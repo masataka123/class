@@ -1,7 +1,7 @@
-# はじめに.
+# はじめに
 
 - こちらは大阪市立大学 R2年度(2020年度)後期 全学共通科目 解析Ⅱ *TⅠ機･情33～ の授業のホームページです. 
-- 授業の教材は[こちら](https://github.com/masataka123/class/tree/master/2020_autumn/materials)です. Webclassにも同じの教材をアップしております.
+- 授業の教材は[こちら](https://github.com/masataka123/class/tree/master/2020_autumn/materials)です. Webclassにも同じ教材をアップしていきます.
 
 # News
 
@@ -12,4 +12,6 @@
 - 担当は岩井雅崇(いわいまさたか)です.
 - 授業は基本(講義資料)と発展(動画配信)によって行います. 質疑応答でのみ双方向(リアルタイム)を使用します.
 - 詳しい事柄はいずれお知らせします.
+- ミス・誤植・その他何かありましたらmasataka[at]sci.osaka-cu.ac.jpにご連絡お願いいたします. 対応いたします.
+
 
