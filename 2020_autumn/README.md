@@ -1,7 +1,7 @@
 # はじめに
 
 - こちらは大阪市立大学 R2年度(2020年度)後期 全学共通科目 解析Ⅱ *TⅠ機･情33～ の授業のホームページです. 
-- 授業の教材は[こちら](https://github.com/masataka123/class/tree/master/2020_autumn/materials)です. Webclassにも同じ教材をアップしていきます.
+- 授業の教材は[こちら](https://github.com/masataka123/class/tree/master/2020_autumn/materials)です. 
 
 # News
 
