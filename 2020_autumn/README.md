@@ -16,6 +16,7 @@
 # 授業内容
 
 0. 成績の付け方, 授業の進め方 [第0回動画](https://www.youtube.com/watch?v=P_AeifrLu3M&t=21s) [第0回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_成績の付け方_授業の進め方.pdf)
+[授業に関する情報と履修方法の資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_授業に関する情報と履修方法ver2.pdf)
 
 1. 多変数の連続写像 [第1回動画](https://www.youtube.com/watch?v=vMxVvZJghqY) [第1回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/1_多変数の連続写像.pdf) [第1回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/1_第一回講義の授業ノート.pdf)
 
