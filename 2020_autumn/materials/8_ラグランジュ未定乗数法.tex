@@ -1,0 +1,223 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+\begin{center}
+{\Large 第8回. ラグランジュ未定乗数法 (川平先生の本, 第24章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/12/01
+\end{flushright}
+
+\section{ラグランジュ未定乗数法}
+ 
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    \label{lan}
+    $f(x,y)$, $g(x,y)$を領域$D$上の$C^1$級関数とする.
+    $g(x,y)=0$のもとで$f(x,y)$が点$(a,b)$で極値を持つとし, 
+    $\left(\pdrv{g}{x}(a,b),  \pdrv{g}{y}(a,b)\right) \neq (0,0)$とする.
+    
+    このとき,  ある定数$\lambda$があって
+    $$
+    \pdrv{f}{x}(a,b) = \lambda \pdrv{g}{x}(a,b), \pdrv{f}{y}(a,b) = \lambda \pdrv{g}{y}(a,b) \text{\,\,\,となる.}
+    $$
+    \end{thm}
+    \end{tcolorbox}
+    
+ 上の定理\ref{lan}から$F(x,y,t) = f(x,y)-tg(x,y)$とするとき, 
+ $g(x,y)=0$のもとでの$f(x,y)$の極値の候補は以下の2つである.
+ \begin{enumerate}
+  \item $g(a,b)=\pdrv{g}{x}(a,b)=\pdrv{g}{y}(a,b)=0$となる点$(a,b)$.
+ \item ある$\lambda$があって
+ $\pdrv{F}{x}(a,b,\lambda) = \pdrv{F}{y}(a,b,\lambda) = \pdrv{F}{t}(a,b,\lambda)=0$となる点$(a,b)$.
+ \end{enumerate}
+
+
+
+
+\section{ラグランジュ未定乗数法の使い方}  
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+
+ $g(x,y)=0$のもとで$f(x,y)$の極値を求める手順は以下の通りである.
+ 
+ \begin{description}
+
+
+ \item{[手順1.]} $g(a,b)=\pdrv{g}{x}(a,b)=\pdrv{g}{y}(a,b)=0$となる点$(a,b)$を求める.
+ 
+   \item{[手順2.]} $F(x,y,t) = f(x,y)-tg(x,y)$とおいて, 
+   $\pdrv{F}{x}(a,b,\lambda) = \pdrv{F}{y}(a,b,\lambda) = \pdrv{F}{t}(a,b,\lambda)=0$となる点$(a,b,\lambda)$を求める. %\footnote{$\lambda$の値は以後使わないので, 具体的に計算する必要はあまりない.}
+   
+ \item{[手順3.]} 手順1,手順2で求めた点$(a,b)$について, その値が極値であるかどうか調べる.
+一般的な方法はないが, 例\ref{lan_exa}のように「最大値の存在」と「最大値, 最小値であれば極値である」ことを用いる方法もある.
+ \end{description}
+
+    \end{tcolorbox}
+    
+\begin{exa}
+\label{lan_exa}
+$f(x,y) = xy, g(x,y) = x^2+y^2-1$とする.
+$g(x,y) =0$のもとでの$f(x,y)$の極値を求めよ.
+
+つまり$S = \{ (x,y) \in \R^2: g(x,y)=0\}$とするとき, $f$の$S$上での極値を求めよ.
+
+(解.)　上の手順通りに求める.
+
+ [手順1.]
+ $\pdrv{g}{x}=2x, \pdrv{g}{y}=2y$より, $g(a,b)=\pdrv{g}{x}(a,b)=\pdrv{g}{y}(a,b)=0$となる点は存在しない.
+ 
+[手順2.] $F(x,y,t) = f(x,y)-tg(x,y) = xy - t(x^2 + y^2 -1)$とおく.
+以下の方程式を解く.
+$$
+\pdrv{F}{x} = y-2xt=0,
+\pdrv{F}{y}= x-2yt=0,
+\pdrv{F}{t} =-(x^2+y^2-1)=0.
+$$
+すると$(x,y) =\pm \left(\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}}\right) , \pm \left(\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}}\right)$
+の4点が極値の候補となる.
+
+[手順3.] $S $は有界閉集合より, $f$は$S$上で連続であるため, 第1回でやった定理より, 
+$f$は$S$上で最大値・最小値を持つ.
+よって$\pm \left(\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}}\right) , \pm \left(\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}}\right)$の中に最大値をとる点や最小値をとる点がある.
+
+実際計算すると, 
+$$
+f\left(\pm \left(\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}}\right)\right)=\frac{1}{2}, 
+f\left(\pm \left(\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}}\right)\right)=-\frac{1}{2}, 
+$$
+であるため, $\pm \left(\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}}\right) $で$f$は極大値(最大値)$\frac{1}{2}$をとり, 
+$\pm \left(\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}}\right)$で$f$は極小値(最小値)$-\frac{1}{2}$をとる.
+
+\end{exa}
+
+\section{ラグランジュ未定乗数法 3変数の場合}
+
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    \label{lan}
+    $f(x,y,z)$, $g(x,y,z)$を領域$D \subset \R^3$上の$C^1$級関数とし, 
+    $F(x,y,t) = f(x,y,z)-tg(x,y,z)$とおく. 
+    $g(x,y,z)=0$のもとで$f(x,y,z)$が点$(a,b,c)$で極値を持つとし, 
+    $\left(\pdrv{g}{x}(a,b,c),  \pdrv{g}{y}(a,b,c), \pdrv{g}{z}(a,b,c)\right) \neq (0,0,0)$とする.
+    
+    このとき,  ある定数$\lambda$があって,
+    $$
+    \pdrv{F}{x}(a,b,c,\lambda) =\pdrv{F}{y}(a,b,c,\lambda) =\pdrv{F}{z}(a,b,c,\lambda) =\pdrv{F}{t}(a,b,c,\lambda) =0
+     \text{\,\,\,となる.}
+    $$
+    \end{thm}
+    \end{tcolorbox}
+    
+  \begin{exa}
+  $f(x,y,z)= xyz, g(x,y,z)=x+y+z-170$とする.
+  $g(x,y,z)=0$のもとで$f$の最大値を求めよ.
+  つまり$S= \{ (x,y,z) \in \R^3: g(x,y,z)=0\}$とするとき, $f$の$S$上での最大値を求めよ.
+  ただし$f$が$S$上で最大値を持つことは認めて良い.
+  
+  
+  (解.)　手順通りに求める.
+  
+  [手順1.]
+   $\pdrv{g}{x}=1$より$g(a,b,c)=\pdrv{g}{x}(a,b,c)=\pdrv{g}{y}(a,b,c)=\pdrv{g}{z}(a,b,c)=0$となる点$(a,b,c)$は存在しない.
+   
+[手順2.]
+    $F(x,y,t) = f(x,y,z)-tg(x,y,z) = xyz-t(x+y+z-170)$とする.
+   以下の方程式を解く.
+$$
+\pdrv{F}{x} = yz-t=0,
+\pdrv{F}{y}= xz-t =0,
+\pdrv{F}{z}=xy-t=0,
+\pdrv{F}{t} =-(x+y+z-170)=0.
+$$ 
+すると$(x,y,z) =(170,0,0), (0,170,0), (0,170,0), (\frac{170}{3},\frac{170}{3},\frac{170}{3})$
+の4点が極値の候補となる.
+
+[手順3.] 最大値が存在し, 最大値は極値であるため, 上の4点の中に最大値をとる点が存在する.
+実際計算すると, 
+$$f(170,0,0)=0, f(0,170,0)=0, f(0,170,0)=0, f\left(\frac{170}{3},\frac{170}{3},\frac{170}{3}\right)=\left(\frac{170}{3}\right)^3
+$$
+であるため, $\left(\frac{170}{3},\frac{170}{3},\frac{170}{3}\right)$で$f$は最大値$\left(\frac{170}{3}\right)^3$をとる.
+  \end{exa}
+
+
+ 
+
+\end{document}

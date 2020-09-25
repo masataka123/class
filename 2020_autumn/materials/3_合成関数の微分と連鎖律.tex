@@ -1,0 +1,205 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+\begin{center}
+{\Large 第3回. 合成関数の微分と連鎖律 (川平先生の本, 第19・20・21章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/10/20
+\end{flushright}
+
+
+
+%\section{連鎖率 part1}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    
+    $f(x,y)$を領域$D$上の$C^1$級関数とする.
+    $x=x(t)$, $y=y(t)$を$t$に関する$C^1$級関数とし, $z(t) = f(x(t) , y(t))$とするとき, 
+    $$
+    \drv{z}{t} = \pdrv{f}{x}\drv{x}{t} + \pdrv{f}{y}\drv{y}{t}.
+    $$
+    \end{thm}
+    \end{tcolorbox}
+
+\begin{exa}
+$f(x,y) = 2x^3y$, $x(t) = \cos t$, $y(t) = \sin t$, 
+ $z(t) = f(x(t) , y(t))$とする.
+ このとき
+ $$
+ \pdrv{f}{x} = 6x^2y,  \pdrv{f}{y}=2x^3, \drv{x}{t}=-\sin t, \drv{y}{t}=\cos t\text{,\,\, より}
+ $$
+ \begin{align*}
+ \begin{split}
+     \drv{z}{t} & = \pdrv{f}{x}\drv{x}{t} + \pdrv{f}{y}\drv{y}{t}
+     = 6\cos^2 t\sin t (-\sin t) + 2 \cos^3 t \cos t
+     = - 6\cos^2 t\sin^2 t  + 2 \cos^4 t.
+   \end{split}
+ \end{align*}
+ 
+\end{exa}
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    
+    領域$D$上の$C^1$級関数を$x(u,v)$, $y(u,v)$とする.
+    
+ $$
+\begin{array}{ccccc}
+\Phi: &D & \rightarrow & \R^2 & \\
+&(u,v) & \longmapsto & (x(u,v),y(u,v))&
+\end{array}
+$$
+を$C^1$級変数変換という.
+    \end{dfn}
+    \end{tcolorbox}
+
+
+\begin{exa}
+\begin{itemize}
+\item $a,b,c,d$を定数とする.
+$\Phi(u,v)  = (au+bv, cu+dv)$は$C^1$級変数変換である.
+これを1次変換という.
+\item $\Phi(u,v)  = (u \cos v, u \sin v)$も$C^1$級変数変換である.
+これを極座標変換という.
+\end{itemize}
+
+\end{exa}
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+ 領域$D$上の$C^1$級変数変換を
+ $$
+\begin{array}{ccccc}
+\Phi: &D & \rightarrow & \R^2 & \\
+&(u,v) & \longmapsto & (x(u,v),y(u,v))&
+\end{array}
+$$
+とし, 領域$E ( \subset \Phi(D))$上の$C^1$級関数を$f(x,y)$とする.
+
+ 領域$D$上の$C^1$級$g(u,v)$を
+ $$
+\begin{array}{ccccc}
+g = f \circ \Phi: &D & \rightarrow & \R & \\
+&(u,v) & \longmapsto & f(x(u,v),y(u,v))&
+\end{array}
+$$
+で定めるとき, 各偏導関数は以下の通りになる.
+
+    $$
+    \pdrv{g}{u} = \pdrv{f}{x}\pdrv{x}{u} + \pdrv{f}{y}\pdrv{y}{u}
+    \text{,\,\,\, \,\,\,\,\,\,\,}
+     \pdrv{g}{v} = \pdrv{f}{x}\pdrv{x}{v} + \pdrv{f}{y}\pdrv{y}{v}.
+    $$
+    \end{thm}
+    \end{tcolorbox}
+行列の記法を用いると以下のようにかける.
+$$
+\left( \pdrv{g}{u}  , \pdrv{g}{v}\right) 
+=
+\left( \pdrv{f}{x} , \pdrv{f}{y}\right) 
+\left(\begin{array}{cc} \pdrv{x}{u} & \pdrv{x}{v} \\ \pdrv{y}{u}& \pdrv{y}{v} \\ \end{array} \right).
+$$
+\begin{exa}
+$f(x,y)$を$C^1$級関数とし,$C^1$級変数変換を$(x(u,v),y(u,v)) = (u \cos v, u \sin v)$とする.
+$g(u,v) = f(x(u,v), y(u,v))$とするとき, $\pdrv{g}{u}, \pdrv{g}{v}$を
+$\pdrv{f}{x},\pdrv{f}{y}$を用いてあらわせ.
+
+(解.)
+$$
+\pdrv{x}{u}=\cos v,\text{\,\,} \pdrv{x}{v}= -u\sin v,\text{\,\,}  \pdrv{y}{u}=\sin v,\text{\,\,}  \pdrv{y}{v}= u \cos v, \text{\,\,\,より} 
+$$
+$$
+   \pdrv{g}{u} = \pdrv{f}{x}\pdrv{x}{u} + \pdrv{f}{y}\pdrv{y}{u}=\cos v\pdrv{f}{x} + \sin v\pdrv{f}{y}.
+$$
+
+$$
+  \pdrv{g}{v} = \pdrv{f}{x}\pdrv{x}{v} + \pdrv{f}{y}\pdrv{y}{v}
+   =-u\sin v \pdrv{f}{x} + u \cos v\pdrv{f}{y}.
+$$
+
+
+\end{exa}
+
+
+\end{document}

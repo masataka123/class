@@ -1,0 +1,267 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+\begin{center}
+{\Large 第2回. 多変数関数の微分 (川平先生の本, 第17・18章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/10/13
+\end{flushright}
+
+
+
+\section{全微分}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    \label{total}
+   \underline{ 関数$f(x,y)$が$(a,b)$で全微分可能}とは, ある定数$A,B$があって
+    $$ E(x,y) = f(x,y)-\{  f(a,b)+ A(x-a) + B(y-b)\} \text{\,\, とするとき, }$$
+      $$ \lim_{(x,y) \rightarrow (a,b)}\frac{|E(x,y)|}{\sqrt{(x-a)^2 + (y-b)^2}} =0 \text{\,\,となること.}$$
+      
+      $z = f(a,b) + A(x-a) + B(y-b)$を\underline{$f(x,y)$の点$(a,b)$での接平面の方程式}といい, その3次元グラフを\underline{接平面}という.
+      
+      $f$が領域$D$の任意の点で全微分可能であるとき, \underline{$f$は$D$上で全微分可能}であるという.
+     
+    \end{dfn}
+\end{tcolorbox}
+
+
+\begin{exa}
+$f(x,y) = -(x^2+ y^2)$は点$(0,0)$で全微分可能.
+
+(証.) $A=B=0$とする.
+$E(x,y) = -(x^2 + y^2) - \{ 0 +0(x-0) + 0(y-0)\}= -(x^2 + y^2) $より, 
+$$\lim_{(x,y) \rightarrow (0,0)}\frac{|E(x,y)|}{\sqrt{x^2 + y^2}} = \lim_{(x,y) \rightarrow (0,0)} \sqrt{x^2 + y^2} =0.$$
+よって全微分可能.
+
+接平面の方程式は
+$$ z = 0 + 0(x-0) + 0(y-0) =0 $$
+\end{exa}
+
+\section{偏微分}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    \label{partial}
+    \underline{関数$f(x,y)$が$(a,b)$で偏微分可能}とは, 2つの極限
+    $$A = \lim_{x \rightarrow a} \frac{f(x,b) - f(a,b)}{x-a} \text{,\,\, \,\,} 
+    B = \lim_{y \rightarrow b}\frac{f(a,y) - f(a,b)}{y-b}  \text{\,\,が存在すること.\,\,} $$
+    $A,B$を\underline{$f(x,y)$の$(a,b)$での偏微分係数}と呼び, 
+    $$A=\pdrv{f}{x}(a,b)    \text{,\,\, \,\,} B=\pdrv{f}{y}(a,b)\text{\,\,とかく.\,\,}$$
+
+$f$が領域$D$の任意の点で偏微分可能であるとき, \underline{$f$は$D$上で偏微分可能}であるという.
+     
+    \end{dfn}
+\end{tcolorbox}
+$\pdrv{f}{x}(a,b) $は$\pdrv{f}{x}|_{(x,y)=(a,b)}$とかくこともある.
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    $D$上で偏微分可能な関数$f$について
+    
+   $$
+\begin{array}{ccccccccc}
+\pdrv{f}{x}: &D & \rightarrow & \R & &\pdrv{f}{y}: &D & \rightarrow & \R \\
+&(x,y) & \longmapsto & \pdrv{f}{x}(x,y)& & &(x,y) & \longmapsto & \pdrv{f}{y}(x,y)
+\end{array}
+$$
+    
+を\underline{$f(x,y)$の偏導関数}という.
+     
+    \end{dfn}
+    
+\end{tcolorbox}
+
+
+\begin{exa}
+\begin{itemize}
+
+\item $f(x,y) = x^2y^3$は$\R^2$で偏微分可能.
+偏導関数は
+$\pdrv{f}{x} = 2xy^3, \pdrv{f}{y} = 3x^2y^2 $である.
+\item $f(x,y) = \sqrt{1-x^2-y^2}$は$\{ (x,y) \in \R^2 : \sqrt{x^2 + y^2} <1 \}$上で偏微分可能.
+偏導関数は
+$$\pdrv{f}{x} = \frac{-x}{\sqrt{1-x^2-y^2}}\text{,\,\,\,\,}
+\pdrv{f}{y} = \frac{-y}{\sqrt{1-x^2-y^2}}\text{\,\,である.\,\,}$$
+\end{itemize}
+\end{exa}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    
+    $f$を領域$D$上の関数とする.
+    $f$が$D$上で偏微分可能であり, その偏導関数$\pdrv{f}{x}, \pdrv{f}{y} $が$D$上で連続であるとき, \underline{$f$は$C^1$級である}という.
+     
+    \end{dfn}
+    \end{tcolorbox}
+\begin{exa}
+ $f(x,y) = x^2y^3$は$C^1$級である.
+ (みんながよく知っている関数は$C^1$級関数.)
+\end{exa}
+
+\section{全微分, 偏微分, $C^1$級の関係}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    
+    $f$を領域$D$上の関数とする.
+    $f$が$D$上で$C^1$級ならば全微分可能である.
+    
+    特に$D$上で$C^1$級な関数$f$と$(a,b) \in D$において, $A=\pdrv{f}{x}(a,b)$, $B=\pdrv{f}{y}(a,b)$とするとき, 
+    $$\lim_{(x,y) \rightarrow (a,b)}\frac{|E(x,y)|}{\sqrt{(x-a)^2 + (y-b)^2}} =0.$$
+    % \footnote{定義\ref{total}に同じ.$E(x,y) := f(x,y)-\{  f(a,b)+ A(x-a) + B(y-b).\}$ }
+    ここで$E(x,y) = f(x,y)-\{  f(a,b)+ A(x-a) + B(y-b)\}$とする.(定義\ref{total}と同様.)
+    \end{thm}
+    \end{tcolorbox}
+    
+    
+    
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    
+    $f$を領域$D$上の関数とする.
+    $f$が$D$上で全微分可能なら, 偏微分可能である.
+    
+    特に定義\ref{total}の状況下において, $(a,b) \in D$について, $A=\pdrv{f}{x}(a,b)$, $B=\pdrv{f}{y}(a,b)$である.
+    \end{thm}
+    \end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    \label{totalconti}
+    $f$を領域$D$上の関数とする.
+    $f$が$D$上で全微分可能なら, 連続である.
+    \end{thm}
+    \end{tcolorbox}
+    
+\begin{exa}
+$f(x,y) = -(x^2+ y^2)$は$C^1$級関数. よって全微分可能.
+点$(0,0)$での偏微分係数は
+$A=\pdrv{f}{x}(0,0) =0$, $B=\pdrv{f}{y}(0,0) =0$.
+接平面の方程式は
+$z=0+A(x-0)+B(y-0)=0$.
+
+ 
+\end{exa}
+
+\begin{rem}
+「全微分可能だが$C^1$級でない関数」, 「偏微分可能だが全微分可能でない関数」, 「連続だが全微分可能でない関数」, 「連続だが偏微分可能でない関数」. 「偏微分可能だが連続でない関数」などなど, いろいろな例がある.
+\end{rem}
+
+\begin{exa}偏微分可能だが全微分可能でない関数の例.
+
+$$
+  f(x,y)= \begin{cases}
+     0& x\neq0 \text{\,かつ\,} y\neq0\\
+    1& x=0 \text{\,または\,} y=0
+  \end{cases}
+  $$
+ $f$は$(0,0)$で偏微分可能. 
+ $\lim_{x \rightarrow 0} \frac{f(x,0) - f(0,0)}{x-0} =   \lim_{x \rightarrow 0} \frac{1-1}{x} =0$より定義\ref{partial}の極限が存在するから. 
+ 
+ しかし$f$は$(0,0)$で全微分可能ではない.
+ もし全微分可能ならば
+ $$E(x,y)=f(x,y)-\{  f(0,0)+ 0(x-0) + 0(y-0)\}=f(x,y)-1$$とすると, 
+ $\lim_{(x,y) \rightarrow (0,0)}\frac{|E(x,y)|}{\sqrt{x^2 + y^2}} =0$となる.
+ よって$\lim_{(x,y) \rightarrow (0,0)} f(x,y)=1$となるが, 
+ これは$(t,t)\rightarrow (0,0)$の$f$の極限を考えると矛盾である.
+ \footnote{$f$は$(0,0)$で連続ではないからでも言える. (もし全微分可能ならば定理\ref{totalconti}より$f$は$(0,0)$で連続でないといけない.) }
+\end{exa}
+
+%$\pdrv{f}{x}$
+
+\end{document}

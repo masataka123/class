@@ -1,0 +1,289 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial^2 #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+\begin{center}
+{\Large 第4回. ヤコビ行列・微分演算子・ラプラシアン \\(川平先生の本, 第20・22章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/10/27
+\end{flushright}
+
+
+\section{ヤコビ行列}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+ 領域$D$上の$C^1$級変数変換
+ $$
+\begin{array}{ccccc}
+\Phi: &D & \rightarrow & \R^2 & \\
+&(u,v) & \longmapsto & (x(u,v),y(u,v))&
+\end{array}
+$$
+について, \underline{$\Phi$のヤコビ行列 }$D\Phi$を次で定める.
+$$
+D\Phi
+=
+\left(\begin{array}{cc} \pdrv{x}{u} & \pdrv{x}{v} \\ \pdrv{y}{u}& \pdrv{y}{v} \\ \end{array} \right)
+$$
+
+    \end{dfn}
+    \end{tcolorbox}
+
+\begin{exa}
+\text{}
+\begin{itemize}
+\item $a,b,c,d$を定数とする.
+1次変換
+$\Phi(u,v)  = (au+bv, cu+dv)$について, 
+$D\Phi = \left(\begin{array}{cc} a& b\\ c& d\\ \end{array} \right).$
+\item 極座標変換$\Phi(u,v)  = (u \cos v, u \sin v)$について, 
+$D\Phi = \left(\begin{array}{cc} \cos v& -u\sin v\\ \sin v& u \cos v\\ \end{array} \right).$
+\end{itemize}
+
+\end{exa}
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+$C^1$級変数変換を$(x,y) = \Phi (u,v)$, $(z,w) = \Psi (x,y)$とする.
+
+\begin{enumerate}
+
+\item\underline{合成変換$\Psi \circ \Phi$}を
+$(z,w) = \Psi \circ \Phi(u,v)=\Psi(x(u,v),y(u,v))$とする.
+
+\item $C^1$級変数変換を$(x,y) = \Phi (u,v)$が1対1であるとき, ある$C^1$級変数変換$(u,v) = \Omega(x,y)$があって$(u,v) = \Omega\circ\Phi (u,v)$となる.
+この$\Omega$を\underline{$\Phi $の逆変換}といい$\Phi^{-1}$とかく.
+\end{enumerate}
+    \end{dfn}
+    \end{tcolorbox}
+   \footnote{$C^1$級変数変換を$\Phi $が1対1とは$\Phi (u_1,v_1)=\Phi (u_2,v_2)$ならば$(u_1,v_1)=(u_2,v_2)$となること. この定義においての逆関数の存在は逆関数定理(第7回)によりわかる.}   
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+$C^1$級変数変換を$(x,y) = \Phi (u,v)$, $(z,w) = \Psi (x,y)$について
+その合成変換を
+$(z,w) = \Psi \circ \Phi(u,v)$とするとき, 
+$$
+D (\Psi \circ \Phi)
+= D \Psi D\Phi
+=
+\left(\begin{array}{cc} \pdrv{z}{x} & \pdrv{z}{y} \\ \pdrv{w}{x}& \pdrv{w}{y} \\ \end{array} \right)
+\left(\begin{array}{cc} \pdrv{x}{u} & \pdrv{x}{v} \\ \pdrv{y}{u}& \pdrv{y}{v} \\ \end{array} \right).
+$$
+特に$\Phi $の逆関数が存在するとき, $\det D \Phi \neq 0$ならば
+$$
+D \Phi^{-1}
+= (D\Phi)^{-1}
+=
+\left(\begin{array}{cc} \pdrv{x}{u} & \pdrv{x}{v} \\ \pdrv{y}{u}& \pdrv{y}{v} \\ \end{array} \right)^{-1}.
+$$
+    \end{thm}
+    \end{tcolorbox}
+    
+\begin{exa}
+
+     極座標変換$\Phi(u,v)  = (u \cos v, u \sin v)$について,
+$D\Phi = \left(\begin{array}{cc} \cos v& -u\sin v\\ \sin v& u \cos v\\ \end{array} \right)$より, 
+$$D\Phi^{-1} = \left(\begin{array}{cc} \cos v& -u\sin v\\ \sin v& u \cos v\\ \end{array} \right)^{-1}
+= \left(\begin{array}{cc} \cos v& \sin v\\ \frac{-\sin v}{u}& \frac{\cos v}{u}\\ \end{array} \right)
+= \left(\begin{array}{cc} \frac{x}{\sqrt{x^2+y^2}}& \frac{y}{\sqrt{x^2+y^2}}\\\ \frac{-y}{x^2+y^2}& \frac{x}{x^2+y^2}\\ \end{array} \right).
+$$
+    
+    \end{exa}
+    
+\section{$n$階偏導関数・$C^n$級}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+$f(x,y)$を$C^1$級関数とする.
+\begin{itemize}
+\item $\pdrv{f}{x} , \pdrv{f}{y}$を\underline{$f$の1階偏導関数}という.
+\item $\pdrv{f}{x} , \pdrv{f}{y}$が$C^1$級であるとき, これらの導関数
+$$
+\pdrv{^2f}{x^2} = \pdrv{}{x}\left( \pdrv{f}{x} \right), 
+\ppdrv{f}{x}{y} =\pdrv{}{x}\left( \pdrv{f}{y} \right), 
+\ppdrv{f}{y}{x} =\pdrv{}{y}\left( \pdrv{f}{x} \right), 
+\pdrv{^2f}{y^2} = \pdrv{}{y}\left( \pdrv{f}{y} \right)
+$$
+を\underline{$f$の2階偏導関数}という.
+\item 同様に, $\pdrv{^3f}{x^3} = \pdrv{}{x}\left( \pdrv{^2f}{x^2} \right)$や
+$\frac{\partial^3 f}{\partial x \partial y \partial x} = \pdrv{}{x}\left( \ppdrv{f}{y}{x}\right)$などが考えられるが, これらを\underline{$f$の3階偏導関数}という.
+$n$階偏導関数も同様である.
+
+\item $n$を正の自然数とする.
+\underline{$f(x,y)$が$C^n$級}であるとは$f$の$n$階偏導関数が存在し連続であること.
+\item \underline{$f(x,y)$が$C^{\infty}$級}とは, 全ての正の自然数$n$について$f(x,y)$が$C^n$級であること.
+
+\end{itemize}
+
+    \end{dfn}
+    \end{tcolorbox}
+
+みんながよく知っている関数は$C^{\infty}$級関数.
+($x^2+1, \sin x, \log x, e^x$ などなど... )
+\begin{exa}
+$f(x,y) = x^2 y^3$. $C^{\infty}$級関数. 偏導関数は以下の通り.
+
+$$
+\pdrv{f}{x}=2xy^3,  \pdrv{f}{y}=3x^2y^2.
+$$
+
+$$
+\pdrv{^2f}{x^2} = 2y^3, 
+\ppdrv{f}{x}{y} =6xy^2, 
+\ppdrv{f}{y}{x} =6xy^2, 
+\pdrv{^2f}{y^2} = 6x^2y.
+$$
+\end{exa}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+$f(x,y)$が$C^2$級関数ならば
+$$
+\ppdrv{f}{x}{y} =\ppdrv{f}{y}{x}.
+$$
+特に, $f(x,y)$が$C^\infty$級関数ならば, 自由に偏微分の順序交換ができる.
+    \end{thm}
+    \end{tcolorbox}
+
+\section{微分演算子・ラプラシアン}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}[この授業だけの定義]
+$m$を正の自然数とし$a_{ij}(x,y)$を関数として
+$$
+D = \sum_{j=0}^{m} \sum_{i=0}^{m-j} a_{ij}(x,y) \left( \pdrv{^i}{x^i} \right)\left( \pdrv{^j}{y^{j}} \right)
+$$ 
+と書ける作用素を\underline{微分演算子}という.
+
+$D$は$C^{\infty}$関数$f$に対して次のように作用する.
+$$
+Df = \sum_{j=0}^{m} \sum_{i=0}^{m-j} a_{ij}(x,y) {\frac{\partial^{i+j} f}{\partial x^i \partial y^{j}}}
+$$
+    \end{dfn}
+    \end{tcolorbox}
+  %$\pdrv{}{x}, x\pdrv{}{x} , \pdrv{^2}{x^2}+\pdrv{^2}{y^2}$などは微分作用素
+    
+ \begin{exa}
+ $D_1=\pdrv{}{x}, D_2=x\pdrv{}{x}$とおく. これらは微分演算子.
+ $D_1D_2 = x\left( \pdrv{}{x^2} \right)$だが
+  $D_2D_1 =\pdrv{}{x} + x\left( \pdrv{}{x^2} \right)$である.
+  特に$D_1D_2 \neq D_2D_1$.
+ \end{exa}
+ 
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+$$
+\Delta = \pdrv{^2}{x^2} + \pdrv{^2}{y^2}
+$$
+と書ける微分演算子を\underline{ラプラシアン}という.
+    \end{dfn}
+    \end{tcolorbox}
+
+    
+ \begin{exa}
+極座標変換$(x(u,v), y(u,v))  = (u \cos v, u \sin v)$とする.
+このとき, 
+$$
+\Delta = \pdrv{^2}{x^2} + \pdrv{^2}{y^2} 
+= \pdrv{^2}{u^2} + \frac{1}{u}\pdrv{}{u}  +  \frac{1}{u^2}\pdrv{^2}{v^2} 
+$$
+ \end{exa}
+ 
+\end{document}

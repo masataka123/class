@@ -1,0 +1,1288 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+%ここから本文．
+\begin{document}
+%\maketitle
+\begin{center}
+{\Large 第1回. 多変数の連続写像 (川平先生の本, 第16章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/10/06
+\end{flushright}
+
+
+
+\section{いくつかの準備}
+以下の用語に関して興味のない人は読み飛ばして良い.
+
+\begin{enumerate}
+\item $xy$平面上の点$(a,b)$と正の数$r>0$について, 点$(a,b)$中心の半径$r$の(閉)円板を
+$$
+B_{(a,b)}(r) = \{ (x,y) \in \R^2 : \sqrt{(x-a)^2 + (y-b)^2} \leqq r  \}
+\text{\,\, とする.} 
+$$
+
+\item $a<b$かつ$c<d$について, 
+$$
+[a,b] \times [c,d] = \{ (x,y) \in \R^2 : a \leqq x \leqq b \text{かつ}  c \leqq y \leqq d \}
+\text{\,\, とする.} 
+$$
+\end{enumerate}
+以下$E \subset \R^2$を集合とする.
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item $(a,b) \in E$が$E$の\underline{内点}とは, ある正の数$r>0$があって$B_{(a,b)}(r) \subset E$となること.
+%\item $(a,b) \in E$が$E$の\underline{境界点}とは, 任意の$r>0$について$B_{(a,b)}(r) \cap E \neq \phi$かつ$B_{(a,b)}(r) \cap (\R^2 \setminus E) \neq \phi$となること.
+\item $E$が\underline{開集合}とは, 任意の(全ての)$(a,b) \in E$について$(a,b)$は$E$の内点となること.
+\item $E$が\underline{閉集合}とは, $\R^2 \setminus E$\footnote{$\R^2 \setminus E = \{ (x,y) \in \R^2 : (x,y) \not \in E\} $と定義する.}
+が開集合であること.
+\item $E$が\underline{有界}とは, ある正の数$M>0$があって, $ E \subset [-M,M] \times [-M,M]$となること.
+\item $E$が\underline{連結}とは, $E$の任意の2点が$E$内の折れ線で結べること.
+\item $E$が\underline{領域}とは, $E$が連結な開集合であること.
+\end{enumerate}
+
+\begin{exa}
+%\text{}
+
+\begin{itemize}
+\item $\{ (x,y) \in \R^2 : \sqrt{x^2 + y^2} < 1  \}$は開集合, 有界, 連結, 領域. でも閉集合ではない.
+\item $\{ (x,y) \in \R^2 : \sqrt{x^2 + y^2} \leqq 1 \}$は閉集合, 有界, 連結. でも開集合ではない.
+\item $\R^2$は開集合, 閉集合, 連結, 領域. でも有界ではない.
+\end{itemize}
+\end{exa}
+
+\begin{enumerate}
+\setcounter{enumi}{8}
+\item 関数$f(x,y)$の値が定まる集合を$f$の\underline{定義域}といい, 
+$$\{ k \in \R : f(x,y) = k \text{となる$(x,y)$が定義域内に存在}\}$$
+を$f$の\underline{値域}という.
+\item \underline{$f$が領域$E$上の関数}とは, $E$が$f$の定義域に含まれることである.
+このとき
+$$
+\begin{array}{ccccc}
+f: &E & \rightarrow & \R & \text{とかく.}\\
+&(x,y) & \longmapsto & f(x,y)&
+\end{array}
+$$
+\end{enumerate}
+
+\begin{exa}
+$f(x,y) = \sqrt{1-x^2-y^2}$の定義域は$\{ (x,y) \in \R^2 : \sqrt{x^2 + y^2} \leqq 1  \}$. 値域は$[0,1]$.
+
+\end{exa}
+
+\section{極限と連続性}
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    \underline{$(x,y)$が$(a,b)$に限りなく近づく}とは$(x,y) \neq (a,b)$かつ
+    $$ \sqrt{(x-a)^2 + (y-b)^2} \rightarrow 0$$
+    となるように変化すること.
+    以後, $(x,y) \rightarrow (a,b)$とかく.
+    \end{dfn}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    $f(x,y)$を領域$D$上の関数とする.
+    \underline{$f(x,y)$が$(x,y) \rightarrow (a,b)$のとき実数$A$に収束する}とは
+    $(x,y)$が$(a,b)$に近づくとき, $f(x,y)$が$A$に限りなく近づくことである.
+    このとき
+    $$ \lim_{(x,y) \rightarrow (a,b)} f(x,y) =A \text{\,\,　または\,\,\,}
+    f(x,y) \rightarrow A  \text{\,\,}((x,y) \rightarrow (a,b)) \text{\,\,　とかく.\,\,}
+    $$ 
+   
+  
+    \end{dfn}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    $f(x,y)$を領域$D$上の関数とする.
+    \underline{$f$が$(a,b)\in D$で連続}とは
+    $$ \lim_{(x,y) \rightarrow (a,b)} f(x,y) =f(a,b) \text{\,\,　となること.\,\,}$$
+    \underline{$f$が$D$上で連続}とは$f$が任意の点$(a,b)\in D$で連続となること.
+    \end{dfn}
+\end{tcolorbox}
+
+\begin{exa}
+\label{conti}
+\begin{itemize}
+\item $ f(x,y) = x+y$, $f(x,y) = e^{x+y^2}$. これらは$\R^2$上の連続関数. (みんながよく知っている関数は連続関数.)
+\item $f(x,y) = \frac{1}{x^2 + y^2}$は定理\ref{continess}より$\R^2 \setminus \{ (0,0)\}$上の連続関数. 
+\item $\R^2$上の関数$f(x,y)$を次で定義する.
+$$
+  f(x,y)= \begin{cases}
+     \frac{x^2-y^2}{x^2+y^2}& ((x,y) \neq (0,0)) \\
+    1& ((x,y) = (0,0)) 
+  \end{cases}
+  $$
+% 定理\ref{continess}%より, $f$は$\R^2 \setminus \{ (0,0)\}$上の連続関数.
+  
+$f$は$(0,0)$で連続ではない.
+
+なぜなら$(0,y) \rightarrow (0,0)$という近づけ方をすると, $f(0,y) = -1 \rightarrow -1 $
+%\text{\,\,}((0,y) \rightarrow (0,0))$
+であるため, \\
+$ \lim_{(0,y) \rightarrow (0,0)} f(0,y) \neq f(0,0)$より連続ではない.
+
+\end{itemize}
+\end{exa}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+     $\lim_{(x,y) \rightarrow (a,b)} f(x,y) =A$, $ \lim_{(x,y) \rightarrow (a,b)} g(x,y) =B$とする. このとき以下が成り立つ.
+     
+ $$  \lim_{(x,y) \rightarrow (a,b)} \left\{ f(x,y) + g(x,y)\right\} =A+B.$$
+  $$  \lim_{(x,y) \rightarrow (a,b)} f(x,y) g(x,y) =AB.$$.
+   $$\text{$B \neq 0$のとき, }  \lim_{(x,y) \rightarrow (a,b)} \frac{f(x,y) }{ g(x,y)} =\frac{A}{B}.$$
+    \end{thm}
+\end{tcolorbox}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    \label{continess}
+    関数$f,g$が点$(a,b)$で連続であるとする. このとき以下が成り立つ.
+    \begin{itemize}
+    \item $f(x,y) + g(x,y)$や$f(x,y)g(x,y)$は$(a,b)$で連続.
+    \item $g(a,b) \neq 0$のとき, $\frac{f(x,y) }{ g(x,y)} $は$(a,b)$で連続.
+    \end{itemize}
+
+    \end{thm}
+\end{tcolorbox}
+
+
+
+\section{最大最小の存在}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    有界な閉集合$D$上で連続な関数$f$は最大値・最小値を持つ.
+    \end{thm}
+\end{tcolorbox}
+
+\begin{exa}
+$D = \{ (x,y) \in \R^2 : \sqrt{x^2 + y^2} \leqq 1  \}$とすると$D$は有界閉集合.
+$f(x,y) =x$とすると$f$は連続. 
+実際, $D$上で$f$は最大値 1, 最小値 -1を持つ.
+\end{exa}
+
+\newpage
+
+\begin{center}
+{\Large 第2回. 多変数関数の微分 (川平先生の本, 第17・18章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/10/13
+\end{flushright}
+
+
+
+\section{全微分}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    \label{total}
+   \underline{ 関数$f(x,y)$が$(a,b)$で全微分可能}とは, ある定数$A,B$があって
+    $$ E(x,y) = f(x,y)-\{  f(a,b)+ A(x-a) + B(y-b)\} \text{\,\, とするとき, }$$
+      $$ \lim_{(x,y) \rightarrow (a,b)}\frac{|E(x,y)|}{\sqrt{(x-a)^2 + (y-b)^2}} =0 \text{\,\,となること.}$$
+      
+      $z = f(a,b) + A(x-a) + B(y-b)$を\underline{$f(x,y)$の点$(a,b)$での接平面の方程式}といい, その3次元グラフを\underline{接平面}という.
+      
+      $f$が領域$D$の任意の点で全微分可能であるとき, \underline{$f$は$D$上で全微分可能}であるという.
+     
+    \end{dfn}
+\end{tcolorbox}
+
+
+\begin{exa}
+$f(x,y) = -(x^2+ y^2)$は点$(0,0)$で全微分可能.
+
+(証.) $A=B=0$とする.
+$E(x,y) = -(x^2 + y^2) - \{ 0 +0(x-0) + 0(y-0)\}= -(x^2 + y^2) $より, 
+$$\lim_{(x,y) \rightarrow (0,0)}\frac{|E(x,y)|}{\sqrt{x^2 + y^2}} = \lim_{(x,y) \rightarrow (0,0)} \sqrt{x^2 + y^2} =0.$$
+よって全微分可能.
+
+接平面の方程式は
+$$ z = 0 + 0(x-0) + 0(y-0) =0 $$
+\end{exa}
+
+\section{偏微分}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    \label{partial}
+    \underline{関数$f(x,y)$が$(a,b)$で偏微分可能}とは, 2つの極限
+    $$A = \lim_{x \rightarrow a} \frac{f(x,b) - f(a,b)}{x-a} \text{,\,\, \,\,} 
+    B = \lim_{y \rightarrow b}\frac{f(a,y) - f(a,b)}{y-b}  \text{\,\,が存在すること.\,\,} $$
+    $A,B$を\underline{$f(x,y)$の$(a,b)$での偏微分係数}と呼び, 
+    $$A=\pdrv{f}{x}(a,b)    \text{,\,\, \,\,} B=\pdrv{f}{y}(a,b)\text{\,\,とかく.\,\,}$$
+
+$f$が領域$D$の任意の点で偏微分可能であるとき, \underline{$f$は$D$上で偏微分可能}であるという.
+     
+    \end{dfn}
+\end{tcolorbox}
+$\pdrv{f}{x}(a,b) $は$\pdrv{f}{x}|_{(x,y)=(a,b)}$とかくこともある.
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    $D$上で偏微分可能な関数$f$について
+    
+   $$
+\begin{array}{ccccccccc}
+\pdrv{f}{x}: &D & \rightarrow & \R & &\pdrv{f}{y}: &D & \rightarrow & \R \\
+&(x,y) & \longmapsto & \pdrv{f}{x}(x,y)& & &(x,y) & \longmapsto & \pdrv{f}{y}(x,y)
+\end{array}
+$$
+    
+を\underline{$f(x,y)$の偏導関数}という.
+     
+    \end{dfn}
+    
+\end{tcolorbox}
+
+
+\begin{exa}
+\begin{itemize}
+
+\item $f(x,y) = x^2y^3$は$\R^2$で偏微分可能.
+偏導関数は
+$\pdrv{f}{x} = 2xy^3, \pdrv{f}{y} = 3x^2y^2 $である.
+\item $f(x,y) = \sqrt{1-x^2-y^2}$は$\{ (x,y) \in \R^2 : \sqrt{x^2 + y^2} <1 \}$上で偏微分可能.
+偏導関数は
+$$\pdrv{f}{x} = \frac{-x}{\sqrt{1-x^2-y^2}}\text{,\,\,\,\,}
+\pdrv{f}{y} = \frac{-y}{\sqrt{1-x^2-y^2}}\text{\,\,である.\,\,}$$
+\end{itemize}
+\end{exa}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    
+    $f$を領域$D$上の関数とする.
+    $f$が$D$上で偏微分可能であり, その偏導関数$\pdrv{f}{x}, \pdrv{f}{y} $が$D$上で連続であるとき, \underline{$f$は$C^1$級である}という.
+     
+    \end{dfn}
+    \end{tcolorbox}
+\begin{exa}
+ $f(x,y) = x^2y^3$は$C^1$級である.
+ (みんながよく知っている関数は$C^1$級関数.)
+\end{exa}
+
+\section{全微分, 偏微分, $C^1$級の関係}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    
+    $f$を領域$D$上の関数とする.
+    $f$が$D$上で$C^1$級ならば全微分可能である.
+    
+    特に$D$上で$C^1$級な関数$f$と$(a,b) \in D$において, $A=\pdrv{f}{x}(a,b)$, $B=\pdrv{f}{y}(a,b)$とするとき, 
+    $$\lim_{(x,y) \rightarrow (a,b)}\frac{|E(x,y)|}{\sqrt{(x-a)^2 + (y-b)^2}} =0.$$
+    % \footnote{定義\ref{total}に同じ.$E(x,y) := f(x,y)-\{  f(a,b)+ A(x-a) + B(y-b).\}$ }
+    ここで$E(x,y) = f(x,y)-\{  f(a,b)+ A(x-a) + B(y-b)\}$とする.(定義\ref{total}と同様.)
+    \end{thm}
+    \end{tcolorbox}
+    
+    
+    
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    
+    $f$を領域$D$上の関数とする.
+    $f$が$D$上で全微分可能なら, 偏微分可能である.
+    
+    特に定義\ref{total}の状況下において, $(a,b) \in D$について, $A=\pdrv{f}{x}(a,b)$, $B=\pdrv{f}{y}(a,b)$である.
+    \end{thm}
+    \end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    \label{totalconti}
+    $f$を領域$D$上の関数とする.
+    $f$が$D$上で全微分可能なら, 連続である.
+    \end{thm}
+    \end{tcolorbox}
+    
+\begin{exa}
+$f(x,y) = -(x^2+ y^2)$は$C^1$級関数. よって全微分可能.
+点$(0,0)$での偏微分係数は
+$A=\pdrv{f}{x}(0,0) =0$, $B=\pdrv{f}{y}(0,0) =0$.
+接平面の方程式は
+$z=0+A(x-0)+B(y-0)=0$.
+
+ 
+\end{exa}
+
+\begin{rem}
+「全微分可能だが$C^1$級でない関数」, 「偏微分可能だが全微分可能でない関数」, 「連続だが全微分可能でない関数」, 「連続だが偏微分可能でない関数」. 「偏微分可能だが連続でない関数」などなど, いろいろな例がある.
+\end{rem}
+
+\begin{exa}偏微分可能だが全微分可能でない関数の例.
+
+$$
+  f(x,y)= \begin{cases}
+     0& x\neq0 \text{\,かつ\,} y\neq0\\
+    1& x=0 \text{\,または\,} y=0
+  \end{cases}
+  $$
+ $f$は$(0,0)$で偏微分可能. 
+ $\lim_{x \rightarrow 0} \frac{f(x,0) - f(0,0)}{x-0} =   \lim_{x \rightarrow 0} \frac{1-1}{x} =0$より定義\ref{partial}の極限が存在するから. 
+ 
+ しかし$f$は$(0,0)$で全微分可能ではない.
+ もし全微分可能ならば
+ $$E(x,y)=f(x,y)-\{  f(0,0)+ 0(x-0) + 0(y-0)\}=f(x,y)-1$$とすると, 
+ $\lim_{(x,y) \rightarrow (0,0)}\frac{|E(x,y)|}{\sqrt{x^2 + y^2}} =0$となる.
+ よって$\lim_{(x,y) \rightarrow (0,0)} f(x,y)=1$となるが, 
+ これは$(t,t)\rightarrow (0,0)$の$f$の極限を考えると矛盾である.
+ \footnote{$f$は$(0,0)$で連続ではないからでも言える. (もし全微分可能ならば定理\ref{totalconti}より$f$は$(0,0)$で連続でないといけない.) }
+\end{exa}
+
+\newpage
+%\maketitle
+\begin{center}
+{\Large 第3回. 合成関数の微分と連鎖律 (川平先生の本, 第19・20・21章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/10/20
+\end{flushright}
+
+
+
+%\section{連鎖率 part1}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    
+    $f(x,y)$を領域$D$上の$C^1$級関数とする.
+    $x=x(t)$, $y=y(t)$を$t$に関する$C^1$級関数とし, $z(t) = f(x(t) , y(t))$とするとき, 
+    $$
+    \drv{z}{t} = \pdrv{f}{x}\drv{x}{t} + \pdrv{f}{y}\drv{y}{t}.
+    $$
+    \end{thm}
+    \end{tcolorbox}
+
+\begin{exa}
+$f(x,y) = 2x^3y$, $x(t) = \cos t$, $y(t) = \sin t$, 
+ $z(t) = f(x(t) , y(t))$とする.
+ このとき
+ $$
+ \pdrv{f}{x} = 6x^2y,  \pdrv{f}{y}=2x^3, \drv{x}{t}=-\sin t, \drv{y}{t}=\cos t\text{,\,\, より}
+ $$
+ \begin{align*}
+ \begin{split}
+     \drv{z}{t} & = \pdrv{f}{x}\drv{x}{t} + \pdrv{f}{y}\drv{y}{t}
+     = 6\cos^2 t\sin t (-\sin t) + 2 \cos^3 t \cos t
+     = - 6\cos^2 t\sin^2 t  + 2 \cos^4 t.
+   \end{split}
+ \end{align*}
+ 
+\end{exa}
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    
+    領域$D$上の$C^1$級関数を$x(u,v)$, $y(u,v)$とする.
+    
+ $$
+\begin{array}{ccccc}
+\Phi: &D & \rightarrow & \R^2 & \\
+&(u,v) & \longmapsto & (x(u,v),y(u,v))&
+\end{array}
+$$
+を$C^1$級変数変換という.
+    \end{dfn}
+    \end{tcolorbox}
+
+
+\begin{exa}
+\begin{itemize}
+\item $a,b,c,d$を定数とする.
+$\Phi(u,v)  = (au+bv, cu+dv)$は$C^1$級変数変換である.
+これを1次変換という.
+\item $\Phi(u,v)  = (u \cos v, u \sin v)$も$C^1$級変数変換である.
+これを極座標変換という.
+\end{itemize}
+
+\end{exa}
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+ 領域$D$上の$C^1$級変数変換を
+ $$
+\begin{array}{ccccc}
+\Phi: &D & \rightarrow & \R^2 & \\
+&(u,v) & \longmapsto & (x(u,v),y(u,v))&
+\end{array}
+$$
+とし, 領域$E ( \subset \Phi(D))$上の$C^1$級関数を$f(x,y)$とする.
+
+ 領域$D$上の$C^1$級$g(u,v)$を
+ $$
+\begin{array}{ccccc}
+g = f \circ \Phi: &D & \rightarrow & \R & \\
+&(u,v) & \longmapsto & f(x(u,v),y(u,v))&
+\end{array}
+$$
+で定めるとき, 各偏導関数は以下の通りになる.
+
+    $$
+    \pdrv{g}{u} = \pdrv{f}{x}\pdrv{x}{u} + \pdrv{f}{y}\pdrv{y}{u}
+    \text{,\,\,\, \,\,\,\,\,\,\,}
+     \pdrv{g}{v} = \pdrv{f}{x}\pdrv{x}{v} + \pdrv{f}{y}\pdrv{y}{v}.
+    $$
+    \end{thm}
+    \end{tcolorbox}
+行列の記法を用いると以下のようにかける.
+$$
+\left( \pdrv{g}{u}  , \pdrv{g}{v}\right) 
+=
+\left( \pdrv{f}{x} , \pdrv{f}{y}\right) 
+\left(\begin{array}{cc} \pdrv{x}{u} & \pdrv{x}{v} \\ \pdrv{y}{u}& \pdrv{y}{v} \\ \end{array} \right).
+$$
+\begin{exa}
+$f(x,y)$を$C^1$級関数とし,$C^1$級変数変換を$(x(u,v),y(u,v)) = (u \cos v, u \sin v)$とする.
+$g(u,v) = f(x(u,v), y(u,v))$とするとき, $\pdrv{g}{u}, \pdrv{g}{v}$を
+$\pdrv{f}{x},\pdrv{f}{y}$を用いてあらわせ.
+
+(解.)
+$$
+\pdrv{x}{u}=\cos v,\text{\,\,} \pdrv{x}{v}= -u\sin v,\text{\,\,}  \pdrv{y}{u}=\sin v,\text{\,\,}  \pdrv{y}{v}= u \cos v, \text{\,\,\,より} 
+$$
+$$
+   \pdrv{g}{u} = \pdrv{f}{x}\pdrv{x}{u} + \pdrv{f}{y}\pdrv{y}{u}=\cos v\pdrv{f}{x} + \sin v\pdrv{f}{y}.
+$$
+
+$$
+  \pdrv{g}{v} = \pdrv{f}{x}\pdrv{x}{v} + \pdrv{f}{y}\pdrv{y}{v}
+   =-u\sin v \pdrv{f}{x} + u \cos v\pdrv{f}{y}.
+$$
+
+
+\end{exa}
+\newpage
+\begin{center}
+{\Large 第4回. ヤコビ行列・微分演算子・ラプラシアン \\(川平先生の本, 第20・22章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/10/27
+\end{flushright}
+
+
+\section{ヤコビ行列}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+ 領域$D$上の$C^1$級変数変換
+ $$
+\begin{array}{ccccc}
+\Phi: &D & \rightarrow & \R^2 & \\
+&(u,v) & \longmapsto & (x(u,v),y(u,v))&
+\end{array}
+$$
+について, \underline{$\Phi$のヤコビ行列 }$D\Phi$を次で定める.
+$$
+D\Phi
+=
+\left(\begin{array}{cc} \pdrv{x}{u} & \pdrv{x}{v} \\ \pdrv{y}{u}& \pdrv{y}{v} \\ \end{array} \right)
+$$
+
+    \end{dfn}
+    \end{tcolorbox}
+
+\begin{exa}
+\text{}
+\begin{itemize}
+\item $a,b,c,d$を定数とする.
+1次変換
+$\Phi(u,v)  = (au+bv, cu+dv)$について, 
+$D\Phi = \left(\begin{array}{cc} a& b\\ c& d\\ \end{array} \right).$
+\item 極座標変換$\Phi(u,v)  = (u \cos v, u \sin v)$について, 
+$D\Phi = \left(\begin{array}{cc} \cos v& -u\sin v\\ \sin v& u \cos v\\ \end{array} \right).$
+\end{itemize}
+
+\end{exa}
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+$C^1$級変数変換を$(x,y) = \Phi (u,v)$, $(z,w) = \Psi (x,y)$とする.
+
+\begin{enumerate}
+
+\item\underline{合成変換$\Psi \circ \Phi$}を
+$(z,w) = \Psi \circ \Phi(u,v)=\Psi(x(u,v),y(u,v))$とする.
+
+\item $C^1$級変数変換を$(x,y) = \Phi (u,v)$が1対1であるとき, ある$C^1$級変数変換$(u,v) = \Omega(x,y)$があって$(u,v) = \Omega\circ\Phi (u,v)$となる.
+この$\Omega$を\underline{$\Phi $の逆変換}といい$\Phi^{-1}$とかく.
+\end{enumerate}
+    \end{dfn}
+    \end{tcolorbox}
+   \footnote{$C^1$級変数変換を$\Phi $が1対1とは$\Phi (u_1,v_1)=\Phi (u_2,v_2)$ならば$(u_1,v_1)=(u_2,v_2)$となること. この定義においての逆関数の存在は逆関数定理(第7回)によりわかる.}   
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+$C^1$級変数変換を$(x,y) = \Phi (u,v)$, $(z,w) = \Psi (x,y)$について
+その合成変換を
+$(z,w) = \Psi \circ \Phi(u,v)$とするとき, 
+$$
+D (\Psi \circ \Phi)
+= D \Psi D\Phi
+=
+\left(\begin{array}{cc} \pdrv{z}{x} & \pdrv{z}{y} \\ \pdrv{w}{x}& \pdrv{w}{y} \\ \end{array} \right)
+\left(\begin{array}{cc} \pdrv{x}{u} & \pdrv{x}{v} \\ \pdrv{y}{u}& \pdrv{y}{v} \\ \end{array} \right).
+$$
+特に$\Phi $の逆関数が存在するとき, $\det D \Phi \neq 0$ならば
+$$
+D \Phi^{-1}
+= (D\Phi)^{-1}
+=
+\left(\begin{array}{cc} \pdrv{x}{u} & \pdrv{x}{v} \\ \pdrv{y}{u}& \pdrv{y}{v} \\ \end{array} \right)^{-1}.
+$$
+    \end{thm}
+    \end{tcolorbox}
+    
+\begin{exa}
+
+     極座標変換$\Phi(u,v)  = (u \cos v, u \sin v)$について,
+$D\Phi = \left(\begin{array}{cc} \cos v& -u\sin v\\ \sin v& u \cos v\\ \end{array} \right)$より, 
+$$D\Phi^{-1} = \left(\begin{array}{cc} \cos v& -u\sin v\\ \sin v& u \cos v\\ \end{array} \right)^{-1}
+= \left(\begin{array}{cc} \cos v& \sin v\\ \frac{-\sin v}{u}& \frac{\cos v}{u}\\ \end{array} \right)
+= \left(\begin{array}{cc} \frac{x}{\sqrt{x^2+y^2}}& \frac{y}{\sqrt{x^2+y^2}}\\\ \frac{-y}{x^2+y^2}& \frac{x}{x^2+y^2}\\ \end{array} \right).
+$$
+    
+    \end{exa}
+    
+\section{$n$階偏導関数・$C^n$級}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+$f(x,y)$を$C^1$級関数とする.
+\begin{itemize}
+\item $\pdrv{f}{x} , \pdrv{f}{y}$を\underline{$f$の1階偏導関数}という.
+\item $\pdrv{f}{x} , \pdrv{f}{y}$が$C^1$級であるとき, これらの導関数
+$$
+\pdrv{^2f}{x^2} = \pdrv{}{x}\left( \pdrv{f}{x} \right), 
+\ppdrv{f}{x}{y} =\pdrv{}{x}\left( \pdrv{f}{y} \right), 
+\ppdrv{f}{y}{x} =\pdrv{}{y}\left( \pdrv{f}{x} \right), 
+\pdrv{^2f}{y^2} = \pdrv{}{y}\left( \pdrv{f}{y} \right)
+$$
+を\underline{$f$の2階偏導関数}という.
+\item 同様に, $\pdrv{^3f}{x^3} = \pdrv{}{x}\left( \pdrv{^2f}{x^2} \right)$や
+$\frac{\partial^3 f}{\partial x \partial y \partial x} = \pdrv{}{x}\left( \ppdrv{f}{y}{x}\right)$などが考えられるが, これらを\underline{$f$の3階偏導関数}という.
+$n$階偏導関数も同様である.
+
+\item $n$を正の自然数とする.
+\underline{$f(x,y)$が$C^n$級}であるとは$f$の$n$階偏導関数が存在し連続であること.
+\item \underline{$f(x,y)$が$C^{\infty}$級}とは, 全ての正の自然数$n$について$f(x,y)$が$C^n$級であること.
+
+\end{itemize}
+
+    \end{dfn}
+    \end{tcolorbox}
+
+みんながよく知っている関数は$C^{\infty}$級関数.
+($x^2+1, \sin x, \log x, e^x$ などなど... )
+\begin{exa}
+$f(x,y) = x^2 y^3$. $C^{\infty}$級関数. 偏導関数は以下の通り.
+
+$$
+\pdrv{f}{x}=2xy^3,  \pdrv{f}{y}=3x^2y^2.
+$$
+
+$$
+\pdrv{^2f}{x^2} = 2y^3, 
+\ppdrv{f}{x}{y} =6xy^2, 
+\ppdrv{f}{y}{x} =6xy^2, 
+\pdrv{^2f}{y^2} = 6x^2y.
+$$
+\end{exa}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+$f(x,y)$が$C^2$級関数ならば
+$$
+\ppdrv{f}{x}{y} =\ppdrv{f}{y}{x}.
+$$
+特に, $f(x,y)$が$C^\infty$級関数ならば, 自由に偏微分の順序交換ができる.
+    \end{thm}
+    \end{tcolorbox}
+
+\section{微分演算子・ラプラシアン}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}[この授業だけの定義]
+$m$を正の自然数とし$a_{ij}(x,y)$を関数として
+$$
+D = \sum_{j=0}^{m} \sum_{i=0}^{m-j} a_{ij}(x,y) \left( \pdrv{^i}{x^i} \right)\left( \pdrv{^j}{y^{j}} \right)
+$$ 
+と書ける作用素を\underline{微分演算子}という.
+
+$D$は$C^{\infty}$関数$f$に対して次のように作用する.
+$$
+Df = \sum_{j=0}^{m} \sum_{i=0}^{m-j} a_{ij}(x,y) {\frac{\partial^{i+j} f}{\partial x^i \partial y^{j}}}
+$$
+    \end{dfn}
+    \end{tcolorbox}
+  %$\pdrv{}{x}, x\pdrv{}{x} , \pdrv{^2}{x^2}+\pdrv{^2}{y^2}$などは微分作用素
+    
+ \begin{exa}
+ $D_1=\pdrv{}{x}, D_2=x\pdrv{}{x}$とおく. これらは微分演算子.
+ $D_1D_2 = x\left( \pdrv{}{x^2} \right)$だが
+  $D_2D_1 =\pdrv{}{x} + x\left( \pdrv{}{x^2} \right)$である.
+  特に$D_1D_2 \neq D_2D_1$.
+ \end{exa}
+ 
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+$$
+\Delta = \pdrv{^2}{x^2} + \pdrv{^2}{y^2}
+$$
+と書ける微分演算子を\underline{ラプラシアン}という.
+    \end{dfn}
+    \end{tcolorbox}
+
+    
+ \begin{exa}
+極座標変換$(x(u,v), y(u,v))  = (u \cos v, u \sin v)$とする.
+このとき, 
+$$
+\Delta = \pdrv{^2}{x^2} + \pdrv{^2}{y^2} 
+= \pdrv{^2}{u^2} + \frac{1}{u}\pdrv{}{u}  +  \frac{1}{u^2}\pdrv{^2}{v^2} 
+$$
+ \end{exa}
+ 
+ \newpage
+ \begin{center}
+{\Large 第5回. テイラー展開 (川平先生の本, 第22章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/11/10
+\end{flushright}
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    $f$を領域$D$上の$C^2$級関数とし, $(a,b)  \in D$とする.
+    点$(a,b)$中心の半径$r>0$の円板$B \subset D$を一つとる.
+    
+    任意の$(x,y) \in B$について$(a,b)$と$(x,y) $を結ぶ線分上の点$(a',b')$があって,
+  \begin{align*}
+  \begin{split}
+  f(x,y) &= f(a,b) + \pdrv{f}{x}(a,b)(x-a) + \pdrv{f}{y}(a,b)(y-b) \\
+  &+ \frac{1}{2} \left\{  \pdrv{^2f}{x^2}(a',b')(x-a)^2 +2 \ppdrv{^2f}{x}{y}(a',b')(x-a)(y-b)+
+   \pdrv{^2f}{y^2}(a',b')(y-b) ^2    \right\}.
+    \end{split}
+  \end{align*}
+
+    \end{thm}
+    \end{tcolorbox}
+    
+    
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    $f$を領域$D$上の$C^{\infty}$級関数とし, $(a,b)  \in D$とする.
+    点$(a,b)$中心の半径$r>0$の円板$B \subset D$を一つとる.
+    
+    任意の$(x,y) \in B$について$(a,b)$と$(x,y) $を結ぶ線分上の点$(a',b')$があって,
+  \begin{align*}
+  \begin{split}
+  f(x,y) &= f(a,b) + \pdrv{f}{x}(a,b)(x-a) + \pdrv{f}{y}(a,b)(y-b) \\
+  &+ \frac{1}{2} \left\{  \pdrv{^2f}{x^2}(a,b)(x-a)^2 +2 \ppdrv{^2f}{x}{y}(a,b)(x-a)(y-b)+
+   \pdrv{^2f}{y^2}(a,b)(y-b) ^2    \right\}\\
+   &+ \cdots \\
+   &+ \frac{1}{n!}\left\{ \sum_{i=0}^{n} {}_n C_r \ppdrv{^n f}{x^i }{ y^{n-i}} (a', b') (x-a)^{i}(y-b)^{n-i}\right\}.
+    \end{split}
+  \end{align*}
+$ R_n = \frac{1}{n!}\left\{ \sum_{i=0}^{n} {}_n C_r \ppdrv{^n f}{x^i }{ y^{n-i}} (a', b') (x-a)^{i}(y-b)^{n-i}\right\}$を\underline{剰余項}という.
+
+特に剰余項について, $\lim_{n \rightarrow \infty} R_n = 0$のとき, 
+  \begin{align*}
+  \begin{split}
+  f(x,y) &= f(a,b) + \pdrv{f}{x}(a,b)(x-a) + \pdrv{f}{y}(a,b)(y-b) \\
+  &+ \frac{1}{2} \left\{  \pdrv{^2f}{x^2}(a,b)(x-a)^2 +2 \ppdrv{^2f}{x}{y}(a,b)(x-a)(y-b)+
+   \pdrv{^2f}{y^2}(a,b)(y-b) ^2    \right\}\\
+   &+ \cdots \\
+   &+ \frac{1}{n!}\left\{ \sum_{i=0}^{n} {}_n C_r \ppdrv{^n f}{x^i }{ y^{n-i}} (a, b) (x-a)^{i}(y-b)^{n-i}\right\} \\
+   &+ \cdots .
+    \end{split}
+  \end{align*}
+    \end{thm}
+    \end{tcolorbox}
+
+\begin{exa}
+$f(x,y) = e^{x+y}$とする.
+$\ppdrv{^n f}{x^i }{ y^{n-i}}(0,0) =1 $であり$\lim_{n \rightarrow \infty} R_n = 0$より
+$$
+ e^{x+y} = 1 + x+ y 
+  + \frac{1}{2} \left (x^2 + 2xy +y^2    \right)
+   + \cdots 
+   + \frac{1}{n!} \left (x +y    \right)^n
+  + \cdots .
+$$
+\end{exa}
+
+\newpage
+\begin{center}
+{\Large 第6回. 極値問題 (川平先生の本, 第23章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/11/17
+\end{flushright}
+
+\section{極値の定義}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    $f(x,y)$を領域$D$上の関数とする.
+\begin{itemize}
+\item \underline{$f(x,y)$が点$(a,b)\in D$で極大}であるとは, $(a,b)$中心の十分小さな半径の円板上で$(x,y) \neq (a,b)$ならば$f(x,y) < f(a,b)$となること.
+このときの$f(a,b)$の値を\underline{極大値}という.
+\item \underline{$f(x,y)$が点$(a,b)\in D$で極小}であるとは, $(a,b)$中心の十分小さな半径の円板上で$(x,y) \neq (a,b)$ならば$f(x,y) > f(a,b)$となること.
+このときの$f(a,b)$の値を\underline{極小値}という.
+\item  極大値, 極小値の二つ合わせて\underline{極値}という.極値をとる点$(a,b)$を\underline{極値点}という.
+\item \underline{点$(a,b)\in D$が$f(x,y)$の鞍点(あんてん, saddle point)}であるとは, ある方向で点$(a,b)$が極大となり, 違うある方向で点$(a,b)$が極小となること.
+\end{itemize}
+    \end{dfn}
+    \end{tcolorbox}
+    
+\begin{exa}
+\begin{enumerate}
+\item $f(x,y)=x^2 + y^2$. 極値点 $(0,0)$, 極値 0, 極小値.
+\item $f(x,y)=-x^2 - y^2$. 極値点 $(0,0)$, 極値 0, 極大値.
+\item $f(x,y)=x^2 -y^2$.
+$f(t,0) = t^2$より, $(t,0)$の方向で見れば$(0,0)$は極小.
+$f(0,t) = -t^2$より, $(0,t)$の方向で見れば$(0,0)$は極大.
+よって$(0,0)$は鞍点.
+\item $f(x,y)=-x^2 $. $f(0,t) =0$であるから$(0,0)$は極大ではない. 
+\end{enumerate}
+
+\end{exa}
+
+    
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    $f(x,y)$を$C^1$級関数とする.
+    $f$が$(a,b)$で極値を取るならば,
+    $$
+    \pdrv{f}{x}(a,b) = \pdrv{f}{y}(a,b) = 0.
+    $$
+
+    \end{thm}
+    \end{tcolorbox}
+\section{ヘッシアンを使った極値判定法}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    $f(x,y)$を$C^2$級関数とする.
+$$H(f) = \left(\begin{array}{cc} \pdrv{^2f}{x^2}& \ppdrv{^2 f}{x}{y}\\ 
+\ppdrv{^2 f}{y}{x}& \pdrv{^2f}{y^2}\\ \end{array} \right)$$
+を\underline{$f$のヘッセ行列}と呼び
+$$
+D_f = \det H(f) = \left(\pdrv{^2f}{x^2}\right)\left(\pdrv{^2f}{y^2}\right)-\left(\ppdrv{^2 f}{x}{y}\right)^2
+$$
+を\underline{ヘッシアン(Hessian)}と呼ぶ. (判別式とも呼ばれる).
+    \end{dfn}
+    \end{tcolorbox}
+    
+    
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    \label{kyokuchi}
+   $C^2$級関数$f(x,y)$が点$(a,b)$で$\pdrv{f}{x}(a,b) = \pdrv{f}{y}(a,b) = 0$であるとする.
+   
+   \begin{enumerate}
+   \item $D_f(a,b) >0$かつ$\pdrv{^2f}{x^2}(a,b) >0$のとき, $f$は点$(a,b)$で極小.
+   \item $D_f(a,b) >0$かつ$\pdrv{^2f}{x^2}(a,b) <0$のとき, $f$は点$(a,b)$で極大.
+   \item $D_f(a,b) <0$の時, 点$(a,b)$は$f$の鞍点.
+   \end{enumerate}
+       \end{thm}
+    \end{tcolorbox}
+
+\begin{exa}
+\begin{enumerate}
+\item $f(x,y)=x^2 + y^2$. 
+$H(f) = \left(\begin{array}{cc} 2& 0\\ 
+0& 2 \\ \end{array} \right)$.
+$D_f =4$.
+$f$は$(0,0)$で極小.
+
+\item $f(x,y)=-x^2 - y^2$.
+$H(f) = \left(\begin{array}{cc} -2& 0\\ 
+0& -2 \\ \end{array} \right)$.
+$D_f =4$.
+$f$は$(0,0)$で極大.
+
+\item $f(x,y)=x^2 -y^2$.
+$H(f) = \left(\begin{array}{cc} 2& 0\\ 
+0& -2 \\ \end{array} \right)$.
+$D_f =-4$.
+$(0,0)$は$f$の鞍点.
+
+%\item $f(x,y)=-x^2 $. $f(0,t) =0$であるから$(0,0)$は極大ではない. 
+\end{enumerate}
+
+\end{exa}
+
+\section{ヘッシアンを使った極値判定法のやり方}
+    
+    
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    
+$C^2$級関数$f$に関して極値を求める方法は以下の通りである.
+
+ \begin{description}
+ 
+\item{[手順1.]} $\pdrv{f}{x}(a,b) = \pdrv{f}{y}(a,b) = 0$となる点$(a,b)$を求める.
+
+\item{[手順2.]} $D_f(a,b)$と$\pdrv{^2f}{x^2}(a,b) $を求める.
+そして定理\ref{kyokuchi}を適応する.
+
+ \end{description}
+    \end{tcolorbox}
+    
+\begin{exa}
+$f(x,y) = x^3 -y^3 -3x +12y$について極大点・極小点を持つ点があれば, その座標と極値を求めよ. またその極値が極小値か極大値のどちらであるか示せ.
+
+(解.) 上の手順に基づいて極値を求める.
+
+[手順1.] 
+$$\pdrv{f}{x} = 3x^2 -3, \pdrv{f}{y} = -3y^2 +12$$より, 
+$\pdrv{f}{x}(a,b) = \pdrv{f}{y}(a,b) = 0$となる点$(a,b)$は
+$(1,2), (1,-2), (-1,2), (-1,-2)$.
+
+[手順2.]
+$$H(f) = \left(\begin{array}{cc} \pdrv{^2f}{x^2}& \ppdrv{^2 f}{x}{y}\\ 
+\ppdrv{^2 f}{y}{x}& \pdrv{^2f}{y^2}\\ \end{array} \right)
+=
+\left(\begin{array}{cc} 6x& 0\\ 
+0& -6y \\ \end{array} \right), D_f = -36xy.
+$$
+
+よって上の4点に対し$D_f(a,b)$と$\pdrv{^2f}{x^2}(a,b) $を計算する.
+\begin{enumerate}
+\item $D_f(1,2) = -72 <0$より定理\ref{kyokuchi}から$(1,2)$は$f$の鞍点.
+\item $D_f(1,-2) = 72 >0, \pdrv{^2f}{x^2}(1,-2) =6 >0$より定理\ref{kyokuchi}から$(1,-2)$は$f$の極小点. $f(1,-2)=-18$.
+\item $D_f(-1,2) = 72 >0, \pdrv{^2f}{x^2}(-1,2) =-6 <0$より定理\ref{kyokuchi}から$(-1,2)$は$f$の極大点. $f(-1,2)=18$.
+\item $D_f(-1,-2) = -72$より定理\ref{kyokuchi}から$(-1,-2)$は$f$の鞍点.
+\end{enumerate}
+
+以上より, $f$は$(1,-2)$で極小値$-18$をもち, $f$は$(-1,2)$で極大値$18$をもつ.
+\end{exa}
+\newpage
+
+\begin{center}
+{\Large 第7回. 陰関数定理と逆関数定理 (川平先生の本, 第24章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/11/24
+\end{flushright}
+
+\section{陰関数定理}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    $f(x,y)$を$C^1$級関数とし, 点$(a,b)$で
+    $f(a,b) =0 $かつ$\pdrv{f}{y}(a,b) \neq 0$とする.
+    
+この時$a$を含む開区間$I$と$I$上の$C^1$級関数$\phi : I \rightarrow \R$があって次の3つを満たす.
+\begin{enumerate}
+\item $b = \phi (a)$.
+\item 任意の$x \in I$について, $f(x, \phi(x))=0$.
+\item $\frac{d\phi}{dx} = \frac{-\pdrv{f}{x}(x,\phi(x)) }{\pdrv{f}{y}(x,\phi(x)) }$. 特に$\frac{d\phi}{dx}(a) = \frac{-\pdrv{f}{x}(a,b) }{\pdrv{f}{y}(a,b) }$.
+
+$f(x,\phi(x))=0$となる関数$y=\phi(x)$を\underline{$f(x,y)=0$の陰関数}という.
+\end{enumerate}
+    \end{thm}
+    \end{tcolorbox}
+
+この定理によって, 陰関数が分からなくとも$\frac{d\phi}{dx}(a)$が計算できる.
+\begin{exa}
+$f(x,y) = x^3 -3xy+y^3-1$とする.
+曲線$f(x,y)=0$の$(1,0)$での接線の方程式を求めよ.
+
+(解.) 
+$$
+\pdrv{f}{x} = 3x^2-3y, \pdrv{f}{y} = -3x+3y^2 \text{\,\,である.}
+$$
+よって$\pdrv{f}{y}(1,0) \neq 0$より, 陰関数$\phi : I \rightarrow \R$があって, 
+$$
+\phi(1) =0, f(x,\phi(x)) =0, \frac{d\phi}{dx}(1) = \frac{-\pdrv{f}{x}(1,0) }{\pdrv{f}{y}(1,0) }=1.
+$$
+よって$y=\phi(x)$の$(1,0)$での接線の方程式は
+$$
+y = \frac{d\phi}{dx}(1)(x-1)=x-1 \text{\,\,\, である.}
+$$
+\end{exa}
+   
+ \section{逆関数定理}
+ 
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    $\Phi$を領域$D$上の$C^1$級変数変換とし$D\Phi$を$\Phi$のヤコビ行列とする.
+    
+    $(a,b) \in D$で$\det(D\Phi(a,b)) \neq 0$ならば, 
+    $(a,b)$を含む小さな円板上で$\Phi$は逆変換$\Phi^{-1}$をもち
+    $D\Phi^{-1} = (D\Phi)^{-1}$となる.
+    
+
+
+    \end{thm}
+    \end{tcolorbox}
+    
+逆関数定理から陰関数定理が導かれる.    
+ \newpage 
+ 
+ %\maketitle
+\begin{center}
+{\Large 第8回. ラグランジュ未定乗数法 (川平先生の本, 第24章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/12/01
+\end{flushright}
+
+\section{ラグランジュ未定乗数法}
+ 
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    \label{lan}
+    $f(x,y)$, $g(x,y)$を領域$D$上の$C^1$級関数とする.
+    $g(x,y)=0$のもとで$f(x,y)$が点$(a,b)$で極値を持つとし, 
+    $\left(\pdrv{g}{x}(a,b),  \pdrv{g}{y}(a,b)\right) \neq (0,0)$とする.
+    
+    このとき,  ある定数$\lambda$があって
+    $$
+    \pdrv{f}{x}(a,b) = \lambda \pdrv{g}{x}(a,b), \pdrv{f}{y}(a,b) = \lambda \pdrv{g}{y}(a,b) \text{\,\,\,となる.}
+    $$
+    \end{thm}
+    \end{tcolorbox}
+    
+ 上の定理\ref{lan}から$F(x,y,t) = f(x,y)-tg(x,y)$とするとき, 
+ $g(x,y)=0$のもとでの$f(x,y)$の極値の候補は以下の2つである.
+ \begin{enumerate}
+  \item $g(a,b)=\pdrv{g}{x}(a,b)=\pdrv{g}{y}(a,b)=0$となる点$(a,b)$.
+ \item ある$\lambda$があって
+ $\pdrv{F}{x}(a,b,\lambda) = \pdrv{F}{y}(a,b,\lambda) = \pdrv{F}{t}(a,b,\lambda)=0$となる点$(a,b)$.
+ \end{enumerate}
+
+
+
+
+\section{ラグランジュ未定乗数法の使い方}  
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+
+ $g(x,y)=0$のもとで$f(x,y)$の極値を求める手順は以下の通りである.
+ 
+ \begin{description}
+
+
+ \item{[手順1.]} $g(a,b)=\pdrv{g}{x}(a,b)=\pdrv{g}{y}(a,b)=0$となる点$(a,b)$を求める.
+ 
+   \item{[手順2.]} $F(x,y,t) = f(x,y)-tg(x,y)$とおいて, 
+   $\pdrv{F}{x}(a,b,\lambda) = \pdrv{F}{y}(a,b,\lambda) = \pdrv{F}{t}(a,b,\lambda)=0$となる点$(a,b,\lambda)$を求める. %\footnote{$\lambda$の値は以後使わないので, 具体的に計算する必要はあまりない.}
+   
+ \item{[手順3.]} 手順1,手順2で求めた点$(a,b)$について, その値が極値であるかどうか調べる.
+一般的な方法はないが, 例\ref{lan_exa}のように「最大値の存在」と「最大値, 最小値であれば極値である」ことを用いる方法もある.
+ \end{description}
+
+    \end{tcolorbox}
+    
+\begin{exa}
+\label{lan_exa}
+$f(x,y) = xy, g(x,y) = x^2+y^2-1$とする.
+$g(x,y) =0$のもとでの$f(x,y)$の極値を求めよ.
+
+つまり$S = \{ (x,y) \in \R^2: g(x,y)=0\}$とするとき, $f$の$S$上での極値を求めよ.
+
+(解.)　上の手順通りに求める.
+
+ [手順1.]
+ $\pdrv{g}{x}=2x, \pdrv{g}{y}=2y$より, $g(a,b)=\pdrv{g}{x}(a,b)=\pdrv{g}{y}(a,b)=0$となる点は存在しない.
+ 
+[手順2.] $F(x,y,t) = f(x,y)-tg(x,y) = xy - t(x^2 + y^2 -1)$とおく.
+以下の方程式を解く.
+$$
+\pdrv{F}{x} = y-2xt=0,
+\pdrv{F}{y}= x-2yt=0,
+\pdrv{F}{t} =-(x^2+y^2-1)=0.
+$$
+すると$(x,y) =\pm \left(\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}}\right) , \pm \left(\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}}\right)$
+の4点が極値の候補となる.
+
+[手順3.] $S $は有界閉集合より, $f$は$S$上で連続であるため, 第1回でやった定理より, 
+$f$は$S$上で最大値・最小値を持つ.
+よって$\pm \left(\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}}\right) , \pm \left(\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}}\right)$の中に最大値をとる点や最小値をとる点がある.
+
+実際計算すると, 
+$$
+f\left(\pm \left(\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}}\right)\right)=\frac{1}{2}, 
+f\left(\pm \left(\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}}\right)\right)=-\frac{1}{2}, 
+$$
+であるため, $\pm \left(\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}}\right) $で$f$は極大値(最大値)$\frac{1}{2}$をとり, 
+$\pm \left(\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}}\right)$で$f$は極小値(最小値)$-\frac{1}{2}$をとる.
+
+\end{exa}
+
+\section{ラグランジュ未定乗数法 3変数の場合}
+
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    \label{lan}
+    $f(x,y,z)$, $g(x,y,z)$を領域$D \subset \R^3$上の$C^1$級関数とし, 
+    $F(x,y,t) = f(x,y,z)-tg(x,y,z)$とおく. 
+    $g(x,y,z)=0$のもとで$f(x,y,z)$が点$(a,b,c)$で極値を持つとし, 
+    $\left(\pdrv{g}{x}(a,b,c),  \pdrv{g}{y}(a,b,c), \pdrv{g}{z}(a,b,c)\right) \neq (0,0,0)$とする.
+    
+    このとき,  ある定数$\lambda$があって,
+    $$
+    \pdrv{F}{x}(a,b,c,\lambda) =\pdrv{F}{y}(a,b,c,\lambda) =\pdrv{F}{z}(a,b,c,\lambda) =\pdrv{F}{t}(a,b,c,\lambda) =0
+     \text{\,\,\,となる.}
+    $$
+    \end{thm}
+    \end{tcolorbox}
+    
+  \begin{exa}
+  $f(x,y,z)= xyz, g(x,y,z)=x+y+z-170$とする.
+  $g(x,y,z)=0$のもとで$f$の最大値を求めよ.
+  つまり$S= \{ (x,y,z) \in \R^3: g(x,y,z)=0\}$とするとき, $f$の$S$上での最大値を求めよ.
+  ただし$f$が$S$上で最大値を持つことは認めて良い.
+  
+  
+  (解.)　手順通りに求める.
+  
+  [手順1.]
+   $\pdrv{g}{x}=1$より$g(a,b,c)=\pdrv{g}{x}(a,b,c)=\pdrv{g}{y}(a,b,c)=\pdrv{g}{z}(a,b,c)=0$となる点$(a,b,c)$は存在しない.
+   
+[手順2.]
+    $F(x,y,t) = f(x,y,z)-tg(x,y,z) = xyz-t(x+y+z-170)$とする.
+   以下の方程式を解く.
+$$
+\pdrv{F}{x} = yz-t=0,
+\pdrv{F}{y}= xz-t =0,
+\pdrv{F}{z}=xy-t=0,
+\pdrv{F}{t} =-(x+y+z-170)=0.
+$$ 
+すると$(x,y,z) =(170,0,0), (0,170,0), (0,170,0), (\frac{170}{3},\frac{170}{3},\frac{170}{3})$
+の4点が極値の候補となる.
+
+[手順3.] 最大値が存在し, 最大値は極値であるため, 上の4点の中に最大値をとる点が存在する.
+実際計算すると, 
+$$f(170,0,0)=0, f(0,170,0)=0, f(0,170,0)=0, f\left(\frac{170}{3},\frac{170}{3},\frac{170}{3}\right)=\left(\frac{170}{3}\right)^3
+$$
+であるため, $\left(\frac{170}{3},\frac{170}{3},\frac{170}{3}\right)$で$f$は最大値$\left(\frac{170}{3}\right)^3$をとる.
+  \end{exa}
+
+
+ 
+ 
+
+\end{document}

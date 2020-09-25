@@ -1,0 +1,237 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+\begin{center}
+{\Large 第6回. 極値問題 (川平先生の本, 第23章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/11/17
+\end{flushright}
+
+\section{極値の定義}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    $f(x,y)$を領域$D$上の関数とする.
+\begin{itemize}
+\item \underline{$f(x,y)$が点$(a,b)\in D$で極大}であるとは, $(a,b)$中心の十分小さな半径の円板上で$(x,y) \neq (a,b)$ならば$f(x,y) < f(a,b)$となること.
+このときの$f(a,b)$の値を\underline{極大値}という.
+\item \underline{$f(x,y)$が点$(a,b)\in D$で極小}であるとは, $(a,b)$中心の十分小さな半径の円板上で$(x,y) \neq (a,b)$ならば$f(x,y) > f(a,b)$となること.
+このときの$f(a,b)$の値を\underline{極小値}という.
+\item  極大値, 極小値の二つ合わせて\underline{極値}という.極値をとる点$(a,b)$を\underline{極値点}という.
+\item \underline{点$(a,b)\in D$が$f(x,y)$の鞍点(あんてん, saddle point)}であるとは, ある方向で点$(a,b)$が極大となり, 違うある方向で点$(a,b)$が極小となること.
+\end{itemize}
+    \end{dfn}
+    \end{tcolorbox}
+    
+\begin{exa}
+\begin{enumerate}
+\item $f(x,y)=x^2 + y^2$. 極値点 $(0,0)$, 極値 0, 極小値.
+\item $f(x,y)=-x^2 - y^2$. 極値点 $(0,0)$, 極値 0, 極大値.
+\item $f(x,y)=x^2 -y^2$.
+$f(t,0) = t^2$より, $(t,0)$の方向で見れば$(0,0)$は極小.
+$f(0,t) = -t^2$より, $(0,t)$の方向で見れば$(0,0)$は極大.
+よって$(0,0)$は鞍点.
+\item $f(x,y)=-x^2 $. $f(0,t) =0$であるから$(0,0)$は極大ではない. 
+\end{enumerate}
+
+\end{exa}
+
+    
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    $f(x,y)$を$C^1$級関数とする.
+    $f$が$(a,b)$で極値を取るならば,
+    $$
+    \pdrv{f}{x}(a,b) = \pdrv{f}{y}(a,b) = 0.
+    $$
+
+    \end{thm}
+    \end{tcolorbox}
+\section{ヘッシアンを使った極値判定法}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    $f(x,y)$を$C^2$級関数とする.
+$$H(f) = \left(\begin{array}{cc} \pdrv{^2f}{x^2}& \ppdrv{^2 f}{x}{y}\\ 
+\ppdrv{^2 f}{y}{x}& \pdrv{^2f}{y^2}\\ \end{array} \right)$$
+を\underline{$f$のヘッセ行列}と呼び
+$$
+D_f = \det H(f) = \left(\pdrv{^2f}{x^2}\right)\left(\pdrv{^2f}{y^2}\right)-\left(\ppdrv{^2 f}{x}{y}\right)^2
+$$
+を\underline{ヘッシアン(Hessian)}と呼ぶ. (判別式とも呼ばれる).
+    \end{dfn}
+    \end{tcolorbox}
+    
+    
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    \label{kyokuchi}
+   $C^2$級関数$f(x,y)$が点$(a,b)$で$\pdrv{f}{x}(a,b) = \pdrv{f}{y}(a,b) = 0$であるとする.
+   
+   \begin{enumerate}
+   \item $D_f(a,b) >0$かつ$\pdrv{^2f}{x^2}(a,b) >0$のとき, $f$は点$(a,b)$で極小.
+   \item $D_f(a,b) >0$かつ$\pdrv{^2f}{x^2}(a,b) <0$のとき, $f$は点$(a,b)$で極大.
+   \item $D_f(a,b) <0$の時, 点$(a,b)$は$f$の鞍点.
+   \end{enumerate}
+       \end{thm}
+    \end{tcolorbox}
+
+\begin{exa}
+\begin{enumerate}
+\item $f(x,y)=x^2 + y^2$. 
+$H(f) = \left(\begin{array}{cc} 2& 0\\ 
+0& 2 \\ \end{array} \right)$.
+$D_f =4$.
+$f$は$(0,0)$で極小.
+
+\item $f(x,y)=-x^2 - y^2$.
+$H(f) = \left(\begin{array}{cc} -2& 0\\ 
+0& -2 \\ \end{array} \right)$.
+$D_f =4$.
+$f$は$(0,0)$で極大.
+
+\item $f(x,y)=x^2 -y^2$.
+$H(f) = \left(\begin{array}{cc} 2& 0\\ 
+0& -2 \\ \end{array} \right)$.
+$D_f =-4$.
+$(0,0)$は$f$の鞍点.
+
+%\item $f(x,y)=-x^2 $. $f(0,t) =0$であるから$(0,0)$は極大ではない. 
+\end{enumerate}
+
+\end{exa}
+
+\section{ヘッシアンを使った極値判定法のやり方}
+    
+    
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    
+$C^2$級関数$f$に関して極値を求める方法は以下の通りである.
+
+ \begin{description}
+ 
+\item{[手順1.]} $\pdrv{f}{x}(a,b) = \pdrv{f}{y}(a,b) = 0$となる点$(a,b)$を求める.
+
+\item{[手順2.]} $D_f(a,b)$と$\pdrv{^2f}{x^2}(a,b) $を求める.
+そして定理\ref{kyokuchi}を適応する.
+
+ \end{description}
+    \end{tcolorbox}
+    
+\begin{exa}
+$f(x,y) = x^3 -y^3 -3x +12y$について極大点・極小点を持つ点があれば, その座標と極値を求めよ. またその極値が極小値か極大値のどちらであるか示せ.
+
+(解.) 上の手順に基づいて極値を求める.
+
+[手順1.] 
+$$\pdrv{f}{x} = 3x^2 -3, \pdrv{f}{y} = -3y^2 +12$$より, 
+$\pdrv{f}{x}(a,b) = \pdrv{f}{y}(a,b) = 0$となる点$(a,b)$は
+$(1,2), (1,-2), (-1,2), (-1,-2)$.
+
+[手順2.]
+$$H(f) = \left(\begin{array}{cc} \pdrv{^2f}{x^2}& \ppdrv{^2 f}{x}{y}\\ 
+\ppdrv{^2 f}{y}{x}& \pdrv{^2f}{y^2}\\ \end{array} \right)
+=
+\left(\begin{array}{cc} 6x& 0\\ 
+0& -6y \\ \end{array} \right), D_f = -36xy.
+$$
+
+よって上の4点に対し$D_f(a,b)$と$\pdrv{^2f}{x^2}(a,b) $を計算する.
+\begin{enumerate}
+\item $D_f(1,2) = -72 <0$より定理\ref{kyokuchi}から$(1,2)$は$f$の鞍点.
+\item $D_f(1,-2) = 72 >0, \pdrv{^2f}{x^2}(1,-2) =6 >0$より定理\ref{kyokuchi}から$(1,-2)$は$f$の極小点. $f(1,-2)=-18$.
+\item $D_f(-1,2) = 72 >0, \pdrv{^2f}{x^2}(-1,2) =-6 <0$より定理\ref{kyokuchi}から$(-1,2)$は$f$の極大点. $f(-1,2)=18$.
+\item $D_f(-1,-2) = -72$より定理\ref{kyokuchi}から$(-1,-2)$は$f$の鞍点.
+\end{enumerate}
+
+以上より, $f$は$(1,-2)$で極小値$-18$をもち, $f$は$(-1,2)$で極大値$18$をもつ.
+\end{exa}
+
+
+\end{document}

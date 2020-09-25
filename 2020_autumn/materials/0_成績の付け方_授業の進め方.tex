@@ -1,0 +1,320 @@
+% [beamer を使うために] by J.Goto (Jul.14,2008+Nov.03,2011)
+%
+% 0. まず, TeXがインストールされていることが前提となります. 
+%    TeXがインストールされていない場合は, まずTeX（pLaTeXなど）をインストールして下さい。
+% 1. 次に, https://sourceforge.net/projects/latex-beamer/ から必要なファイルをダウンロード＆展開します.
+%    とりあえず, latex-beamer, pgf, xcolor（フォルダ）をダウンロードして, 
+%    適当な場所に適当なファイル解凍ソフトで展開します.
+%
+%    ## 2011年11月3日現在、上記にあるヴァージョンはやや古いようです。
+%    ## 上記のものではなく、下記のダウンロード先を参照してみてください。
+%    ## 【beamer本体】http://www.ctan.org/tex-archive/macros/latex/contrib/beamer/
+%    ## 【pgf】       http://sourceforge.net/projects/pgf/files/pgf/version%202.00/pgf-2.00.tar.gz/download
+%    ## 【xcolor】    http://www.ctan.org/tex-archive/macros/latex/contrib/xcolor/
+%
+% 2. 展開されたlatex-beamer, pgf, xcolorの3つのフォルダを適当なフォルダ(/texmf/tex/latex/)に置きます. 
+%    詳しくは http://sourceforge.net/docman/display_doc.php?docid=19464&group_id=92412 を参照して下さい.
+%    ちなみに, 僕の場合は, TeXがインストールされているフォルダを/tex/とすると, 
+%    /tex/share/texmf/tex/latex/に3つのフォルダを置きました.
+% 3. 後はTeXと同じように.texファイルを作成し, コンパイルして使います. 
+%    もちろん, クラスファイルの読み込みや, その入力ルールに従う必要があります.（以下を参考）
+%
+% -- beamerを初めて使うときは, これより下の部分を, 適当に置き換えながら使ってみましょう --
+
+\documentclass[11pt,dvipdfmx]{beamer}
+
+%%% 使用するテーマ（現在Copenhagenを指定しています。適当に変えてみよう。）%%%
+%
+\usetheme{Antibes}  
+%\usetheme{Default}       % シンプルで機能的なテーマ #何も指定しない場合は自動的にこれ
+%\usetheme{Bergen}        % フレームを縦方向に分割
+%\usetheme{Boadilla}      % より多くの情報を収容可
+%\usetheme{Madrid}        % Boadillaをよりカラフルにしたもの
+%\usetheme{Pittsburgh}    % シンプルで機能的、見出しは右寄せ
+%\usetheme{Rochester}     % 横方向のヘッダパネルが特徴     % 上部にナビゲーションバーを持つ、明瞭度の高いテーマ
+%\usetheme{JuanLesPins}   % Antibesと類似のテーマ
+%\usetheme{Montpellier}   % シンプルで色調のおとなしいもの
+%\usetheme{Berkeley}      % 横方向のヘッダパネルを持つ機能的なテーマ
+%\usetheme{PaloAlto}      % Berkeleyと類似のテーマ
+%\usetheme{Goettingen}    % サイドバーは右側で、ヘッダパネルなし
+%\usetheme{Marburg}       % Goettingenの色調を強くしたもの
+%\usetheme{Hannover}      % サイドバーは左側で見出しは右寄せ
+%\usetheme{Berlin}        % 縦方向のナビゲーションバーを上部に持つ強い色調のテーマ
+%\usetheme{Ilmenau}       % Berlinと類似のテーマ
+%\usetheme{Dresden}       % Ilmenauと類似のテーマ
+%\usetheme{Darmstadt}     % 横方向のナビゲーションバーを上部に持つ
+%\usetheme{Frankfurt}     % Darmstadtと類似、しかしサブセクション情報は含まない
+%\usetheme{Singapore}     % ソフトな色調を持ったテーマ
+%\usetheme{Szeged}        % Singaporeと類似、しかし境界線は明確
+%\usetheme{Copenhagen}    % セクション/サブセクションテーブルを上部に配置
+%\usetheme{Luebeck}       % Copenhagenから丸みを取ったもの
+%\usetheme{Malmoe}        % Copenhagenをより質素にしたもの
+\usetheme{Warsaw}        % Copenhagenと類似のテーマ
+
+%%% 数式のフォント（TeXっぽいフォントになる）%%%
+%
+\usefonttheme{professionalfonts}
+
+
+%%% 隠蔽されている要素の透明度の設定 %%%
+%
+%\setbeamercovered{transparent=10}
+
+%%% その他のクラス・パッケージの導入 %%%
+
+\usepackage{graphicx}  % includegraphicsコマンドなどで図を表示するためのクラス
+\usepackage{amsmath}   % プロ仕様の数学用のフォントI（AMSはアメリカ数学会）
+\usepackage{amssymb}   % プロ仕様の数学用のフォントII（AMSはアメリカ数学会）
+\usepackage{bm}        % 太字を表現するのに便利なクラス
+\usepackage[absolute,overlay]{textpos}
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{float}
+\usepackage{graphicx}
+%% ゴシック体にする
+%\renewcommand{\kanjifamilydefault}{gt}
+
+% フォントはお好みで
+%\usepackage{txfonts}
+%\mathversion{bold}                             %%% 数式を太字にする
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\kanjifamilydefault}{\gtdefault} %%% 日本語フォントを太字にする
+%\setbeamerfont{title}{size=\large,series=\bfseries}
+%\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+%\setbeamertemplate{frametitle}[default][center]
+%\usefonttheme{professionalfonts} 
+%
+\newtheorem{proposition}{命題}
+\newtheorem{assumption}{仮定}
+\newtheorem{cor}{系}
+\newtheorem{remark}{Remark}
+\newtheorem{exercise}{Exercise}
+
+\newtheorem{thm}{Theorem}[section] 
+\newtheorem{theo}[thm]{Theorem}
+\newtheorem{corr}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem*{mainthm}{Theorem}
+\newtheorem{deflem}[thm]{Definition-Lemma}
+\newtheorem{lem}[thm]{Lemma}
+\theoremstyle{definition} 
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{propdefn}[thm]{Proposition-Definition} 
+\newtheorem{lemdefn}[thm]{Lemma-Definition} 
+\newtheorem{thmdefn}[thm]{Theorem-Definition} 
+\newtheorem{eg}[thm]{Example} 
+\newtheorem{ex}[thm]{Example} 
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{obs}[thm]{Observation}
+\newtheorem{ques}[thm]{Question}
+%\newtheorem{problem}[thm]{Problem}
+\newtheorem{setup}[thm]{Set up}
+\newtheorem{notation}[thm]{Notation}
+\newtheorem{cl}{Claim}
+\newtheorem{claim}{Claim}
+\newtheorem{step}{Step}
+\newtheorem*{clproof}{Proof of Claim}
+\newtheorem{cln}[thm]{Claim}
+\newtheorem*{ack}{Acknowledgements} 
+
+
+
+%% 自分で定義したマクロ
+\newcommand{\Sym}{{\rm Sym}}
+
+\newcommand{\Sigmat}{\mbox{\boldmath\ensuremath{\Sigma}}}
+\newcommand{\evec}{\mbox{\boldmath\ensuremath{e}}}
+\newcommand{\ovec}{\mbox{\boldmath\ensuremath{0}}}
+\newcommand{\xvec}{\mbox{\boldmath\ensuremath{x}}}
+\newcommand{\R}{{\rm I\!R}}
+\newcommand{\e}{{\rm e}}
+\newcommand{\dr}{{\rm d}}
+\newcommand{\E}{{\mathbb E}}
+\newcommand{\p}{{\mathbb P}}
+\newcommand{\V}{{\mathbb V}}
+
+
+\title[大阪市立大学 2020年度後期 全学共通科目 解析II TI機・情33-]{大阪市立大学 2020年度後期 全学共通科目 \\ 解析II TI機・情33-}
+\subtitle{授業の進め方・成績の付け方について}
+\author[岩井雅崇]{岩井雅崇}
+%% 所属の登録 \institute[所属の略称]{所属}
+\institute[大阪市立大学数学研究所]{大阪市立大学数学研究所}
+%% 日付
+\date{2020年10月6日}  %% <- \today 命令は今日の日付を表示. 任意の日付を入れれば良い:（例）\date{2008年7月14日}
+
+%%% 以下が本体 %%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% タイトルページ出力 %%
+
+\begin{frame}  %% <- \begin{frame} から \end{frame}までが1つの頁になると思って下さい.
+ \titlepage    %% <- このコマンドで自動的に表紙のページが作成されます.
+\end{frame}
+
+% [remark]
+% \begin{frame} *** \end{frame} の代わりに
+% \frame { *** } としても同じです（次のページの書き方を参考にして下さい）.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 目次ページ
+
+%%\begin{frame}  %% <- この書き方でもOK.
+%% \tableofcontents   %% <- このコマンド1つで自動的に目次のページが作成されます.
+%%\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{ }
+\begin{frame}
+\frametitle{この授業について}
+ \begin{itemize}
+
+
+ \item この授業は"2020年度後期 全学共通科目 解析II TI機・情33-"です.
+ \item 担当教官は岩井雅崇(いわいまさたか)です.
+ \item この授業でやることは"多変数関数の微積分"です.
+ 
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{なぜ微積分や線形代数を学ぶのか?}
+   \begin{alertblock}{}
+  \begin{center}
+応用がいっぱいある.
+  \end{center}
+ \end{alertblock}
+ 
+  \begin{itemize}
+  \item 多変数の微積分や線型代数とか使って, 多くの理論ができている.
+  \item  何らかのシミュレーションするとき, 偏微分方程式を使うから, 微積分の知識が必要.
+  \item (最近の流行の) 機械学習, 深層学習, 人工知能, AI (etc...)は微積分と行列が多く出てくる.
+  {\tiny (Pythonのnumpyとか行列の記法だし...)}
+ 
+  \end{itemize}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{授業のシラバス}
+
+\begin{textblock*}{0.4\linewidth}(20pt, 40pt)
+    \centering
+    \includegraphics[height=50mm, width=110mm]{pic.jpg}
+\end{textblock*}
+ \vspace{50mm}
+  \begin{alertblock}{}
+  \begin{center}
+ 多い!  \\
+ (私が作った予定ではないので多少の変更の可能性あり)
+  \end{center}
+ \end{alertblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{成績の付け方}
+ \begin{itemize}
+ \item 中間レポートと期末レポートのみで評価する. 
+ \item 合計6問(小問あり). %計120点満点. (ただし1問２０点ではない)
+% \item %単位が欲しいだけの人も, 
+ 全6問を解くことをお勧めします. %(かなり減点があると思うので...)
+ \item (奨学金などの申請で)より良い成績がほしい方は, 上の6問に加えて, レポートにある"おまけ問題"を解くこと. \\
+ 単位が欲しいだけの人は"おまけ問題"を解かなくて良い. \\
+% \item 単位が欲しいだけの人は"おまけ問題"を解かなくて良い. 6問は絶対に解くこと! \\
+ {\tiny 例えばレポートで79点(良)とった人がおまけ問題を正答してた場合, 成績には80点(優)つける考慮をします.
+ レポートで59点(不可)とった人がおまけ問題を正答してても, 成績が60点(可)になることはない. }
+{\tiny  おまけ問題を解かなくても90点以上の成績をつけることもあります.}
+ \end{itemize}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{レポートの６問(予定)}
+ \begin{enumerate}
+ \item 多変数関数の微分・偏微分と全微分(第2回)
+ %\item 連鎖律・ヤコビ行列(第3・4回)
+ \item 連鎖律(第3回)
+ \item 極値問題(第6回)
+ \item ラグランジュ乗数法(第8回)
+ \item 累次積分・重積分, 変数変換公式(第10・11回)
+ \item 広義積分(第12回)
+ \end{enumerate}
+ 
+ おまけ問題は「多変数の連続写像(第1回)」「線積分と面積分, ガウス・グリーン・ストークスの定理(第13・14回)」の予定
+ 
+   \begin{alertblock}{}
+  \begin{center}
+予定なので変更の可能性もあります!
+  \end{center}
+ \end{alertblock}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{授業の進め方・みなさんの学び方}
+この授業は基本(資料配布)・発展(動画視聴)で行います.
+
+%{\tiny (私の家のwifiが微弱でして.....)}
+
+ \begin{alertblock}{}
+  \begin{center}
+学び方は皆さんにお任せします.
+  \end{center}
+ \end{alertblock}
+ 例えば以下の方法など挙げられます.
+  \begin{itemize}
+  \item 私が作った動画を見て, 私の資料や川平先生の本で復習する.  \\
+  (基本的に川平先生の本通りに進みます.)
+  \item 川平先生の本を読んで, 私の資料で復習する.
+  \item 川平先生の本オンリーで勉強する.
+  \item その他, 自己流で勉強する.
+  
+  {\tiny (ヨビノリたくみとか川平先生など"解析学"と検索すればYouTubeにいっぱい授業動画があると思います. 解析2の内容の解説記事はネットにはいっぱいあります. あとはクラスメイト同士で勉強し合うとか.)}
+  \end{itemize}
+
+  \begin{alertblock}{}
+  \begin{center}
+最終的にレポートで出す問題6問を\\ 解けるぐらい理解をすればOKです.
+  \end{center}
+ \end{alertblock}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{最後に(お詫びも含め)}
+ \begin{itemize}
+ \item レポートのみで成績をつけることをお許しください.
+ {\tiny (本当ならば試験一本勝負で理解度を測るのが良いのですが, 試験をすることが困難であるためこうせざるを得ないのです...)}
+ \item みなさんの負担が増えないよう努力しますが, ただ何も学んでないのに単位をあげることもできないのでこういう形にしました.
+  {\tiny (一部ネットではレポートだけ出す教官がいて良くないと言う意見もあったのですが...一応資料作りと動画作りでまあまあ時間がかかっているので許してください...)}
+ 
+ \item  各レポート提出1週間前に質疑応答の場を設けたいと思います. 時間は火曜2限の時間(10時50分-12時30分). 詳しい日や方法はレポートやWebClassでお知らせします.
+ 
+\item 他にもWebClassの質疑応答で対応いたします. 上以外の口頭質問に関しては, メールしてくれれば対応いたします.
+
+  \begin{alertblock}{}
+  \begin{center}
+皆様, 本当に大変だと思います. \\
+無理のないように自分のペースで理解をしていってください.
+  \end{center}
+ \end{alertblock}
+
+
+ \end{itemize}
+
+\end{frame}
+
+\end{document}

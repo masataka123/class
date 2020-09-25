@@ -1,0 +1,261 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+\begin{center}
+{\Large 第1回. 多変数の連続写像 (川平先生の本, 第16章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/10/06
+\end{flushright}
+
+
+
+\section{いくつかの準備}
+以下の用語に関して興味のない人は読み飛ばして良い.
+
+\begin{enumerate}
+\item $xy$平面上の点$(a,b)$と正の数$r>0$について, 点$(a,b)$中心の半径$r$の(閉)円板を
+$$
+B_{(a,b)}(r) = \{ (x,y) \in \R^2 : \sqrt{(x-a)^2 + (y-b)^2} \leqq r  \}
+\text{\,\, とする.} 
+$$
+
+\item $a<b$かつ$c<d$について, 
+$$
+[a,b] \times [c,d] = \{ (x,y) \in \R^2 : a \leqq x \leqq b \text{かつ}  c \leqq y \leqq d \}
+\text{\,\, とする.} 
+$$
+\end{enumerate}
+以下$E \subset \R^2$を集合とする.
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item $(a,b) \in E$が$E$の\underline{内点}とは, ある正の数$r>0$があって$B_{(a,b)}(r) \subset E$となること.
+%\item $(a,b) \in E$が$E$の\underline{境界点}とは, 任意の$r>0$について$B_{(a,b)}(r) \cap E \neq \phi$かつ$B_{(a,b)}(r) \cap (\R^2 \setminus E) \neq \phi$となること.
+\item $E$が\underline{開集合}とは, 任意の(全ての)$(a,b) \in E$について$(a,b)$は$E$の内点となること.
+\item $E$が\underline{閉集合}とは, $\R^2 \setminus E$\footnote{$\R^2 \setminus E = \{ (x,y) \in \R^2 : (x,y) \not \in E\} $と定義する.}
+が開集合であること.
+\item $E$が\underline{有界}とは, ある正の数$M>0$があって, $ E \subset [-M,M] \times [-M,M]$となること.
+\item $E$が\underline{連結}とは, $E$の任意の2点が$E$内の折れ線で結べること.
+\item $E$が\underline{領域}とは, $E$が連結な開集合であること.
+\end{enumerate}
+
+\begin{exa}
+%\text{}
+
+\begin{itemize}
+\item $\{ (x,y) \in \R^2 : \sqrt{x^2 + y^2} < 1  \}$は開集合, 有界, 連結, 領域. でも閉集合ではない.
+\item $\{ (x,y) \in \R^2 : \sqrt{x^2 + y^2} \leqq 1 \}$は閉集合, 有界, 連結. でも開集合ではない.
+\item $\R^2$は開集合, 閉集合, 連結, 領域. でも有界ではない.
+\end{itemize}
+\end{exa}
+
+\begin{enumerate}
+\setcounter{enumi}{8}
+\item 関数$f(x,y)$の値が定まる集合を$f$の\underline{定義域}といい, 
+$$\{ k \in \R : f(x,y) = k \text{となる$(x,y)$が定義域内に存在}\}$$
+を$f$の\underline{値域}という.
+\item \underline{$f$が領域$E$上の関数}とは, $E$が$f$の定義域に含まれることである.
+このとき
+$$
+\begin{array}{ccccc}
+f: &E & \rightarrow & \R & \text{とかく.}\\
+&(x,y) & \longmapsto & f(x,y)&
+\end{array}
+$$
+\end{enumerate}
+
+\begin{exa}
+$f(x,y) = \sqrt{1-x^2-y^2}$の定義域は$\{ (x,y) \in \R^2 : \sqrt{x^2 + y^2} \leqq 1  \}$. 値域は$[0,1]$.
+
+\end{exa}
+
+\section{極限と連続性}
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    \underline{$(x,y)$が$(a,b)$に限りなく近づく}とは$(x,y) \neq (a,b)$かつ
+    $$ \sqrt{(x-a)^2 + (y-b)^2} \rightarrow 0$$
+    となるように変化すること.
+    以後, $(x,y) \rightarrow (a,b)$とかく.
+    \end{dfn}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    $f(x,y)$を領域$D$上の関数とする.
+    \underline{$f(x,y)$が$(x,y) \rightarrow (a,b)$のとき実数$A$に収束する}とは
+    $(x,y)$が$(a,b)$に近づくとき, $f(x,y)$が$A$に限りなく近づくことである.
+    このとき
+    $$ \lim_{(x,y) \rightarrow (a,b)} f(x,y) =A \text{\,\,　または\,\,\,}
+    f(x,y) \rightarrow A  \text{\,\,}((x,y) \rightarrow (a,b)) \text{\,\,　とかく.\,\,}
+    $$ 
+   
+  
+    \end{dfn}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    $f(x,y)$を領域$D$上の関数とする.
+    \underline{$f$が$(a,b)\in D$で連続}とは
+    $$ \lim_{(x,y) \rightarrow (a,b)} f(x,y) =f(a,b) \text{\,\,　となること.\,\,}$$
+    \underline{$f$が$D$上で連続}とは$f$が任意の点$(a,b)\in D$で連続となること.
+    \end{dfn}
+\end{tcolorbox}
+
+\begin{exa}
+\label{conti}
+\begin{itemize}
+\item $ f(x,y) = x+y$, $f(x,y) = e^{x+y^2}$. これらは$\R^2$上の連続関数. (みんながよく知っている関数は連続関数.)
+\item $f(x,y) = \frac{1}{x^2 + y^2}$は定理\ref{continess}より$\R^2 \setminus \{ (0,0)\}$上の連続関数. 
+\item $\R^2$上の関数$f(x,y)$を次で定義する.
+$$
+  f(x,y)= \begin{cases}
+     \frac{x^2-y^2}{x^2+y^2}& ((x,y) \neq (0,0)) \\
+    1& ((x,y) = (0,0)) 
+  \end{cases}
+  $$
+% 定理\ref{continess}%より, $f$は$\R^2 \setminus \{ (0,0)\}$上の連続関数.
+  
+$f$は$(0,0)$で連続ではない.
+
+なぜなら$(0,y) \rightarrow (0,0)$という近づけ方をすると, $f(0,y) = -1 \rightarrow -1 $
+%\text{\,\,}((0,y) \rightarrow (0,0))$
+であるため, \\
+$ \lim_{(0,y) \rightarrow (0,0)} f(0,y) \neq f(0,0)$より連続ではない.
+
+\end{itemize}
+\end{exa}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+     $\lim_{(x,y) \rightarrow (a,b)} f(x,y) =A$, $ \lim_{(x,y) \rightarrow (a,b)} g(x,y) =B$とする. このとき以下が成り立つ.
+     
+ $$  \lim_{(x,y) \rightarrow (a,b)} \left\{ f(x,y) + g(x,y)\right\} =A+B.$$
+  $$  \lim_{(x,y) \rightarrow (a,b)} f(x,y) g(x,y) =AB.$$.
+   $$\text{$B \neq 0$のとき, }  \lim_{(x,y) \rightarrow (a,b)} \frac{f(x,y) }{ g(x,y)} =\frac{A}{B}.$$
+    \end{thm}
+\end{tcolorbox}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    \label{continess}
+    関数$f,g$が点$(a,b)$で連続であるとする. このとき以下が成り立つ.
+    \begin{itemize}
+    \item $f(x,y) + g(x,y)$や$f(x,y)g(x,y)$は$(a,b)$で連続.
+    \item $g(a,b) \neq 0$のとき, $\frac{f(x,y) }{ g(x,y)} $は$(a,b)$で連続.
+    \end{itemize}
+
+    \end{thm}
+\end{tcolorbox}
+
+
+
+\section{最大最小の存在}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    有界な閉集合$D$上で連続な関数$f$は最大値・最小値を持つ.
+    \end{thm}
+\end{tcolorbox}
+
+\begin{exa}
+$D = \{ (x,y) \in \R^2 : \sqrt{x^2 + y^2} \leqq 1  \}$とすると$D$は有界閉集合.
+$f(x,y) =x$とすると$f$は連続. 
+実際, $D$上で$f$は最大値 1, 最小値 -1を持つ.
+\end{exa}
+
+
+%$\pdrv{f}{x}$
+
+\end{document}
