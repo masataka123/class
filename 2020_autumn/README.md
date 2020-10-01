@@ -1,6 +1,7 @@
 # 大阪市立大学 R2年度(2020年度)後期 全学共通科目 解析Ⅱ *TⅠ機･情33～ の授業のホームページ
 
 # News
+- 2020/10/01 プリント資料(第3回と第8回)とこのホームページの微修正をしました.
 - 2020/09/25 授業内容をアップしました. 動画サイズがあまりにも大きいため, "WebClassで教材の配布はしない"ことにしました. 
 - 2020/09/11 授業ページを作りました.
 
@@ -15,7 +16,8 @@
 
 # 授業内容
 
-0. 成績の付け方, 授業の進め方 [第0回動画](https://www.youtube.com/watch?v=P_AeifrLu3M&t=21s) [第0回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_成績の付け方_授業の進め方.pdf)
+
+第0回. 成績の付け方, 授業の進め方 [第0回動画](https://www.youtube.com/watch?v=P_AeifrLu3M&t=21s) [第0回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_成績の付け方_授業の進め方.pdf)
 [授業に関する情報と履修方法の資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_授業に関する情報と履修方法ver2.pdf)
 
 1. 多変数の連続写像 [第1回動画](https://www.youtube.com/watch?v=vMxVvZJghqY) [第1回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/1_多変数の連続写像.pdf) [第1回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/1_第一回講義の授業ノート.pdf)
@@ -49,6 +51,8 @@
 - 動画を見る際はスピーカーで聴くことをお勧めします.(イヤホンで聴くと時々びっくりすることがあります.)
 
 - 動画の授業はかなり早いペースで進むので, 状況に応じて一時停止等を使うことをお勧めします.
+
+- 動画の概要欄に訂正やリンクなどを貼っていきます.
 
 - 動画, 資料の著作権は岩井雅崇にあります.
 
