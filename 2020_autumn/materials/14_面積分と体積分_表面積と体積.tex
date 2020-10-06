@@ -1,0 +1,382 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\Area}{\text{Area}}
+\newcommand{\vol}{\text{Vol}}
+
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+\begin{center}
+{\Large 第14回. 面積分と体積分, 表面積と体積 \\ (川平先生の本, 第11・28章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2021/01/26
+\end{flushright}
+
+\section{はじめに}
+第13回と第14回はベクトル解析の初歩(イントロ)に関する授業を行う.
+授業準備のために, 以下の文献も参考した.
+\begin{itemize}
+\item 川平友規先生 解析学概論第三第四(ベクトル解析) available at \url{http://www.math.titech.ac.jp/~kawahira/courses/17W-kaiseki.html}
+\end{itemize}
+時々この文献を引用する.(引用する際は"川平先生のpdf"と呼ぶことにする.)
+
+
+\section{曲線の長さ(復習)}
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+$\R^2$内の滑らかな曲線$C: \vec{p}(t) = (x(t), y(t)) (a \leqq t \leqq b)$について. 曲線$C$の長さ$l(C)$を
+$$
+l(C) = \int_{a}^{b} \sqrt{\left( \drv{x}{t}\right)^2 + \left( \drv{y}{t}\right)^2}
+=\int_{a}^{b} \left|\left| \drv{\vec{p}(t)}{t}\right|\right|dt
+\text{と定義する.}
+$$
+ \end{dfn}
+ \end{tcolorbox}
+\section{面積分}
+
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+$\vec{a}=(a_1,a_2,a_3), \vec{b}=(b_1,b_2,b_3) \in \R^3$とする.
+\begin{itemize}
+\item \underline{ベクトル$\vec{a}$の長さ$||\vec{a}||$}を$||\vec{a}||=\sqrt{a_{1}^{2} + a_{2}^{2}+a_{3}^{2}}$とする.
+\item \underline{外積$\vec{a} \times \vec{b}$}を
+$$
+\vec{a} \times \vec{b} = (a_2b_3-a_3b_2, a_3b_1-a_1b_3, a_1b_2-a_2b_1) \text{\,\,とする.}
+$$
+\end{itemize}
+
+ \end{dfn}
+ \end{tcolorbox}
+ 
+  \begin{exa}
+ $\vec{a}=(1,0,0), \vec{b}=(1,2,0) \in \R^3$とする.
+ 
+$||\vec{a}||=\sqrt{1^{2} + 0^{2}+0^{2}}=1$かつ, $||\vec{b}||=\sqrt{1^{2} + 2^{2}+0^{2}}=\sqrt{5}$である.
+
+また, $\vec{a} \times \vec{b}=(0,0,2)$かつ, $\vec{b} \times \vec{a}=(0,0,-2)$である.
+ \end{exa}
+ 
+  \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}[川平先生のpdf 6章(プリント06)参照]
+    \text{}
+    
+\begin{itemize}
+\item \underline{$\Omega \subset \R^2$が閉領域}とは, ある領域$D$があって, $\Omega = D \cup \partial D$となること. (つまり$\Omega$が$D$と$D$の境界の和集合となること.)
+\item $\Omega \subset \R^2$を閉領域とし, $x(s,t), y(s,t),z(s,t)$を$\Omega $上の連続関数とする.
+
+ $$
+\begin{array}{ccccc}
+\vec{p}: &\Omega & \rightarrow & \R^3 & \\
+&(s,t) & \longmapsto & ( x(s,t), y(s,t),z(s,t) )&
+\end{array}
+$$
+という関数$\vec{p}(s,t)$を考える.
+$$
+S =\{\vec{p}(s,t) : (s,t) \in \Omega \}=\{(x(s,t), y(s,t),z(s,t) ) : (s,t) \in \Omega \}
+$$
+を$\R^3$内の曲面という.
+\item $\R^3$内の曲面$S: \vec{p}(s,t) ((s,t) \in \Omega)$について, \underline{$S$が$\R^3$内の滑らかな曲面}であるとは, 次の二つの条件を満たすこと.
+\begin{enumerate}
+\item[条件1.] $x(s,t), y(s,t),z(s,t)$は$C^1$級.
+\item[条件2.] $\pdrv{\vec{p}}{s} = \left( \pdrv{x}{s}, \pdrv{y}{s},\pdrv{z}{s} \right)$と
+$\pdrv{\vec{p}}{t} = \left( \pdrv{x}{t}, \pdrv{y}{t},\pdrv{z}{t} \right)$が一次独立となる.
+(つまり$\pdrv{\vec{p}}{s} \times \pdrv{\vec{p}}{t} \neq \vec{0}$となること.)
+\end{enumerate}
+\item $\R^3$内の滑らかな曲面$S: \vec{p}(s,t) ((s,t) \in \Omega)$について
+$$\vec{n} = \frac{ \pdrv{\vec{p}}{s} \times \pdrv{\vec{p}}{t}}{  \left|\left|  \pdrv{\vec{p}}{s} \times \pdrv{\vec{p}}{t} \right|\right|} \text{を\underline{単位法線ベクトル}という.}$$
+\end{itemize}
+
+
+ \end{dfn}
+ \end{tcolorbox}
+ 
+ \begin{exa}
+ \label{sphere}
+ $\Omega = \{ (s,t) \in \R^2 : \sqrt{s^2+t^2} \leqq 1\}$とする.これは閉領域である.\footnote{$D= \{ (s,t) \in \R^2 : \sqrt{s^2+t^2} < 1\}$とすれば$\Omega = D \cup \partial D$となる.}
+ 
+  $$
+\begin{array}{ccccc}
+\vec{p}: &\Omega & \rightarrow & \R^3 & \\
+&(s,t) & \longmapsto & ( s, t, \sqrt{1-s^2-t^2} )&
+\end{array}
+\text{とすると, }
+$$
+$$
+S=\{\vec{p}(s,t) : (s,t) \in \Omega \}=\{ (x,y,z) : 0 \leqq z, x^2+y^2+z^2=1 \}.
+$$
+つまり$S$は原点中心半径1の球の上半分の表面である.
+
+また$\pdrv{\vec{p}}{s},\pdrv{\vec{p}}{t}$を計算すると, 
+$$
+\pdrv{\vec{p}}{s} = \left( 1, 0, \frac{-s}{\sqrt{1-s^2-t^2}}\right), \text{\,\,}
+\pdrv{\vec{p}}{t} = \left( 0, 1,\frac{-t}{\sqrt{1-s^2-t^2}} \right) \text{であるため, }
+$$
+$$
+\pdrv{\vec{p}}{s} \times \pdrv{\vec{p}}{t} 
+=\left( \frac{s}{\sqrt{1-s^2-t^2}}, \frac{t}{\sqrt{1-s^2-t^2}}, 1\right).
+$$
+よって $\Omega$上で$\pdrv{\vec{p}}{s} \times \pdrv{\vec{p}}{t}  \neq \vec{0}$より$S$は滑らかな曲面である.
+
+$$
+ \left|\left|  \pdrv{\vec{p}}{s} \times \pdrv{\vec{p}}{t} \right|\right|
+ =
+ \sqrt{\frac{s^2}{1-s^2-t^2}    +    \frac{t^2}{1-s^2-t^2}   +1    }
+ =
+ \frac{1}{\sqrt{1-s^2-t^2}}  \text{\,\,であるため, }
+ $$
+ $$
+\text{単位法線ベクトルは \,\,} \vec{n} = \frac{ \pdrv{\vec{p}}{s} \times \pdrv{\vec{p}}{t}}{  \left|\left|  \pdrv{\vec{p}}{s} \times \pdrv{\vec{p}}{t} \right|\right|}
+ =
+ (s,t,\sqrt{1-s^2-t^2})\text{\,\,となる.}
+ $$
+ \end{exa}
+
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}[川平先生のpdf 6章(プリント06)参照]
+    \text{}
+    
+$\R^3$内の滑らかな曲面$S: \vec{p}(s,t)=(x(s,t), y(s,t),z(s,t) ) ((s,t) \in \Omega)$とし, $F(x,y,z)$を$S$を含む開集合上で定義された$C^1$級関数とする.
+\underline{関数$F$の曲面$S$上での面積分}を
+\begin{align*}
+\begin{split}
+\iint_{S}F(\vec{p}) dA
+&=\iint_{\Omega}F(\vec{p}(s,t))\left|\left|  \pdrv{\vec{p}}{s} \times \pdrv{\vec{p}}{t} \right|\right|dsdt \\
+&=\iint_{\Omega}F(x(s,t), y(s,t),z(s,t))\left|\left|  \pdrv{\vec{p}}{s} \times \pdrv{\vec{p}}{t} \right|\right|dsdt \text{と定義する.}
+\end{split}
+\end{align*}
+特に\underline{$S$の表面積$\Area(S)$}を
+$$
+\Area(S)=\iint_{S}1 dA=\iint_{\Omega}\left|\left|  \pdrv{\vec{p}}{s} \times \pdrv{\vec{p}}{t} \right|\right|dsdt \text{と定義する.}
+$$
+ \end{dfn}
+ \end{tcolorbox}
+
+ \begin{exa}
+ $S=\{\vec{p}(s,t) : (s,t) \in \Omega \}=\{ (x,y,z) : 0 \leqq z, x^2+y^2+z^2=1 \}$とするとき, $S$の表面積$\Area(S)=\iint_{S}dA$を求めよ.
+ 
+ \hspace{-11pt}(解.)
+ 例\ref{sphere}から, $\Omega = \{ (s,t) \in \R^2 : \sqrt{s^2+t^2} \leqq 1\}$, $\vec{p}(s,t)=( s, t, \sqrt{1-s^2-t^2} )$とすると, 
+$S=\{\vec{p}(s,t) : (s,t) \in \Omega \}$かつ
+$ \left|\left|  \pdrv{\vec{p}}{s} \times \pdrv{\vec{p}}{t} \right|\right| = \frac{1}{\sqrt{1-s^2-t^2}}$である.
+
+以上より, 
+$$
+\iint_{S}dA
+=\iint_{\Omega}\left|\left|  \pdrv{\vec{p}}{s} \times \pdrv{\vec{p}}{t} \right|\right|dsdt
+= \iint_{\Omega}\frac{1}{\sqrt{1-s^2-t^2}}dsdt
+=\int_{0}^{2\pi} \int_{0}^{1} \frac{r}{\sqrt{1-r^2}} drd \theta
+= 2\pi.
+$$
+よって, $S$(原点中心の半径1の球の表面の上半分)の表面積は $2\pi$である.
+
+
+これにより原点中心の半径1の球の表面積は$2\pi \times 2 = 4\pi$である.
+
+より一般に原点中心の半径$r>0$の球の表面積は$4\pi r^2$である.\footnote{厳密にやるなら$\Omega = \{ (s,t) \in \R^2 : \sqrt{s^2+t^2} \leqq r\}, \vec{p}(s,t)=( s, t, \sqrt{r^2-s^2-t^2} )$として同じ計算をする.}
+ \end{exa}
+ 
+  \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+$\Omega \subset \R^2$を閉領域とし, $f(s,t)$を$\Omega$上の非負の$C^1$級関数とする. \\
+このとき
+$S=\{ (s,t,f(s,t)) : (s,t) \in \Omega \}$
+は滑らかな曲面となり, 曲面積$\Area(S)$は
+$$
+\Area(S) = \iint_{\Omega}\left( \sqrt{ \left( \pdrv{f}{s} \right)^2 + \left( \pdrv{f}{t} \right)^2+1 } \right)dsdt \text{\,\,で与えられる.}
+$$
+ \end{thm}
+ \end{tcolorbox}
+ 
+ \section{体積分}
+  \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}[川平先生のpdf 11章(プリント11)参照]
+    \text{}
+    \begin{itemize}
+    \item $\Omega \subset \R^2$が閉領域とし, $\phi_1, \phi_2$を$\phi_1(x,y) \leqq \phi_2(x,y)$となる$\Omega$上の連続関数とする.
+    $$
+    K=\{ (x,y,z) \in \R^3: (x,y) \in \Omega, \phi_1(x,y) \leqq z \leqq \phi_2(x,y) \}
+    $$
+    となる有界閉集合$K$を\underline{$z$方向の線領域}という.
+    \item $K$を$z$方向の線領域とし, $F(x,y,z)$を$K$を含むある開集合上で定義された$C^1$級関数とする.
+    \underline{$F(x,y,z)$の$K$上での体積分}を
+    $$
+    \iiint_{K}F(x,y,z)dxdydz = \iint_{\Omega} \left( \int_{\phi_1(x,y)}^{\phi_2(x,y)} F(x,y,z) dz \right)dxdy \text{\,\,と定義する.}
+    $$
+    
+    特に\underline{$K$の体積$\vol(K)$}を
+    $$
+    \vol(K) = \iiint_{K}1dxdydz 
+    =\iint_{\Omega} \left\{ \phi_2(x,y)-\phi_1(x,y) \right\}dxdy \text{と定義する.}
+    $$
+    \end{itemize}
+     \end{dfn}
+ \end{tcolorbox}
+ 
+ \begin{exa}
+$K = \{(x,y,z) \in \R^3 : 0 \leqq z, x^2+y^2+z^2 \leqq 1\}$とする.
+$K$の体積$\vol(K)=\iiint_{K}1dxdydz $を求めよ.
+
+\hspace{-11pt}(解.)
+$\Omega= \{ (x,y) \in \R^2 : \sqrt{x^2+y^2} \leqq 1\}$とし, $\phi_1(x,y)=0, \phi_2(x,y)=\sqrt{1-x^2-y^2}$とすると, 
+$K=\{ (x,y,z) \in \R^3: (x,y) \in \Omega, \phi_1(x,y) \leqq z \leqq \phi_2(x,y) \}$
+となる.
+よって, 
+$$
+\iiint_{K}1dxdydz 
+=\iint_{\Omega} \sqrt{1-x^2-y^2}dxdy 
+=\int_{0}^{2\pi} \int_{0}^{1}\left(\sqrt{1-r^2} \right)rdrd \theta
+=\frac{2\pi}{3}
+.$$
+よって, $K$(原点中心の半径1の球の上半分)の体積は $\frac{2\pi}{3}$である.
+
+これにより原点中心の半径1の球の体積は$\frac{2\pi}{3} \times 2 = \frac{4\pi}{3}$である.
+
+より一般に原点中心の半径$r>0$の球の表面積は$\frac{4\pi r^3}{3}$である.\footnote{厳密にやるなら$\Omega = \{ (s,t) \in \R^2 : \sqrt{s^2+t^2} \leqq r\}$, $\phi_1(x,y)=-\sqrt{r^2-x^2-y^2}$, $\phi_2(x,y)=\sqrt{r^2-x^2-y^2}$として同じ計算をする.}
+
+ \end{exa}
+ 
+  \begin{exa}
+  底面の半径$R>0$, 高さが$h>0$の円錐の体積を求めよ.
+  
+  \hspace{-11pt}(解.)
+  小学校でやった知識を用いると, 
+  $
+  \text{(円錐の体積)} =  \text{(底面積)} \times \text{(高さ)} \times \frac{1}{3}
+  $
+  により, 体積は$\pi R^2 \times h \times \frac{1}{3} = \frac{\pi R^2 h}{3}$.
+  
+体積分を使うと次の通りである.
+$\Omega= \{ (x,y) \in \R^2 : \sqrt{x^2+y^2} \leqq R\}$とすると, 円錐は
+$$K=\left\{ (x,y,z) \in \R^3 : (x,y) \in \Omega, 0 \leqq z \leqq h \left(1- \frac{ \sqrt{x^2+y^2}}{R} \right) \right\}$$
+という$z$方向の線領域$K$で表せられる.
+以上より, 
+$$
+\vol(K)=
+\iint_{\Omega} h \left(1- \frac{ \sqrt{x^2+y^2}}{R} \right)dxdy 
+=
+\int_{0}^{2\pi} \left(\int_{0}^{R}h \left(1- \frac{ r}{R} \right)rdr \right) d \theta
+= \text{(計算略)}
+=\frac{\pi R^2 h}{3}.
+$$
+よって 底面の半径$R>0$, 高さが$h>0$の円錐の体積は$\frac{\pi R^2 h}{3}$である.\footnote{小学校以来, なぜ$\frac{1}{3}$が出てくるのだろうと思った人も多いかもしれないが, これは積分による結果で出たものである. あともっと簡単な求め方もある.}
+  \end{exa}
+
+
+
+ \section{最後に}
+第13回と第14回はベクトル解析の初歩(イントロ)に関する授業を行った. 
+ベクトル解析は電磁気学などいろいろなところでお世話になる.(もしかしたら電磁気学や他の授業で詳しく学ぶかもしれません.)
+
+ベクトル解析に関して, より詳しいことを学びたい人は
+\begin{itemize}
+\item 川平友規先生 解析学概論第三第四(ベクトル解析) available at \url{http://www.math.titech.ac.jp/~kawahira/courses/17W-kaiseki.html}
+\end{itemize}
+を参考にすると良い.
+図などが綺麗に揃っててものすごく分かり易かった.
+
+空間内の曲線や曲面に関しては
+\begin{itemize}
+\item 小林昭七 曲線と曲面の微分幾何 (裳華房)
+\end{itemize}
+が数学的に厳密で良いかもしれない.
+
+私が10年前にベクトル解析を学んだときに使った本は
+ \begin{itemize}
+\item 渡辺正 ベクトル解析の基礎と応用 新数理ライブラリＭ5 (サイエンス社)
+\end{itemize}
+である. 結構ラフに書いていて, 数学的な厳密性抜きで学べた気がする.
+もっともこの本に限らず, ネットで調べれば色々な本が見つかるので, 各自調べてみて吟味してください. 
+\footnote{「スバラシク実力がつくと評判のベクトル解析キャンパス・ゼミ—大学の数学がこんなに分かる!単位なんて楽に取れる! (マセマ出版社)」という本もありますし... \\ もしかしたら私の授業の内容を「スバラシク実力がつくと評判の微分積分キャンパス・ゼミ—大学の数学がこんなに分かる!単位なんて楽に取れる!(マセマ出版社)」という本で勉強している人がいるかもしれません. もしこの本読んで私の授業の単位を楽に取れた場合はご一報ください. 以後の授業の参考にいたします.}
+
+他にも"予備校のノリで学ぶ「大学の数学・物理」"チャンネルに再生リスト"ベクトル解析"や"電磁気学"があるので, ベクトル解析につまづいたらこちらで補うのもいいかもしれません.
+(直感的にものすごくわかりやすかったです).
+\end{document}

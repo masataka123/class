@@ -1,0 +1,432 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\Area}{\text{Area}}
+
+
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+\begin{center}
+{\Large 第12回. 広義積分とガンマ関数 (川平先生の本, 第12・27章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2021/01/12
+\end{flushright}
+
+
+\section{広義積分}
+この回は1変数の積分に関しても取り扱う.(ガウス積分以外は1変数の積分の話である.)
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+$f(x)$を$[a,b)$上の連続関数とする.($b=+\infty$も許す.)
+左極限$\lim_{z \rightarrow b-0} \int_{a}^{z} f(x)dx$が存在するとき, 
+\underline{広義積分 $\int_{a}^{b} f(x)dx$は収束する}といい
+$$
+\int_{a}^{b} f(x)dx = \lim_{z \rightarrow b-0} \int_{a}^{z} f(x)dx \text{\,\,とする.}
+$$
+この積分を\underline{広義積分}という.
+極限が存在しないときは, \underline{$\int_{a}^{b} f(x)dx$は発散する}という.
+ \end{dfn}
+ \end{tcolorbox}
+ 
+ \begin{exa}
+ \begin{itemize}
+ \item $\int_{1}^{\infty} x^p dx$は$p<-1$のとき収束し, $p \geqq -1$のとき発散する.
+ \item $\int_{0}^{1} x^p dx$は$p>-1$のとき収束し, $p \leqq -1$のとき発散する.
+
+ \end{itemize}
+ \end{exa}
+ 
+ 
+  \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    \label{kougi}
+$f(x)$を$[a,b)$上の連続関数とする.
+\begin{enumerate}
+\item $b=+ \infty$のとき, ある$\lambda >1$があって, $f(x)x^{\lambda}$が
+$[a, +\infty)$上で有界ならば, 広義積分$\int_{a}^{\infty} f(x)dx $は収束する.
+\item $b$が実数のとき($b <+ \infty$のとき), ある$\mu <1$があって, $f(x)(x-b)^{\mu}$が
+$[a, b)$上で有界ならば, 広義積分$\int_{a}^{b} f(x)dx $は収束する.
+\end{enumerate}
+ \end{thm}
+ \end{tcolorbox}
+ \footnote{関数$g(x)$が$[a, b)$上で有界とは, ある正の数$M>0$があって, 任意の$x \in [a, b)$について$|g(x)| < M$となること.}
+ 
+ \begin{exa}
+広義積分$\int_{0}^{\infty} e^{-x^2}dx $は収束する.
+$\lim_{x \rightarrow \infty}e^{-x^2}x^{2} =0$から, $e^{-x^2}x^{2} $は$[0, +\infty)$上で有界
+のため, $\lambda=2$として定理\ref{kougi}を適応すれば良い.
+
+ \end{exa}
+  \begin{exa}
+実数$s>0$について, 広義積分$\int_{0}^{\infty} e^{-x}x^{s-1}dx $は収束する.
+
+\hspace{-18pt}(証.)
+$\int_{0}^{\infty} e^{-x}x^{s-1}dx = \int_{1}^{\infty} e^{-x}x^{s-1}dx+\int_{0}^{1} e^{-x}x^{s-1}dx$より両方の広義積分が収束することを示す.
+
+\hspace{-18pt}(1). $\lim_{x \rightarrow \infty} (e^{-x}x^{s-1}) x^{2} = \lim_{x \rightarrow \infty} e^{-x}x^{s+1} =0$
+より定理\ref{kougi}から広義積分$\int_{1}^{\infty} e^{-x}x^{s-1}dx$は収束する.
+
+\hspace{-18pt}(2). $\lim_{x \rightarrow 0} (e^{-x}x^{s-1}) x^{1-s} =\lim_{x \rightarrow 0} e^{-x} =1$であり, $1-s<1$のため, 定理\ref{kougi}から広義積分$\int_{0}^{1} e^{-x}x^{s-1} dx$は収束する.
+ \end{exa}
+
+  \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[ガウス積分]
+  $$
+  \int_{-\infty}^{\infty} e^{-x^2}dx = \sqrt{\pi}.
+  $$
+    
+ \end{thm}
+ \end{tcolorbox}
+\section{ガンマ関数とベータ関数}
+
+
+  \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}%[ガンマ関数, ベータ関数]
+    \text{}
+    
+\begin{itemize}
+\item $s>0$なる実数$s$について, \underline{ガンマ関数$\Gamma(s)$}を
+$$
+\Gamma(s) = \int_{0}^{\infty} e^{-x}x^{s-1}dx \text{\,\,と定義する.}
+$$
+\item $p>0, q>0$なる実数$p,q$について, \underline{ベータ関数$B(p,q)$}を
+$$
+B(p,q) = \int_{0}^{1}x^{p-1}(1-x)^{q-1} dx \text{\,\,と定義する.}
+$$
+ 
+\end{itemize}
+
+    
+ \end{dfn}
+ \end{tcolorbox}
+
+ガンマ関数, ベータ関数においての広義積分が収束することは定理\ref{kougi}から分かる.
+ガンマ関数は階乗の概念の一般化と思って良い.
+   \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    \label{gam}
+  ガンマ関数$\Gamma(s)$, ベータ関数$B(p,q)$について次が成り立つ.
+  \begin{enumerate}
+  \item $\Gamma(s+1)=s\Gamma(s), \Gamma(1)=1$. 特に正の自然数$n$について$\Gamma(n+1)=n!$.
+  \item $\Gamma(\frac{1}{2}) = \sqrt{\pi}$.
+  特に正の自然数$n$について$\Gamma(\frac{1}{2} +n)=\frac{(2n-1)!!}{2^n} \sqrt{\pi}$.
+  \item $B(p,q)=B(q,p)$.
+  \item $B(p,q)=B(p+1,q)+B(p,q+1)$, $B(p+1,q)=\frac{p}{p+q}B(p,q)$, $B(p,q+1)=\frac{q}{p+q}B(p,q)$.
+  \item $B(p,q)=2\int_{0}^{\frac{\pi}{2}} (\cos t)^{2p-1}(\sin t)^{2q-1} dt$.
+  \item $B(p,q)=\frac{\Gamma(p)\Gamma(q)}{\Gamma(p+q)}$.
+  \item $B(1,1)=1$, $B(\frac{1}{2},\frac{1}{2})=\pi$.
+  特に$l,m$を正の自然数として, $B(l,m)=\frac{(l-1)!(m-1)!}{(l+m-1)!}$.
+  \end{enumerate}
+
+    \end{thm}
+ \end{tcolorbox}
+ \footnote{$n!!$は二重階乗と呼ばれる. $n$を正の自然数として, $(2n-1)!!=(2n-1)(2n-3) \cdots 3\cdot1 $, $(2n)!!=(2n)(2n-2) \cdots 4\cdot2 $である. 便宜上$0!!=1$とする.($0!=1$であるので.)}
+ 
+ \begin{exa}
+ \label{cos}
+ $n$を自然数として, 
+ $$I_n = \int_{0}^{\frac{\pi}{2}} (\cos t)^n dt =\int_{0}^{\frac{\pi}{2}} (\sin t)^n dt \text{\,\,の値を求めよ.}$$
+ 
+ \hspace{-11pt}(解.)
+ 定理\ref{gam}から
+  
+ $$
+ I_n = \int_{0}^{\frac{\pi}{2}} (\cos t)^{2\left( \frac{n+1}{2}\right) -1} (\sin t)^{2\left( \frac{1}{2}\right) -1}dt 
+ =
+ \frac{1}{2}B\left(\frac{n+1}{2},\frac{1}{2} \right)
+ =
+ \frac{\Gamma( \frac{n+1}{2} )\Gamma( \frac{1}{2} )}{2 \Gamma(\frac{n}{2}+1 )}
+ =
+ \frac{\Gamma( \frac{n+1}{2} )}{ \Gamma(\frac{n}{2}+1 )} \frac{\sqrt{\pi}}{2} \text{\,\,となる.}
+ $$
+ 
+
+\hspace{-18pt}(1). $n$が偶数のとき. $n=2m$とおくと, 定理\ref{gam}から
+$$
+ I_n =  \frac{\Gamma( \frac{n+1}{2} )}{ \Gamma(\frac{n}{2}+1 )} \frac{\sqrt{\pi}}{2}
+ =
+ \frac{(2m-1)!! \sqrt{\pi}}{2^{m} (m!)}\frac{\sqrt{\pi}}{2}
+ =
+ \frac{(n-1)!!}{n!!}\frac{\pi}{2} 
+ =
+ \frac{n-1}{n}\cdot\frac{n-3}{n-2} \cdots \frac{3}{4}\cdot\frac{1}{2}\cdot \frac{\pi}{2}\text{\,\,である.}
+$$
+
+ \hspace{-18pt}(2).$n$が奇数のとき. $n=2m+1$とおくと, 定理\ref{gam}から
+$$
+ I_n =  \frac{\Gamma( \frac{n+1}{2} )}{ \Gamma(\frac{n}{2}+1 )} \frac{\sqrt{\pi}}{2}
+ =
+ \frac{2^{m+1} (m!) }{(2m+1)!! \sqrt{\pi} }\frac{\sqrt{\pi}}{2}
+ =
+ \frac{(n-1)!!}{n!!} 
+ =
+ \frac{n-1}{n}\cdot\frac{n-3}{n-2} \cdots \frac{4}{5}\cdot\frac{2}{3} \cdot 1 \text{\,\,である.}
+ $$
+
+
+ \end{exa}
+ 
+  \begin{exa}[ウォリスの公式]
+  \begin{align*}
+  \begin{split}
+\frac{\pi}{2} 
+&=
+ \lim_{m\rightarrow \infty} \frac{(2m)^2}{ (2m+1)(2m-1)} \cdot 
+ \frac{(2(m-1))^2}{ (2m-1)(2m-3)} \cdots \frac{2^2}{3\cdot1 }  \\
+& =
+  \lim_{m\rightarrow \infty}\frac{1}{(1- \frac{1}{4m^2})} \cdot \frac{1}{(1- \frac{1}{4(m-1)^2})}
+  \cdots \frac{1}{(1- \frac{1}{4})} \text{\,\,となる.}
+  \end{split}
+   \end{align*}
+     \footnote{ 積の記号を使って書けば, $$\frac{\pi}{2} =\lim_{m\rightarrow \infty}\frac{1}{(1- \frac{1}{4m^2})} \cdot \frac{1}{(1- \frac{1}{4(m-1)^2})}\cdots \frac{1}{(1- \frac{1}{4})} = \Pi_{i=0}^{\infty} \frac{1}{(1- \frac{1}{4i^2})}\text{\,\, である.}$$}
+つまり
+$$
+\frac{\pi}{2} 
+=
+\frac{2 \cdot 2}{1 \cdot 3} \cdot \frac{4 \cdot 4}{3 \cdot 5} 
+\cdot \frac{6 \cdot 6}{5 \cdot 7}\cdot \frac{8 \cdot 8}{7 \cdot 9}
+ \cdots  \text{\,\, である.}
+$$
+   
+ \hspace{-11pt}(証.)  
+ $J(m)= \frac{(2m)^2}{ (2m+1)(2m-1)} \cdot 
+ \frac{(2(m-1))^2}{ (2m-1)(2m-3)} \cdots \frac{2^2}{3\cdot1 }$とおく. 
+ $I_n = \int_{0}^{\frac{\pi}{2}} (\cos t)^n dt$とおくと, $I_{2m+2} \leqq I_{2m+1} \leqq I_{2m} $より, 例\ref{cos}から
+ $$
+ \frac{(2m+1)!!}{(2m+2)!!} \frac{\pi}{2} \leqq  \frac{(2m)!!}{(2m+1)!!}  \leqq  \frac{(2m-1)!!}{(2m)!!} \frac{\pi}{2} \text{\,\,である.}
+ $$
+この不等式の両辺に$\frac{(2m)!!}{(2m-1)!!}$をかけると
+ $$
+ \frac{2m+1}{2m+2}\frac{\pi}{2} \leqq J(m) \leqq \frac{\pi}{2} 
+ $$
+ であるため, $ \lim_{m\rightarrow \infty} J(m)= \frac{\pi}{2} $である.
+  \end{exa}
+
+
+
+ 
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{comment}
+ \begin{exa}
+ \label{cos}
+ $n$を自然数として, 
+ $$I_n = \int_{0}^{\frac{\pi}{2}} (\cos t)^n dt =\int_{0}^{\frac{\pi}{2}} (\sin t)^n dt \text{\,\,を求めよ.}$$
+ 
+ \hspace{-11pt}(解.)
+  $\int_{0}^{\frac{\pi}{2}} (\cos t)^n dt = \int_{0}^{\frac{\pi}{2}} (\sin t)^n dt$は$s =\frac{\pi}{2}-t $という置換積分でわかる. 定理\ref{gam}から
+  
+ $$
+ I_n = \int_{0}^{\frac{\pi}{2}} (\cos t)^{2\left( \frac{n+1}{2}\right) -1} (\sin t)^{2\left( \frac{1}{2}\right) -1}dt 
+ =
+ \frac{1}{2}B\left(\frac{n+1}{2},\frac{1}{2} \right)
+ =
+ \frac{\Gamma( \frac{n+1}{2} )\Gamma( \frac{1}{2} )}{2 \Gamma(\frac{n}{2}+1 )}
+ =
+ \frac{\Gamma( \frac{n+1}{2} )}{ \Gamma(\frac{n}{2}+1 )} \frac{\sqrt{\pi}}{2} \text{\,\,である.}
+ $$
+ 
+ よって$n$が偶数か奇数かの二つの場合に分かれる.
+\begin{enumerate}
+\item $n$が偶数のとき. $n=2m$とおくと, 定理\ref{gam}から
+$$
+\Gamma \left( \frac{n+1}{2} \right)=\Gamma \left( m+ \frac{1}{2} \right)
+= \frac{(2m-1)!! \sqrt{\pi}}{2^m}, \text{\,\,}
+\Gamma \left( \frac{n}{2} +1 \right)=\Gamma \left( m+ 1 \right)
+= m! \text{\,\,である.}
+$$
+$2^{m}(m!)  = (2m)!!=n!!$に注意すると, 
+$$
+ I_n =  \frac{\Gamma( \frac{n+1}{2} )}{ \Gamma(\frac{n}{2}+1 )} \frac{\sqrt{\pi}}{2}
+ =
+ \frac{(2m-1)!! \sqrt{\pi}}{2^{m} (m!)}\frac{\sqrt{\pi}}{2}
+ =
+ \frac{(n-1)!!}{n!!}\frac{\pi}{2} \text{\,\,である.}
+$$
+わかりやすく書くと, 
+$$
+ I_n = \frac{n-1}{n}\cdot\frac{n-3}{n-2} \cdots \frac{3}{4}\cdot\frac{1}{2}\cdot \frac{\pi}{2}\text{\,\,である.}
+ $$
+ 
+ \item $n$が奇数のとき. $n=2m+1$とおくと, 定理\ref{gam}から
+$$
+\Gamma \left( \frac{n+1}{2} \right)=\Gamma \left( m+ 1 \right)
+= m!, \text{\,\,}
+\Gamma \left( \frac{n}{2} +1 \right)=\Gamma \left( (m+ 1) + \frac{1}{2}\right)
+=  \frac{(2m+1)!! \sqrt{\pi}}{2^{m+1}}\text{\,\,である.}
+$$
+
+
+$2^{m}(m!)  = (2m)!!=n!!$に注意すると, 
+$$
+ I_n =  \frac{\Gamma( \frac{n+1}{2} )}{ \Gamma(\frac{n}{2}+1 )} \frac{\sqrt{\pi}}{2}
+ =
+ \frac{2^{m+1} (m!) }{(2m+1)!! \sqrt{\pi} }\frac{\sqrt{\pi}}{2}
+ =
+ \frac{(n-1)!!}{n!!} \text{\,\,である.}
+$$
+わかりやすく書くと, 
+$$
+ I_n = \frac{n-1}{n}\cdot\frac{n-3}{n-2} \cdots \frac{3}{4}\cdot\frac{1}{2}\cdot 1\text{\,\,である.}
+ $$
+
+\end{enumerate}
+
+ \end{exa}
+ 
+  \begin{exa}[ウォリスの公式]
+  \begin{align*}
+  \begin{split}
+\frac{\pi}{2} 
+&=
+ \lim_{m\rightarrow \infty} \frac{(2m)^2}{ (2m+1)(2m-1)} \cdot 
+ \frac{(2(m-1))^2}{ (2m-1)(2m-3)} \cdots \frac{2^2}{3\cdot1 }  \\
+& =
+  \lim_{m\rightarrow \infty}\frac{1}{(1- \frac{1}{4m^2})} \cdot \frac{1}{(1- \frac{1}{4(m-1)^2})}
+  \cdots \frac{1}{(1- \frac{1}{4})} \text{\,\,となる.}
+  \end{split}
+   \end{align*}
+     \footnote{ 積の記号を使って書けば, $$\frac{\pi}{2} =\lim_{m\rightarrow \infty}\frac{1}{(1- \frac{1}{4m^2})} \cdot \frac{1}{(1- \frac{1}{4(m-1)^2})}\cdots \frac{1}{(1- \frac{1}{4})} = \Pi_{i=0}^{\infty} \frac{1}{(1- \frac{1}{4i^2})}\text{\,\, である.}$$}
+つまり
+$$
+\frac{\pi}{2} 
+=
+\frac{2 \cdot 2}{1 \cdot 3} \cdot \frac{4 \cdot 4}{3 \cdot 5} 
+\cdot \frac{6 \cdot 6}{5 \cdot 7}\cdot \frac{8 \cdot 8}{7 \cdot 9}
+ \cdots  \text{\,\, である.}
+$$
+   
+ \hspace{-11pt}(証.)  
+ $J(m)= \frac{(2m)^2}{ (2m+1)(2m-1)} \cdot 
+ \frac{(2(m-1))^2}{ (2m-1)(2m-3)} \cdots \frac{2^2}{3\cdot1 }$とおく. 
+ $I_n = \int_{0}^{\frac{\pi}{2}} (\cos t)^n dt$とおくと, $I_{2m+2} \leqq I_{2m+1} \leqq I_{2m} $より, 例\ref{cos}から
+ $$
+ \frac{(2m+1)!!}{(2m+2)!!} \frac{\pi}{2} \leqq  \frac{(2m)!!}{(2m+1)!!}  \leqq  \frac{(2m-1)!!}{(2m)!!} \frac{\pi}{2} \text{\,\,である.}
+ $$
+この不等式の両辺に$\frac{(2m)!!}{(2m-1)!!}$をかけると
+ $$
+ \frac{2m+1}{2m+2}\frac{\pi}{2} \leqq J(m) \leqq \frac{\pi}{2} 
+ $$
+ であるため, $ \lim_{m\rightarrow \infty} J(m)= \frac{\pi}{2} $である.
+  \end{exa}
+
+
+\end{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+ \section{他の資料・動画について}
+ 
+ 以下に示す資料や動画の数学的な厳密性に関しては保証しない.
+ (おそらく大丈夫だと思うが, 詳しく見ていないので保証はできない. 直感的なわかりやすさを第一にすると, 厳密性は二の次になるし...あと広告が出てくるリンクもあるので注意すること.)
+ 
+ \vspace{11pt}
+ 
+ガウス積分$ \int_{-\infty}^{\infty} e^{-x^2}dx = \sqrt{\pi}$は正規分布$f(x)=\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}$と関わりが深い.
+正規分布に関しては統計でよく使うことになる. (今回その話をしようとしたが意外とまとめるのが難しかったのでやめた.)
+\begin{itemize}
+\item 株式会社Albertの記事 \url{https://www.albert2005.co.jp/knowledge/statistics_analysis/probability_distribution/normal_distribution}
+\item マイナビニュース 正規分布の基本的な考え方 \url{https://news.mynavi.jp/article/excelanalytics-57/} 
+\end{itemize}
+
+とか参考になるかもしれません. (偏差値・標準偏差も正規分布から来ているので調べるといいかもしれません.)
+
+ガンマ関数に関してはYouTubeにいっぱい動画があるのでそちらを参考にするといいかもしれません.
+例えば
+\begin{itemize}
+\item 予備校のノリで学ぶ「大学の数学・物理」【大学数学】ガンマ関数\UTF{2460}(定義と性質)【解析学】 \url{https://www.youtube.com/watch?v=K-HwL3N4P5Q}
+\item 予備校のノリで学ぶ「大学の数学・物理」【大学数学】ガンマ関数\UTF{2461}(収束性の証明)【解析学】\url{https://www.youtube.com/watch?v=dy40up4jnc0}
+\item 予備校のノリで学ぶ「大学の数学・物理」【大学数学】ガンマ関数\UTF{2462}(n次元球の体積)【解析学】\url{https://www.youtube.com/watch?v=AEj6MOoAgL4&t=1001s}
+\end{itemize}
+などが参考になるかもしれません.
+特に$n$次元球の体積はこの授業でやらなかったのでためになるかもしれません.
+\footnote{サムネイルにある$(1.5)!$の値は定理\ref{gam}の1と2から$\Gamma(\frac{3}{2}+1)=\frac{3}{4}\sqrt{\pi}$と思えます.}
+
+\end{document}

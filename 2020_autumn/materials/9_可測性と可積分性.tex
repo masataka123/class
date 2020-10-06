@@ -1,0 +1,361 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\Area}{\text{Area}}
+
+
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+\begin{center}
+{\Large 第9回. 可測性と可積分性 (川平先生の本, 第25章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/12/08
+\end{flushright}
+ \section{はじめに}
+ この回の内容はかなり難しいので, 積分の理論を気にせず計算だけしたい人はこの回の内容を読み飛ばして, 次の回の内容に移って良い.
+ (最後の誤差評価は使えるかもしれませんが...)
+ 
+ また証明等を少々省略するので, 詳しくリーマン積分を理解したい人は次の文献を見てほしい.
+ \begin{itemize}
+ \item 杉浦光夫 解析入門 1 (東京大学出版会)
+ \end{itemize}
+ 
+動画冒頭に述べたルベーグ積分を理解したい人は次の文献を見てほしい.
+(めちゃくちゃ難しいですが...)
+ \begin{itemize}
+ \item 伊藤清三 ルベーグ積分入門 (裳華房)
+ \item Terence Tao \textit{An introduction to measure theory}
+ available at \url{https://terrytao.files.wordpress.com/2011/01/measure-book1.pdf}
+ \end{itemize}
+ 
+リーマン積分もルベーグ積分もどちらも計算上は違いはないので, 積分の理論を気にせず, 計算だけしたい場合は気にしなくて良いです.
+
+\section{リーマン積分の定義}
+この節では
+$D = [a,b]\times [c,d] = \{ (x,y) \in \R^2 : a \leqq x \leqq b, c \leqq y \leqq d\}%\text{\,\,とする.}$
+$とする.
+ \begin{itemize}
+ \item \underline{関数$f(x,y)$が$D$上で有界}であるとは, ある正の数$M>0$があって, 任意の$(x,y)\in D$について$|f(x,y) |<M$となること.
+ 
+\hspace{-22pt} 以下, 関数$f(x,y)$が$D$上で有界であるとする.
+ \item \underline{$\Delta$が$D$の分割}とは, ある正の自然数$m,n$と
+ $$
+ a = x_{0}<x_1< \dots , x_{m-1}<x_{m}=b, \text{\,\,\,}
+c = y_{0}<y_1< \dots , y_{n-1}<y_{n}=d, \text{\,\,となる}
+ $$
+ 数の組$( a, x_1, \dots , x_{m-1} , b), ( c, y_1, \dots , y_{n-1} , d)$のこと.
+ 
+ 以下$\Delta = \{ ( a, x_1, \dots , x_{m-1} , b ),( c, y_1, \dots , y_{n-1} , d )\}$とかく. (この授業だけの記号である.)
+ \item $\Delta$を$D$の分割として, \underline{$\Delta$の長さ}を
+ $$
+| \Delta| = \max_{1 \leqq i \leqq m, 1 \leqq j \leqq n} \{ |x_i - x_{i-1}|, |y_{j} - y_{j-1}|\} 
+ \text{\,\,とする.}
+ $$
+ 
+ \item $\Delta$を$D$の分割とする.
+ $1 \leqq i \leqq m, 1 \leqq j \leqq n$となる自然数$i,j$について
+ $$
+ M_{ij} = \max \{ f(x,y) :x_{i-1} \leqq x \leqq x_i , y_{j-1} \leqq y \leqq y_{j} \},
+ $$
+ $$
+ m_{ij} = \min \{ f(x,y) : x_{i-1} \leqq x \leqq x_i , y_{j-1} \leqq y \leqq y_{j} \} \text{\,\,とし, }
+ \footnote{最大値最小値の存在は自明ではないので実は間違い. 本当は上限(sup)と下限(inf)を用いて
+ $$
+  M_{ij} = \sup \{ f(x,y) : x_{i-1} \leqq x \leqq x_i , y_{j-1} \leqq y \leqq y_{j} \}, \text{\,\,}
+ m_{ij} = \inf \{ f(x,y) : x_{i-1} \leqq x \leqq x_i , y_{j-1} \leqq y \leqq y_{j} \} 
+ $$
+ と書く. (おそらく上限や下限を習ってないと思うので, 今回はmax, minで定義します.)}
+ $$
+ 
+  
+ $$
+ S_{\Delta} = \sum_{j=1}^{n}\sum_{i=1}^{m} M_{ij}(x_i - x_{i-1})(y_{j} - y_{j-1}), \text{\,\,\,\,}
+  T_{\Delta} = \sum_{j=1}^{n}\sum_{i=1}^{m} m_{ij}(x_i - x_{i-1})(y_{j} - y_{j-1})\text{\,\,とおく. }
+ $$
+定義から$T_{\Delta} \leqq S_{\Delta}$となる.
+
+ \end{itemize}
+ 
+  \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[ダルブーの定理]
+    ある実数$S,T$があって, 
+    $$
+    \lim_{|\Delta| \rightarrow 0}S_{\Delta} = S, \text{\,\,} \lim_{|\Delta| \rightarrow 0}T_{\Delta} = T.
+    $$
+    \end{thm}
+    \end{tcolorbox}
+    \footnote{$\lim_{|\Delta| \rightarrow 0}S_{\Delta} = S$の意味は, $\Delta$の長さが0になるように分割をとっていくと, $S_{\Delta}$は$S$に限りなく近くという意味である.}
+    
+      \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    $D = [a,b]\times [c,d]$かつ$f(x,y)$を$D$上の有界関数とする. \\
+    \underline{$f$が$D$上でリーマン積分可能(リーマン可積分)}とは$S=T$となること.
+    このとき, 
+    $$
+    S = \iint_{D} f(x,y)dxdy \text{\,\,と表す.}
+    $$
+    \underline{$S$を$f(x,y)$の$D$上での重積分}といい, \underline{$D$を積分領域}, \underline{$f$を被積分関数}という.
+    \end{dfn}
+    \end{tcolorbox}
+    以下, リーマン積分可能を単に積分可能ということにする.
+
+\begin{exa}
+\label{riem_not}
+\begin{itemize}
+\item $D = [a,b]\times [c,d]$とし, $f$を$D$上での連続関数とする.
+このとき$f$は$D$上で積分可能.(みんながよく知っている関数は積分可能.)
+\item $D = [0,1]\times[0,1]$とし, $D$上の有界関数$f(x,y)$を
+$$
+  f(x,y)= \begin{cases}
+     1& \text{$x$も$y$も共に有理数}\\
+    0& \text{上以外}
+  \end{cases}
+$$
+とおくとき, 任意の$D$の分割$\Delta$について, $S_{\Delta}=1$であり, $T_{\Delta}=0$である.
+よって$S =1$かつ$T=0$より, $f$は$D$上で積分可能ではない.
+\footnote{ルベーグ積分は可能になる. 積分値は0となる. ルベーグ積分はいい感じにリーマン積分を包含する概念である.}
+ \end{itemize}
+\end{exa}
+
+\section{一般集合上での積分}
+      \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+    $D \subset \R^2$を有界集合とし, ある正の数$M>0$を$D \subset [-M,M]\times[-M,M]$となるようにとる.
+    $\tilde{D} = [-M,M]\times[-M,M]$とおく.
+    
+    $f(x,y)$を$D$上の有界関数として, \underline{$f$が$D$上リーマン積分可能(リーマン可積分)}
+    とは
+    $$
+  \tilde{f}(x,y)= \begin{cases}
+     f(x,y)& (x,y) \in D\\
+    0& (x,y) \not \in D
+  \end{cases}
+$$
+とおくとき, $\tilde{f}$が$\tilde{D}$上で積分可能であること.
+    このとき
+    $$
+    \iint_{D}f(x,y)dxdy = \iint_{\tilde{D}} \tilde{f}(x,y)dxdy \text{\,\,と定義する.}
+    $$
+    \end{dfn}
+    \end{tcolorbox}
+
+      \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+
+    $D \subset \R^2$を有界集合とする.
+    \underline{$D$が面積確定(ジョルダン可測)}とは$D$上の定数関数$f(x,y)=1$が$D$上で(リーマン)積分可能であること. 
+このとき
+$$
+\Area(D) = \iint_{D} dxdy = \iint_{D} 1 dxdy \text{\,\,と表す.}
+$$
+        \end{dfn}
+    \end{tcolorbox}
+    
+\begin{exa}
+
+\begin{itemize}
+\item $D=[a,b]\times [c,d]$とすると$D$は面積確定である. 面積$\Area(D)=(b-a)(d-c)$である.
+\item $\phi_1(x), \phi_{2}(x)$を$\phi_1(x) \leqq \phi_2(x)$となる$[a,b]$上の連続関数とする. \\ $
+D = \{ (x,y) \in \R^2 : a \leqq x \leqq b, \phi_1(x) \leqq y \leqq \phi_2(x)\}
+$
+とおくとき, $D$は面積確定で, 
+$$\Area(D) = \int_{a}^{b} \{ \phi_2(x) - \phi_1(x)\}dx \text{\,\,となる.}\footnote{第10回の資料によりわかる.}$$
+
+特に半径1の円は
+$
+D = \{ (x,y) \in \R^2 :\ -1 \leqq x \leqq 1, -\sqrt{1-x^2} \leqq y \leqq \sqrt{1-x^2} \}
+$
+と書けるので, $\Area(D) = \pi$となる.\footnote{これも第10回の資料によりわかる.}
+(みんながよく知っている図形は面積確定.)
+\item $D = \{ (x,y) \in \R^2 : \text{$x$も$y$も共に有理数}\}$とおくとき,  例\ref{riem_not}から$D$は面積確定ではない.
+\end{itemize}
+\end{exa}
+
+      \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+$D$を面積確定な有界閉集合とし, $f$を$D$上で連続とするとき, $f$は$D$上で積分可能である.
+        \end{thm}
+    \end{tcolorbox}
+ 以上から, みんながよく知っている図形の上での, みんながよく知っている関数の積分は可能である.
+    
+\section{重積分の性質.}
+      \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{prop}
+$D, D_1,D_2$を面積確定な有界閉集合とし, 
+$f(x,y), g(x,y)$を連続関数とする.
+\begin{enumerate}
+\item \text{$\Area(D_1 \cap D_2)=0$ならば}
+$$
+\iint_{D_1 \cup D_2}fdxdy = \iint _{D_1}fdxdy +\iint _{D_2}fdxdy.
+$$
+\item $D$上$f(x,y) \leqq g(x,y)$のとき, 
+$$
+\iint _{D}fdxdy  \leqq \iint_{D} gdxdy.
+$$
+
+\item $\alpha$を実数とするとき, 
+$$
+\iint _{D}\{f +g\}dxdy = \iint _{D}fdxdy + \iint _{D}gdxdy, \text{\,\,}
+ \iint _{D}\alpha fdxdy = \alpha  \iint _{D}fdxdy.
+$$
+
+\item ある実数$M>0$があって, $D$上で$|f(x,y)| \leqq M$のとき, 
+$$
+\iint _{D}fdxdy  \leqq M \Area(D).
+$$
+\end{enumerate}
+
+        \end{prop}
+    \end{tcolorbox}
+
+\section{数値積分の精度}
+
+      \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+$D=[a,b] \times [c,d]$とし, 
+$f$を$D$上の$C^1$級関数とする. \\
+$\max_{(x,y)\in D} \left\{ |\pdrv{f}{x}(x,y)|, |\pdrv{f}{y}(x,y)| \right\} \leqq K_1$となる実数$K_1$をとる.
+
+$\Delta$を$D$の分割とすると, 
+$$
+(S_{\Delta} -T_{\Delta} )\leqq 2K_1 \Area(D) |\Delta| = 2K_{1}(b-a)(d-c)  |\Delta|  \text{\,\,となる.}
+$$
+        \end{thm}
+    \end{tcolorbox}
+
+      \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[区分求積法]
+$D=[a,b] \times [c,d]$とし, 
+$f$を$D$上の$C^1$級関数, $N>0$を正の自然数とする. 
+$\max_{(x,y)\in D} \left\{ |\pdrv{f}{x}(x,y)|, |\pdrv{f}{y}(x,y)| \right\} \leqq K_1$となる実数$K_1$をとる.
+$$
+I = \iint_{D} f dxdy, \text{\,\,\,\,} 
+\Sigma_N=\sum_{j=1}^{N}\sum_{i=1}^{N}f\left(  a+i\frac{(b-a)}{N} ,c+j\frac{(d-c)}{N}\right)\frac{(b-a)(d-c)}{N^2}
+\text{とおくとき,}
+$$
+$$
+|I-\Sigma_{N}| \leqq \frac{K_1(b-a)(d-c)\{ b-a+d-c\}}{N}.
+$$
+とくに
+$\lim_{N \rightarrow \infty} \Sigma_{N} = I $
+となる.
+        \end{thm}
+    \end{tcolorbox}
+\begin{exa}
+$D=[0,1]\times [0,1]$とし, $f(x,y)=x^2+y^2$とする.
+$$
+\max_{(x,y)\in D} \left\{ |\pdrv{f}{x}(x,y)|, |\pdrv{f}{y}(x,y)| \right\} 
+=
+\max_{(x,y)\in D} \left\{ |2x|, |2y| \right\} 
+=
+2
+$$
+より, $K_1=2$と取れる.
+
+$N$を正の自然数とすると, 
+$I = \iint_{D} f dxdy, =\frac{2}{3}$, $\frac{K_1(b-a)(d-c)\{ b-a+d-c\}}{N}=\frac{4}{N}$,
+$$\Sigma_{N}=
+\sum_{j=1}^{N}\sum_{i=1}^{N}f\left( \frac{i}{N},\frac{j}{N}\right)
+=\sum_{j=1}^{N}\sum_{i=1}^{N}\frac{i^2+j^2}{N^4} \text{\,\,であるので. }
+|I - \Sigma_{N}|=\left|\frac{2}{3} - \sum_{j=1}^{N}\sum_{i=1}^{N}\frac{i^2+j^2}{N^4} \right| \leqq \frac{4}{N}.
+$$
+\end{exa}
+
+\end{document}

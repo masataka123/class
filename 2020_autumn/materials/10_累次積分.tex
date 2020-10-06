@@ -1,0 +1,180 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\Area}{\text{Area}}
+
+
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+\begin{center}
+{\Large 第10回. 累次積分 (川平先生の本, 第26章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2020/12/15
+\end{flushright}
+ 
+ \section{縦線領域と累次積分}
+ 
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+   $\phi_1(x), \phi_{2}(x)$を$\phi_1(x) \leqq \phi_2(x)$となる$[a,b]$上の連続関数とする. 
+   $$
+D = \{ (x,y) \in \R^2 : a \leqq x \leqq b, \phi_1(x) \leqq y \leqq \phi_2(x)\}
+$$
+で表せられる領域を\underline{縦線領域}という.
+ \end{dfn}
+ \end{tcolorbox}
+ 
+ 
+ 
+ \begin{exa}
+
+\begin{itemize}
+\item $D=[a,b]\times [c,d]$は縦線領域. $\phi_1(x)=c$, $\phi_2(x)=d$とすれば良い.
+\item 縦線領域
+$D = \{ (x,y) \in \R^2 :\ -1 \leqq x \leqq 1, -\sqrt{1-x^2} \leqq y \leqq \sqrt{1-x^2} \}$
+とおくと$D$は原点中心の半径1の円.
+\end{itemize}
+\end{exa}
+ 
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+縦線領域を$D = \{ (x,y) \in \R^2 : a \leqq x \leqq b, \phi_1(x) \leqq y \leqq \phi_2(x)\}$とし, $f(x,y)$
+を$D$上の連続関数とする.
+このとき, $f(x,y)$は$D$上で積分可能であり,
+$$
+\iint_{D} f(x,y)dxdy = \int_{a}^{b }\left( \int_{\phi_1(x)}^{\phi_{2}(x)}f(x,y)dy    \right) dx \text{\,\,となる.}
+$$
+これを\underline{$f(x,y)$の累次積分}という.
+
+特に$D$は面積確定で
+$$
+\Area(D) = \iint_{D} dxdy=\int_{a}^{b} \{ \phi_2(x) - \phi_1(x)\}dx.
+$$
+        \end{thm}
+ \end{tcolorbox}
+ 
+  \begin{exa}
+ $D=[0,1]\times[0,1]$, $f(x,y)=x^2+y^2$とする.
+ $\iint_{D}f(x,y)dxdy$を求めよ.
+
+\hspace{-11pt}(解.) $\phi_1(x)=0, \phi_2(x)=1$とすると上の定理より, 
+
+$$
+%  \iint_{D}f(x,y)dxdy %&=  \int_{0}^{1}\left( \int_{0}^{1} x^2+y^2dy    \right) dx \\ &
+\iint_{D}x^2+y^2dxdy 
+  =  \int_{0}^{1}\left( \int_{0}^{1} x^2+y^2dy    \right) dx 
+  = \int_{0}^{1}\left[ x^{2}y + \frac{y^3}{3}   \right]_{0}^{1} dx 
+  =\int_{0}^{1} x^{2}+ \frac{1}{3}  dx 
+  =\left[  \frac{x^3}{3} +\frac{x}{3}  \right]_{0}^{1} =\frac{2}{3}.
+$$
+ \end{exa}
+ 
+   \begin{exa}
+$D = \{ (x,y) \in \R^2 : -1 \leqq x \leqq 1, -\sqrt{1-x^2} \leqq y \leqq \sqrt{1-x^2} \}$とする.
+$\Area(D) = \iint_{D} dxdy$を求めよ.
+
+\hspace{-11pt}(解.) $\phi_1(x)=-\sqrt{1-x^2}, \phi_2(x)=\sqrt{1-x^2} $とすると上の定理より, 
+
+$$
+  \iint_{D}dxdy =\int_{-1}^{1} \left\{ \sqrt{1-x^2} - \left(-\sqrt{1-x^2} \right) \right\} dx
+  = 2 \int_{-1}^{1} \sqrt{1-x^2} dx =\pi.
+$$
+  \end{exa}
+つまり半径1の円の面積は$\pi$.
+ 
+    \begin{exa}
+$D = \{ (x,y) \in \R^2 : 0 \leqq x \leqq 1, x^2 \leqq y \leqq 1 \}$とし, 
+$f(x,y)=xe^{-y^2}$とするとき,  $\iint_{D}f(x,y)dxdy$を求めよ.
+
+\hspace{-11pt}(解.) 普通に定理を適用すると, 
+$$
+\iint_{D} xe^{-y^2}dxdy = \int_{0}^{1} \left( \int_{x^2}^{1} xe^{-y^2}dy    \right) dx
+$$
+となるが, $e^{-y^2}$の不定積分がわからないため, ここで手詰まりとなる.
+
+そこで$D = \{ (x,y) \in \R^2 : 0 \leqq y \leqq 1, 0 \leqq x \leqq \sqrt{y} \}$に注意すると, 
+\begin{align*}
+\begin{split}
+\iint_{D} xe^{-y^2}dxdy &= \int_{0}^{1} \left( \int_{0}^{\sqrt{y}} xe^{-y^2}dx   \right) dy \\
+&= \int_{0}^{1}\left[ \frac{x^{2} e^{-y^2} }{2}  \right]_{0}^{\sqrt{y}} dy
+=  \int_{0}^{1}    \frac{y e^{-y^2} }{2}      dy
+= \left[  \frac{- e^{-y^2} }{4}   \right]_{0}^{1} = \frac{1}{4}\left( 1 - \frac{1}{e}\right).
+\end{split}
+\end{align*}
+
+  \end{exa}
+
+\end{document}
