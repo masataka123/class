@@ -1,6 +1,7 @@
 # 大阪市立大学 R2年度(2020年度)後期 全学共通科目 解析Ⅱ *TⅠ機･情33～ の授業のホームページ
 
 # News
+- 2020/10/07 第9回から第14回授業の資料と動画をアップロードしました. 中間レポートに関しての欄も作りました.
 - 2020/10/01 プリント資料(第3回と第8回)とこのホームページの微修正をしました.
 - 2020/09/25 授業内容をアップしました. 動画サイズがあまりにも大きいため, "WebClassで教材の配布はしない"ことにしました. 
 - 2020/09/11 授業ページを作りました.
@@ -13,6 +14,10 @@
 - ミス・誤植・その他何かありましたらmasataka[at]sci.osaka-cu.ac.jpにご連絡お願いいたします. 対応いたします. ([at]をアットマークに変えてください. スパム対策でこうせざるを得ないのです...)
 - 急な変更がある可能性もあるので, こまめにこの授業ホームページやWebClassを確認すること.
 - 動画サイズがあまりにも大きいため, "WebClassで教材の配布はしない"ことにしました. 
+
+# 中間レポートについて
+- 中間レポートに関しては11月頃にアップロードする予定ですので暫しお待ちください.(中間レポートの締め切りは12月下旬の予定です.)
+- 中間レポートの範囲は第1回から第8回授業の内容です. 詳しい出題範囲は「第0回 成績の付け方, 授業の進め方」の動画・資料をご覧ください.
 
 # 授業内容
 この授業の受講者は全員「第0回 成績の付け方, 授業の進め方」の動画を見ることをお勧めします.
@@ -40,7 +45,21 @@
 [第1回から第8回授業の資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_第1回講義から第8回講義の資料まとめ.pdf)
 [第1回から第8回授業の講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_第一回から第八回までの講義の授業ノート.pdf)
 
-第9回 (2020/12/08). 可測性と可積分性   準備中....
+第9回 (2020/12/08). 可測性と可積分性 [第9回動画](https://www.youtube.com/watch?v=QjqqMuOR_gw) [第9回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/9_可測性と可積分性.pdf) [第9回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/9_第九回講義の授業ノート.pdf)
+
+第10回 (2020/12/15). 累次積分 [第10回動画](https://www.youtube.com/watch?v=9AmLOz3P3Ac&t=11s) [第10回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/10_累次積分.pdf) [第10回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/10_第十回講義の授業ノート.pdf)
+
+第11回 (2020/12/22). 多重積分の変数変換公式 [第11回動画](https://www.youtube.com/watch?v=xYJqCIKAUUY&t=3s) [第11回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/11_多重積分の変数変換公式.pdf) [第11回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/11_第十一回講義の授業ノート.pdf)
+
+第12回 (2021/01/12). 広義積分とガンマ関数  [第12回動画](https://www.youtube.com/watch?v=35Es9VGwRvk&t=29s) [第12回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/12_広義積分とガンマ関数.pdf) [第12回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/12_第十二回講義の授業ノート.pdf)
+
+第13回 (2021/01/19). 線積分とグリーンの定理  [第13回動画](https://www.youtube.com/watch?v=tAEatwbE_AE&t=2s) [第13回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/13_線積分とグリーンの定理.pdf) [第13回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/13_第十三回講義の授業ノート.pdf)
+
+第14回 (2021/01/26). 面積分と体積分, 表面積と体積  [第14回動画](https://www.youtube.com/watch?v=KOguB7zXmSE&t=1941s) [第14回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/14_面積分と体積分_表面積と体積.pdf) [第13回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/14_第十四回講義の授業ノート.pdf)
+
+[第9回から第14回授業の動画の再生リスト](https://www.youtube.com/playlist?list=PLZDOK-K3OuvDGiTRClzYQa_ISlUulPPNS)
+[第9回から第14回授業の資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_第9回講義から第14回講義の資料まとめ.pdf)
+[第9回から第14回授業の講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_第九回から第十四回までの講義の授業ノート.pdf)
 
 もし資料を一括してダウンロードしたい場合は[こちらのページ](https://github.com/masataka123/class/tree/master/2020_autumn/materials)をご覧ください.
 
