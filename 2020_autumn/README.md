@@ -45,7 +45,7 @@
 [第1回から第8回授業の資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_第1回講義から第8回講義の資料まとめ.pdf)
 [第1回から第8回授業の講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_第一回から第八回までの講義の授業ノート.pdf)
 
-第9回 (2020/12/08). 可測性と可積分性 [第9回動画](https://www.youtube.com/watch?v=QjqqMuOR_gw) [第9回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/9_可測性と可積分性.pdf) [第9回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/9_第九回講義の授業ノート.pdf) 
+第9回 (2020/12/08). 可測性と可積分性 [第9回動画](https://www.youtube.com/watch?v=QjqqMuOR_gw) [第9回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/9_可測性と可積分性.pdf) [第9回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/9_第九回講義の授業ノート.pdf) [第9回追加資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/9_integral.ipynb)
 
 第10回 (2020/12/15). 累次積分 [第10回動画](https://www.youtube.com/watch?v=9AmLOz3P3Ac&t=11s) [第10回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/10_累次積分.pdf) [第10回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/10_第十回講義の授業ノート.pdf)
 
