@@ -1,0 +1,289 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+\begin{center}
+{ \large 大阪市立大学 R2年度(2020年度)後期  全学共通科目 解析II TI機・情33 $\sim$} \\
+\vspace{5pt}
+
+{\LARGE 中間レポート } \\
+\vspace{5pt}
+
+{ \Large 提出締め切り 2020年12月22日 23時59分00秒 (日本標準時刻)}
+\end{center}
+
+\begin{flushright}
+ 担当教官: 岩井雅崇(いわいまさたか) 
+\end{flushright}
+
+{\Large $\bullet$ 注意事項}
+\begin{enumerate}
+\item 第1問から第4問まで解くこと. 
+\item おまけ問題は全員が解く必要はない.(詳しくは成績の付け方のスライドを参照せよ).
+\item 用語に関しては授業または教科書(川平友規著 微分積分 1変数と2変数)に準じます.
+\item \underline{提出締め切りを遅れて提出した場合, 大幅に減点する可能性がある.}
+\item \underline{名前・学籍番号をきちんと書くこと.}
+\item \underline{解答に関して, 答えのみならず, 答えを導出する過程をきちんと記してください.} きちんと記していない場合は大幅に減点する場合がある.
+%ただし用語の定義の違いによるミスに関して, 大幅に減点することはない.
+\item 字は汚くても構いませんが, \underline{読める字で濃く書いてください.} あまりにも読めない場合は採点をしないかもしれません.%\footnote{私も字が汚い方ですので人のこと言えませんが...自論ですが, 字が汚いと自覚ある人は大きく書けば読みやすくなると思います.}
+\item 採点を効率的に行うため, \underline{順番通り解答するようお願いいたします.}
+\item 採点を効率的に行うため,  \underline{レポートはpdfファイル形式で提出し,} ファイル名を「dif(学籍番号).pdf」とするようお願いいたします. 
+(difは微分(differential)の略です.)
+例えば学籍番号が「A18CA999」の場合はファイル名は「difA18CA999.pdf」となります.
+\end{enumerate}
+
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = black,
+    fonttitle = \bfseries,
+    breakable = true]
+    レポート提出前のチェックリスト
+    \begin{itemize}
+    \item[] $\Box$ 締め切りを守っているか?
+    \item[] $\Box$ レポートに名前・学籍番号を書いたか?
+     \item[] $\Box$ 答えを導出する過程をきちんと記したか?
+    \item[] $\Box$ 他者が読める字で書いたか?
+    \item[] $\Box$ 順番通り解答したか?
+    \item[] $\Box$レポートはpdfファイル形式で提出したか?
+   \item[] $\Box$ ファイル名を「dif(学籍番号).pdf」としたか?
+    \end{itemize}
+
+  \end{tcolorbox}
+  
+2020年12月15日(火)の10時50分からオンラインによる質疑応答の場を設けます. (出席義務はありません, 来たい人だけ来てください. レポートに関する質問も可とします.) 質疑応答に関してはWebClassを参照してください.
+ 
+\newpage
+ \hspace{-11pt}
+{\Large $\bullet$ レポートの提出方法について }
+\vspace{11pt}
+
+\underline{原則的にWebClassからの提出しか認めません.}
+レポートは余裕を持って提出してください.
+\vspace{11pt}
+
+\underline{レポートはpdfファイルで提出してください.}
+またWebClassからの提出の際, 提出ファイルを一つにまとめる必要があるとのことですので, 提出ファイルを一つにまとめてください.
+\vspace{11pt}
+
+\underline{採点を効率的に行うため, ファイル名を「dif(学籍番号).pdf」とするようお願いいたします.}
+(difは微分(differential)の略です.)
+例えば学籍番号が「A18CA999」の場合はファイル名は「difA18CA999.pdf」となります.
+
+\vspace{11pt}
+ \hspace{-11pt}
+{\Large $\bullet$ 提出用pdfファイルの作成の仕方について}
+\vspace{11pt}
+
+いろいろ方法はあると思います.
+\vspace{11pt}
+
+1つ目は「手書きレポートをpdfにする方法」があります.
+この方法は時間はあまりかかりませんが, お金がかかる可能性があります.
+手書きレポートをpdfにするには以下の方法があると思います.
+\begin{itemize}
+\setlength{\parskip}{0cm} % 段落間
+  \setlength{\itemsep}{0cm}
+\item スキャナーを使うかコンビニに行ってスキャンする.
+\item スマートフォンやカメラで画像データにしてからpdfにする. 例えばMicrosoft Wordを使えば画像データをpdfにできます. %(見づらくなる可能性あり)
+\item その他いろいろ検索して独自の方法を行う.
+\end{itemize}
+
+2つ目は「TeXでレポートを作成する方法」があります.
+時間はかなりかかりますが, 見た目はかなり綺麗です.
+\vspace{11pt}
+
+
+いずれの方法でも構いません. 最終的に私が読めるように書いたレポートであれば大丈夫です.
+%他者が読める字で書いてあれば問題ありません. (私が読めるようなレポートであれば大丈夫です.)
+
+\vspace{11pt}
+ \hspace{-11pt}
+{\Large $\bullet$ WebClassからの提出が不可能な場合}
+\vspace{11pt}
+
+提出の期限までに (WebClassのシステムトラブル等の理由で) WebClassからの提出が不可能な場合のみメール提出を受け付けます.
+その場合には以下の項目を厳守してください.
+\begin{itemize}
+\setlength{\parskip}{0cm} % 段落間
+  \setlength{\itemsep}{0cm}
+\item 大学のメールアドレスを使って送信すること. (なりすまし提出防止のため.)
+\item 件名を「レポート提出」とすること
+\item 講義名, 学籍番号, 氏名 (フルネーム)を書くこと.
+\item レポートのファイルを添付すること.
+\item WebClassでの提出ができなかった事情を説明すること. (提出理由が不十分である場合, 減点となる可能性があります.)
+\end{itemize}
+
+メール提出の場合はmasataka[at]sci.osaka-cu.ac.jpにメールするようお願いいたします.
+
+%正当な理由(WebClassのシステムトラブル等)ではない場合, メールでの提出は減点対象となるので注意すること.
+\newpage
+\begin{center}
+{\LARGE 中間レポート問題.} 
+\end{center}
+
+{\Large 第1問.} (授業第2回の内容.)
+\vspace{11pt}
+
+$\R^2$上の関数$f(x,y)$を以下で定める.
+$$
+  f(x,y)= \begin{cases}
+     \frac{(x-y)^3}{x^2+y^2}& (x,y) \neq (0,0) \text{\,\,のとき.} \\
+    0&  (x,y) = (0,0) \text{\,\,のとき.} 
+  \end{cases}
+  $$
+  
+(1).
+ $f(x,y)$が点$(0,0)$で偏微分可能であることを示せ.
+ 
+(2).
+  $f(x,y)$が点$(0,0)$で全微分可能ではないことを示せ.
+  
+ \vspace{11pt}
+ 
+(3).
+$\R^2$上の$C^1$級関数を$g(x,y) = x^3+2xy^2+y-11$とおく. \\
+ \hspace{33pt}$g(x,y)$の点$(1,2)$での接平面の方程式を求めよ.
+
+ \vspace{33pt}
+ 
+ {\Large 第2問.} (授業第3回の内容.)
+ \vspace{11pt}
+ 
+ $\R$上の$C^1$級関数$\text{cosh}(t)$と$\text{sinh}(t)$を
+ $$
+ \text{cosh}(t) = \frac{e^t+e^{-t}}{2} \text{,\,\,\,\,\,} \text{sinh}(t) = \frac{e^t - e^{-t}}{2} \text{\,\, とする.}
+ $$
+  $f(x,y)$を $\R^2$上の$C^1$級関数とし, $C^1$級変数変換を$(x(r,t),y(r,t)) = (r \text{ cosh}(t), r\text{ sinh}(t))$とする. \\
+  $g(r,t) = f(x(r,t), y(r,t))$とするとき, $\pdrv{g}{r}, \pdrv{g}{t}$を$\pdrv{f}{x},\pdrv{f}{y}$を用いてあらわせ.
+  
+   \vspace{33pt}
+   
+   {\Large 第3問.} (授業第6回の内容.)
+    \vspace{11pt}
+    
+$\R^2$上の$C^2$級関数を$f(x,y) = x^3 + y^3 + 6xy$とする.
+$f(x,y) $について極大点・極小点を持つ点があれば, その座標と極値を求めよ. またその極値が極大値か極小値のどちらであるか示せ.
+  
+     \vspace{33pt} 
+   
+{\Large 第4問.} (授業第8回の内容.)
+    \vspace{11pt}
+
+$\R^3$上の$C^{\infty}$級関数を$f(x,y,z) = x+y+z$, $g(x,y,z) = x^2+2y^2+z^{2}-1$とする. \\ 
+$g(x,y,z)=0$のもとで, $f(x,y,z)$の最大値と最大値をとる点の座標, 最小値と最小値をとる点の座標を全て求めよ. \\
+
+    \vspace{-11pt}
+    
+つまり$S = \{ (x,y,z) \in \R^3: g(x,y,z)=0\}$とするとき, 
+$f(x,y,z)$の$S$上での最大値と最大値をとる点の座標, 最小値と最小値をとる点の座標を全て求めよ.　\\
+
+   \vspace{-11pt}
+ ただし, $S$上で$f(x,y,z)$が最大値・最小値をとることは認めて良い.
+ 
+ \newpage 
+ 
+{\Large 中間レポートおまけ問題.} (授業第1回の内容.)
+\vspace{11pt}
+
+$\R^2$上の部分集合$E$を次で定める.
+
+$$
+E = \{ (x,y) \in \R^2 : \text{$x$と$y$は共に有理数.}\}
+$$
+
+(1).
+$E$が開集合ではないことを示せ.
+ 
+(2).
+$E$が閉集合ではないことを示せ.
+    \vspace{11pt}
+
+
+ただし次の事実は認めて良い.
+
+(事実.[有理数の稠密性])
+$a<b$なる任意の実数$a,b$について, $a<q<b$となる有理数$q$が存在する.
+%任意の点$(a,b)\in \R^2$と任意の正の数$r>0$について, 点$(a,b)$中心の半径$r$の円板を$$B =\{ (x,y) \in \R^2 : \sqrt{(x-a)^2 + (y-b)^2} \leqq r\} \text{\,\, とするとき, }$$  ある点$(c,d) \in B$があって, $c$も$d$も共に有理数である.
+
+     \vspace{33pt} 
+     
+ \begin{flushright}
+ {\LARGE 以上.}
+ \end{flushright}
+
+
+%$f(x,y)$を$C^1$級関数とし,$C^1$級変数変換を$(x(u,v),y(u,v)) = (u \cos v, u \sin v)$とする.$g(u,v) = f(x(u,v), y(u,v))$とする時, $\pdrv{g}{u}, \pdrv{g}{v}$を$\pdrv{f}{x},\pdrv{f}{y}$を用いてあらわせ.
+
+%$f(x,y) = x^3 -y^3 -3x +12y$について極大点・極小点を持つ点があれば, その座標と極値を求めよ. またその極値が極小値か極大値のどちらであるか示せ.
+
+ %$f(x,y,z)= xyz, g(x,y,z)=x+y+z-170$とする.$g(x,y,z)=0$のもとで$f$の最大値を求めよ.つまり$S : = \{ (x,y) \in \R^3: g(x,y,z)=0\}$とする時, $f$の$S$上での最大値を求めよ.ただし$f$が$S$上で最大値を持つことは認めて良い.
+  
+ %
+
+ 
+
+\end{document}
