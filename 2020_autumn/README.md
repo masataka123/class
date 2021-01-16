@@ -1,6 +1,7 @@
 # 大阪市立大学 R2年度(2020年度)後期 全学共通科目 解析Ⅱ *TⅠ機･情33～ の授業のホームページ
 
 # News
+- 2021/01/16 第12回授業の広義積分に関して, 説明が少々不足していると感じたため, [広義積分の追加資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/12_広義積分の追加資料.pdf)をアップロードしました. 期末レポート第6問の解答の参考になればと思います. また[第9回から第14回授業の資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_第9回講義から第14回講義の資料まとめ_ver2.pdf)にも上の資料を追加しました.
 - 2021/01/04 あけましておめでとうございます. 期末レポートを掲載しました. また中間レポートの採点は終了しました. 
 - 2020/11/16 中間レポートを掲載しました. また授業の成績の付け方に関する欄を作成しました. 日本語が表示されない問題に関しての欄も作成しました.
 - 2020/11/10 このホームページ上で授業資料を見ると日本語が表示されない現象が見られます(原因は不明です...). ただダウンロードした授業資料には日本語がきちんと表示されています. そのため, 授業資料をダウンロードすることを強く推奨いたします.
@@ -73,20 +74,22 @@
 [第1回から第8回授業の資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_第1回講義から第8回講義の資料まとめ.pdf)
 [第1回から第8回授業の講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_第一回から第八回までの講義の授業ノート.pdf)
 
-- 第9回 (2020/12/08). 可測性と可積分性 [第9回動画](https://www.youtube.com/watch?v=QjqqMuOR_gw) [第9回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/9_可測性と可積分性.pdf) [第9回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/9_第九回講義の授業ノート.pdf) [第9回追加資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/9_integral.ipynb)
+- 第9回 (2020/12/08). 可測性と可積分性 [第9回動画](https://www.youtube.com/watch?v=QjqqMuOR_gw) [第9回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/9_可測性と可積分性.pdf) [第9回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/9_第九回講義の授業ノート.pdf) [数値積分のプログラミング例](https://github.com/masataka123/class/blob/master/2020_autumn/materials/9_integral.ipynb)
 
 - 第10回 (2020/12/15). 累次積分 [第10回動画](https://www.youtube.com/watch?v=9AmLOz3P3Ac&t=11s) [第10回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/10_累次積分.pdf) [第10回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/10_第十回講義の授業ノート.pdf)
 
 - 第11回 (2020/12/22). 多重積分の変数変換公式 [第11回動画](https://www.youtube.com/watch?v=xYJqCIKAUUY&t=3s) [第11回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/11_多重積分の変数変換公式.pdf) [第11回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/11_第十一回講義の授業ノート.pdf)
 
-- 第12回 (2021/01/12). 広義積分とガンマ関数  [第12回動画](https://www.youtube.com/watch?v=35Es9VGwRvk&t=29s) [第12回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/12_広義積分とガンマ関数.pdf) [第12回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/12_第十二回講義の授業ノート.pdf) [第12回追加資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/12_kougi.ipynb)
+- 第12回 (2021/01/12). 広義積分とガンマ関数  [第12回動画](https://www.youtube.com/watch?v=35Es9VGwRvk&t=29s) [第12回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/12_広義積分とガンマ関数.pdf) [第12回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/12_第十二回講義の授業ノート.pdf) 
+[広義積分の追加資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/12_広義積分の追加資料.pdf)
+[円周率のプログラミング例](https://github.com/masataka123/class/blob/master/2020_autumn/materials/12_kougi.ipynb)
 
 - 第13回 (2021/01/19). 線積分とグリーンの定理  [第13回動画](https://www.youtube.com/watch?v=tAEatwbE_AE&t=2s) [第13回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/13_線積分とグリーンの定理.pdf) [第13回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/13_第十三回講義の授業ノート.pdf)
 
 - 第14回 (2021/01/26). 面積分と体積分, 表面積と体積  [第14回動画](https://www.youtube.com/watch?v=KOguB7zXmSE&t=1941s) [第14回資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/14_面積分と体積分_表面積と体積.pdf) [第14回講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/14_第十四回講義の授業ノート.pdf)
 
 [第9回から第14回授業の動画の再生リスト](https://www.youtube.com/playlist?list=PLZDOK-K3OuvDGiTRClzYQa_ISlUulPPNS)
-[第9回から第14回授業の資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_第9回講義から第14回講義の資料まとめ.pdf)
+[第9回から第14回授業の資料](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_第9回講義から第14回講義の資料まとめ_ver2.pdf)
 [第9回から第14回授業の講義ノート](https://github.com/masataka123/class/blob/master/2020_autumn/materials/0_第九回から第十四回までの講義の授業ノート.pdf)
 
 もし資料を一括してダウンロードしたい場合は[こちらのページ](https://github.com/masataka123/class/tree/master/2020_autumn/materials)をご覧ください.

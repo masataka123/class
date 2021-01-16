@@ -1,0 +1,202 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\Area}{\text{Area}}
+\newcommand{\vol}{\text{Vol}}
+
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+\begin{center}
+{\Large 第12回追加資料. 広義積分の収束性の判定方法 \\ (川平先生の本, 第12章の内容)}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇, 2021/01/12
+\end{flushright}
+
+広義積分の収束の判定法に関して, 少々説明が不足していると感じたため, 追加の資料を作りました. 期末レポートの第6問を解答する際のヒントになれればと思います.
+
+\section{広義積分の判定法のおさらい}
+
+  \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    \label{kougi2}
+$f(x)$を$[a,b)$上の連続関数とする.
+\begin{enumerate}
+\item $b=+ \infty$のとき, ある$\lambda >1$があって, $f(x)x^{\lambda}$が
+$[a, +\infty)$上で有界ならば, 広義積分$\int_{a}^{\infty} f(x)dx $は収束する.
+\item $b$が実数のとき($b <+ \infty$のとき), ある$\mu <1$があって, $f(x)(x-b)^{\mu}$が
+$[a, b)$上で有界ならば, 広義積分$\int_{a}^{b} f(x)dx $は収束する.
+\end{enumerate}
+ \end{thm}
+ \end{tcolorbox}
+関数$f(x)$が$[a, b)$上で有界とは, ある正の数$M>0$があって, 任意の$x \in [a, b)$について$|f(x)| < M$となること.
+
+\vspace{11pt}
+定理\ref{kougi2}(広義積分の収束判定法)を使うにあたって, 
+「$f(x)x^{\lambda}$が$[a, +\infty)$上で有界であること」や「$f(x)(x-b)^{\mu}$が$[a, b)$上で有界であること」を示さないといけません.
+これに関しては次の主張が成り立ちます.
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{claim}
+    \label{cla2}
+ $a,b$を実数とする.
+  \begin{enumerate}
+\item $f(x)$を$[a,+\infty)$上の連続関数とする.
+ある実数$C$があって, $\lim_{x \rightarrow +\infty} |f(x)|=C$ならば$f(x)$は$[a,+\infty)$上で有界.
+\item $f(x)$を$[a,b)$上の連続関数とする.
+ある実数$C$があって, $\lim_{x \rightarrow b} |f(x)|=C$ならば$f(x)$は$[a,b)$上で有界.
+  \end{enumerate}
+ \end{claim}
+ \end{tcolorbox}
+ 
+ \hspace{-18pt}(主張\ref{cla2}の証明.)
+ (2)のみ証明します. (1)も同様です.
+ 
+ $\lim_{x \rightarrow b} |f(x)|=C$より, $\delta<\frac{b-a}{2}$となる正の数$\delta>0$があって, 任意の$x \in (b - \delta ,b)$について$|f(x)| < C+1$となる.($x$が$b$の近くにあれば$|f(x)|$は$C$に近いからです).
+ 一方$[a,b-\frac{\delta}{2}]$上で$f(x)$は連続であるので,
+$[a,b-\frac{\delta}{2}]$上で$f(x)$は最大値$A$, 最小値$B$を持つ.
+\footnote{講義第一回目でやりました. 最大最小の存在に関する定理です.}
+
+よって$M = \max\{ |A|+1, |B|+1, C+1\}$とおけば, 任意の$x \in  [a,b) $について$|f(x)| < M$となり, $f(x)$は有界です.
+
+
+
+\section{広義積分の判定法の使い方.}
+
+実際に授業でやった例で見ていきます.
+
+  \begin{exa}
+実数$s>0$について, 広義積分$\int_{0}^{1} e^{-x}x^{s-1}dx$は収束する.
+
+\hspace{-18pt}(証.)
+$f(x) = e^{-x}x^{s-1}$, $\mu=1-s$とおくと, $\lim_{x \rightarrow 0} |f(x)x^{\mu}| =\lim_{x \rightarrow 0} e^{-x} =1$である. 
+よって, 主張\ref{cla2}から$f(x)x^{\mu}$は$(0,1]$上で有界である.
+$\mu=1-s<1$のため, 定理\ref{kougi2}から広義積分$\int_{0}^{1}f(x)dx=\int_{0}^{1} e^{-x}x^{s-1} dx$は収束する.
+ \end{exa}
+ 
+   \begin{exa}
+実数$s>0$について, 広義積分$\int_{1}^{\infty} e^{-x}x^{s-1}dx$は収束する.
+
+\hspace{-18pt}(証.)
+$f(x) = e^{-x}x^{s-1}$, $\lambda=2$とおくと, $\lim_{x \rightarrow \infty} |f(x) x^{\lambda}| = \lim_{x \rightarrow \infty} e^{-x}x^{s+1} =0$である.
+よって, 主張\ref{cla2}から$f(x)x^{\lambda}$は$[1,+\infty)$上で有界である.
+$\lambda=2>1$のため, 定理\ref{kougi2}から広義積分$\int_{1}^{\infty} f(x)dx=\int_{1}^{\infty} e^{-x}x^{s-1}dx$は収束する.
+
+ \end{exa}
+ 
+ 以上から実数$s>0$について, 広義積分$\int_{0}^{\infty} e^{-x}x^{s-1}dx $は収束する.
+ 
+\begin{exa}
+$p>0, q>0$なる実数$p,q$について, 広義積分
+$\int^{\frac{1}{2}}_{0}x^{p-1}(1-x)^{q-1} dx$は収束する.
+
+\hspace{-18pt}(証.)
+$f(x) = x^{p-1}(1-x)^{q-1}$, $\mu=1-p$とおくと, $\lim_{x \rightarrow 0} |f(x) x^{\mu}| =\lim_{x \rightarrow 0} (1-x)^{q-1}=1$である.
+よって, 主張\ref{cla2}から$f(x)(x-0)^{\mu}$は$(0, \frac{1}{2}]$上で有界である.
+$\mu=1-p<1$のため, 定理\ref{kougi2}から広義積分
+$\int_{0}^{\frac{1}{2}}f(x) dx = \int^{\frac{1}{2}}_{0}x^{p-1}(1-x)^{q-1} dx$は収束する.
+
+ \end{exa}
+ 
+ \begin{exa}
+$p>0, q>0$なる実数$p,q$について, 広義積分
+$\int_{\frac{1}{2}}^{1}x^{p-1}(1-x)^{q-1} dx$は収束する
+
+\hspace{-18pt}(証.)
+$f(x) = x^{p-1}(1-x)^{q-1}$, $\mu = 1-q$とおくと, $\lim_{x \rightarrow 1} |f(x) (1-x)^{\mu}| =\lim_{x \rightarrow 1} x^{p-1}=1$である.
+よって, 主張\ref{cla2}から$f(x)(1-x)^{\mu}$は$[\frac{1}{2},1)$上で有界である.
+$|f(x)(1-x)^{\mu}| = |f(x)(x-1)^{\mu}|$であるので, $f(x)(x-1)^{\mu}$は$[\frac{1}{2},1)$上で有界である.
+以上より, $\mu=1-q<1$のため, 定理\ref{kougi2}から広義積分
+$\int_{\frac{1}{2}}^{1} f(x) dx = \int_{\frac{1}{2}}^{1}x^{p-1}(1-x)^{q-1} dx$は収束する.
+
+ \end{exa}
+ 以上から$p>0, q>0$なる実数$p,q$について, 広義積分
+$\int^{1}_{0}x^{p-1}(1-x)^{q-1} dx$は収束する.
+
+\vspace{11pt}
+まとめると次のようになります.
+ \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+
+\begin{enumerate}
+\item $f(x)$を$[a,\infty)$上の連続関数とする.「広義積分$\int_{a}^{\infty} f(x)dx $は収束する」ことを示すには, ある$\lambda >1$で$\lim_{x \rightarrow \infty} |f(x) x^{\lambda}|=C$
+($C$は実数)となるものを探せば良い. (ただし解答の書き方は上の例のようにすること.)
+\item $f(x)$を$[a,b)$上の連続関数とする.「広義積分$\int_{a}^{b} f(x)dx $は収束する」ことを示すには, ある$\mu <1$で$\lim_{x \rightarrow b} |f(x) (x-b)^{\mu}|=C$
+($C$は実数)となるものを探せば良い. (ただし解答の書き方は上の例のようにすること.)
+\end{enumerate}
+ \end{tcolorbox}
+ 
+\end{document}
