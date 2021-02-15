@@ -1,0 +1,672 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+\begin{center}
+{ \large 大阪市立大学 R2年度(2020年度)後期  全学共通科目 解析II TI機・情33 $\sim$} \\
+
+{\LARGE 中間レポート問題解答例.} 
+\end{center}
+\begin{flushright}
+ 担当教官: 岩井雅崇(いわいまさたか) 
+\end{flushright}
+
+{\Large 第1問.} (授業第2回の内容.)
+\vspace{11pt}
+
+$\R^2$上の関数$f(x,y)$を以下で定める.
+$$
+  f(x,y)= \begin{cases}
+     \frac{(x-y)^3}{x^2+y^2}& (x,y) \neq (0,0) \text{\,\,のとき.} \\
+    0&  (x,y) = (0,0) \text{\,\,のとき.} 
+  \end{cases}
+  $$
+  
+(1).
+ $f(x,y)$が点$(0,0)$で偏微分可能であることを示せ.
+ 
+(2).
+  $f(x,y)$が点$(0,0)$で全微分可能ではないことを示せ.
+  
+ \vspace{11pt}
+ 
+(3).
+$\R^2$上の$C^1$級関数を$g(x,y) = x^3+2xy^2+y-11$とおく. \\
+ \hspace{33pt}$g(x,y)$の点$(1,2)$での接平面の方程式を求めよ.
+
+ \vspace{11pt}
+ 
+\hspace{-11pt}{\Large $\bullet$ 第1問解答例}
+
+(1).
+$\R^2 \setminus \{ (0,0)\}$上では偏微分可能である. よって$(0,0)$で偏微分可能か調べれば良い. これは
+$$
+\lim_{x \rightarrow 0} \frac{f(x,0) - f(0,0)}{x-0}
+=
+\lim_{x \rightarrow 0} \frac{1}{x}\left( \frac{x^3}{x^2} -0 \right) =1
+,
+\lim_{y \rightarrow 0} \frac{f(0,y) - f(0,0)}{y-0}
+=
+\lim_{y \rightarrow 0} \frac{1}{y}\left( \frac{-y^3}{y^2} -0 \right) =-1
+$$
+より$(0,0)$で偏微分可能である.
+以上より$f(x,y)$は偏微分可能である.
+
+(2).
+全微分可能と仮定して矛盾を示す.
+全微分可能ならば$A=\pdrv{f}{x}(0,0)=1, B=\pdrv{f}{y}=-1$として
+$$
+E(x,y):= f(x,y)-\{ f(0,0) +A(x-0)+B(y-0)\}=\frac{2xy(y-x)}{x^2+y^2} \text{\,\,とおくと,}
+$$
+ %$f(x,y)$は全微分可能であると仮定したので,
+$$
+\lim_{(x,y) \rightarrow (0,0)} \frac{|E(x,y)|}{\sqrt{x^2 + y^2}} 
+=\lim_{(x,y) \rightarrow (0,0)}\frac{|2xy(y-x)|}{(x^2+y^2)^{\frac{3}{2}}}
+=0 \text{\,\,となる. }
+$$
+しかし, $(x,y) = (-t,t)$として$t\rightarrow 0$の極限を考えると,
+ $$
+ \frac{|2xy(y-x)|}{(x^2+y^2)^{\frac{3}{2}}}|_{x=-t, y=t}
+ =
+ \frac{4t^3}{2\sqrt{2}t^3}
+ =\sqrt{2}
+ \rightarrow_{t \rightarrow 0} 
+ \sqrt{2}
+ $$
+ により
+ $
+\lim_{(x,y) \rightarrow (0,0)} \frac{|E(x,y)|}{\sqrt{x^2 + y^2}} =0
+$
+に矛盾する.
+よって(原点で)全微分可能でない.
+
+(3).
+$g(x,y)$は$C^1$級関数であるので, 点$(1,2)$での接平面の方程式は
+$$
+z=g(1,2) +\pdrv{g}{x}(1,2)(x-1)+\pdrv{g}{x}(1,2)(y-2)
+$$
+と表せれる.
+よってこれを計算すれば, $z=11x+9y-29$を得る.
+
+\newpage
+ {\Large 第2問.} (授業第3回の内容.)
+ \vspace{11pt}
+ 
+ $\R$上の$C^1$級関数$\text{cosh}(t)$と$\text{sinh}(t)$を
+ $$
+ \text{cosh}(t) = \frac{e^t+e^{-t}}{2} \text{,\,\,\,\,\,} \text{sinh}(t) = \frac{e^t - e^{-t}}{2} \text{\,\, とする.}
+ $$
+  $f(x,y)$を $\R^2$上の$C^1$級関数とし, $C^1$級変数変換を$(x(r,t),y(r,t)) = (r \text{ cosh}(t), r\text{ sinh}(t))$とする. \\
+  $g(r,t) = f(x(r,t), y(r,t))$とするとき, $\pdrv{g}{r}, \pdrv{g}{t}$を$\pdrv{f}{x},\pdrv{f}{y}$を用いてあらわせ.
+  
+ \vspace{11pt}
+ 
+\hspace{-11pt}{\Large $\bullet$ 第2問解答例}
+
+$\pdrv{x}{r} = \cosh (t), \pdrv{y}{r} = \sinh (t), \pdrv{x}{t} =r \sinh (t), \pdrv{y}{t} = r \cosh (t)$
+より, 連鎖律を用いて
+$$
+\pdrv{g}{r} = \cosh (t) \pdrv{f}{x} + \sinh (t) \pdrv{f}{y},
+\pdrv{g}{t} = r \sinh (t) \pdrv{f}{x} + r \cosh (t) \pdrv{f}{y}\text{\,\,を得る.}
+$$
+
+ 
+     \vspace{33pt}
+   {\Large 第3問.} (授業第6回の内容.)
+    \vspace{11pt}
+    
+$\R^2$上の$C^2$級関数を$f(x,y) = x^3 + y^3 + 6xy$とする.
+$f(x,y) $について極大点・極小点を持つ点があれば, その座標と極値を求めよ. またその極値が極大値か極小値のどちらであるか示せ.
+  
+ \vspace{11pt}
+ 
+\hspace{-11pt}{\Large $\bullet$ 第3問解答例}
+
+$\pdrv{f}{x}=3x^2+6y, \pdrv{f}{y}=3y^2+6x$より,$\pdrv{f}{x}= \pdrv{f}{y}=0$となる点は
+$(0,0), (2,2)$である.
+
+またヘッシアンは
+$$H(f) = \left(\begin{array}{cc} \pdrv{^2f}{x^2}& \ppdrv{^2 f}{x}{y}\\ 
+\ppdrv{^2 f}{y}{x}& \pdrv{^2f}{y^2}\\ \end{array} \right)
+=
+\left(\begin{array}{cc} 6x& 6\\ 
+6& 6y \\ \end{array} \right), D_f = 36(xy-1).
+$$
+であるため, ヘッシアンによる極値判定法を用いると, 
+\begin{enumerate}
+\item $D_f(0,0) = -36 <0$より判定法から$(0,0)$は$f$の鞍点.
+\item $D_f(-2,-2) = 108 >0, \pdrv{^2f}{x^2}(-2,-2) =-12 <0$より判定法から$(-2,-2)$は$f$の極大点. $f(-2,-2)=-8-8+24=8$.
+\end{enumerate}
+
+以上より,  $f(x,y)$は$(-2,-2)$で極大値$8$をもつ.
+   
+       \vspace{33pt}
+{\Large 第4問.} (授業第8回の内容.)
+    \vspace{11pt}
+
+$\R^3$上の$C^{\infty}$級関数を$f(x,y,z) = x+y+z$, $g(x,y,z) = x^2+2y^2+z^{2}-1$とする. \\ 
+$g(x,y,z)=0$のもとで, $f(x,y,z)$の最大値と最大値をとる点の座標, 最小値と最小値をとる点の座標を全て求めよ. \\
+
+    \vspace{-11pt}
+    
+つまり$S = \{ (x,y,z) \in \R^3: g(x,y,z)=0\}$とするとき, 
+$f(x,y,z)$の$S$上での最大値と最大値をとる点の座標, 最小値と最小値をとる点の座標を全て求めよ.　\\
+
+   \vspace{-11pt}
+ ただし, $S$上で$f(x,y,z)$が最大値・最小値をとることは認めて良い.
+ 
+  \vspace{11pt}
+ 
+\hspace{-11pt}{\Large $\bullet$ 第4問解答例}
+  
+ $\pdrv{g}{x}=2x, \pdrv{g}{y}=4y, \pdrv{g}{z}=2z, $より
+ $g(a,b,c)=\pdrv{g}{x}(a,b,c)=\pdrv{g}{y}(a,b,c)=\pdrv{g}{z}(a,b,c)=0$となる点$(a,b,c)$は存在しない.
+   
+$F(x,y,t) = f(x,y,z)-tg(x,y,z)$とし, 以下の方程式を解く.
+$$
+\pdrv{F}{x} = 1-2xt=0,
+\pdrv{F}{y}= 1-4yt =0,
+\pdrv{F}{z}=1-2zt=0,
+\pdrv{F}{t} =-(x^2+2y^2+z^2-1)=0.
+$$ 
+するとラグランジュ未定乗数法より, 
+$(x,y,z) =(\frac{2}{\sqrt{10}} ,  \frac{1}{\sqrt{10}} ,\frac{2}{\sqrt{10}}  ), 
+(\frac{-2}{\sqrt{10}} ,  \frac{-1}{\sqrt{10}} ,\frac{-2}{\sqrt{10}}  )$
+の2点が極値の候補となり, 
+この2点の中に最大値・最小値をとる点が存在する.
+実際計算すると, 
+$$
+f(\frac{2}{\sqrt{10}} ,  \frac{1}{\sqrt{10}} ,\frac{2}{\sqrt{10}}  )=\frac{\sqrt{10}}{2}, 
+f(\frac{-2}{\sqrt{10}} ,  \frac{-1}{\sqrt{10}} ,\frac{-2}{\sqrt{10}}  )=\frac{-\sqrt{10}}{2}
+$$
+であるため, 
+$
+(\frac{2}{\sqrt{10}} ,  \frac{1}{\sqrt{10}} ,\frac{2}{\sqrt{10}})$
+で最大値$\frac{\sqrt{10}}{2}$をとり, 
+$
+(\frac{-2}{\sqrt{10}} ,  \frac{-1}{\sqrt{10}} ,\frac{-2}{\sqrt{10}})
+$
+で最小値$\frac{-\sqrt{10}}{2}$をとる.
+
+% \vspace{11pt}
+ 
+%{\Large 第4問解答例(別解)コーシーシュワルツの不等式より. 任意の$(a,b,c) , (p,q,r)\in \R^3$について$$|ap +bq+cr|^2 \leqq (a^2+b^2+c^2)(p^2+q^2+r^2)$$である.よって$a=1, b=\frac{1}{\sqrt{2}}, c=1, p=x, q=\sqrt{2}y, r=z$とおけば$$|x+y+z|^2 \leqq \frac{5}{2}(x^2+2y^2+z^2)$$以上より$g(x,y,z)=x^2+2y^2+z^2-1=0$の元では$|f(x,y,z)| \leqq \frac{\sqrt{10}}{2}$である.
+
+%またコーシーシュワルツの等号成立条件はある$t \in \R$があって$(a,b,c) = t(p,q,r)$となることである.つまり, $(x,y,z)=(t,\frac{t}{2}, t)$のとき, 不等式$|x+y+z|^2 \leqq \frac{5}{2}(x^2+2y^2+z^2)$は等号成立する.
+
+ 
+ \vspace{33pt}
+{\Large 中間レポートおまけ問題.} (授業第1回の内容.)
+\vspace{11pt}
+
+$\R^2$上の部分集合$E$を次で定める.
+
+$$
+E = \{ (x,y) \in \R^2 : \text{$x$と$y$は共に有理数.}\}
+$$
+
+(1).
+$E$が開集合ではないことを示せ.
+ 
+(2).
+$E$が閉集合ではないことを示せ.
+    \vspace{11pt}
+
+
+ただし次の事実は認めて良い.
+
+(事実.[有理数の稠密性])
+$a<b$なる任意の実数$a,b$について, $a<q<b$となる有理数$q$が存在する.
+%任意の点$(a,b)\in \R^2$と任意の正の数$r>0$について, 点$(a,b)$中心の半径$r$の円板を$$B =\{ (x,y) \in \R^2 : \sqrt{(x-a)^2 + (y-b)^2} \leqq r\} \text{\,\, とするとき, }$$  ある点$(c,d) \in B$があって, $c$も$d$も共に有理数である.
+
+  \vspace{11pt}
+ 
+\hspace{-11pt}{\Large $\bullet$ 中間レポートおまけ問題解答例}
+
+解答にさいし, 次の補題を示す.
+\begin{lem}
+$a<b$なる任意の実数$a,b$について, $a<r<b$となる\underline{無理数$r$}が存在する.
+\end{lem}
+\hspace{-11pt}[証.]
+有理数の稠密性から, $a<q_1<b$となる有理数$q_1$が存在する.
+再度有理数の稠密性を用いると, $q_1<q_2<b$となる有理数$q_2$が存在する.
+よって$r=\frac{q_1 + \sqrt{2}q_2}{1+\sqrt{2}}$とおけば, $r$は無理数で$a<r<b$を満たす.
+
+(1).
+$E$が開集合であることの定義は「$E$のすべての点が内点であること」である.
+よって$(0,0) \in E$が内点ではないことを言えば良い.
+つまり, 任意の$r$について,
+$$
+B_{(0,0)}(r) = \{(x,y) \in \R^2 : \sqrt{x^2 + y^2} \leqq r \}
+$$
+とするとき, $(a,b) \in B_{(0,0)}(r) $かつ
+$(a,b) \in \R^2 \setminus E$
+となる点$(a,b)$が存在することを示せば良い.
+
+任意の$r>0$について, 
+補題から$0 < c < r$となる無理数$c$が存在する.
+よって$(0,c) \in B_{(0,0)}(r)$かつ$(0,c) \in \R^2 \setminus E$
+より, $(0,0) \in E$は内点ではない.
+
+(2.)
+$\R^2 \setminus E$が開集合ではないことを示す.
+これは$(0,\sqrt{2}) \in \R^2 \setminus E$が内点ではないことを示せば良い.
+つまり, 任意の$r$について,
+$$
+B_{(0,\sqrt{2})}(r) = \{(x,y) \in \R^2 : \sqrt{x^2 + (y - \sqrt{2})^2} \leqq r \}
+$$
+とするとき, $(a,b) \in B_{(0,\sqrt{2})}(r) $かつ
+$(a,b) \in  E$
+となる$(a,b)$が存在することを示せば良い.
+
+任意の$r>0$について, 
+有理数の稠密性から$\sqrt{2} < c < \sqrt{2}+r$となる有理数$c$が存在する.
+よって$(0,c) \in B_{(0,\sqrt{2})}(r)$かつ$(0,c) \in  E$
+より, $(0,\sqrt{2}) \in \R^2 \setminus E$は内点ではない.
+
+%$f(x,y)$を$C^1$級関数とし,$C^1$級変数変換を$(x(u,v),y(u,v)) = (u \cos v, u \sin v)$とする.$g(u,v) = f(x(u,v), y(u,v))$とする時, $\pdrv{g}{u}, \pdrv{g}{v}$を$\pdrv{f}{x},\pdrv{f}{y}$を用いてあらわせ.
+
+%$f(x,y) = x^3 -y^3 -3x +12y$について極大点・極小点を持つ点があれば, その座標と極値を求めよ. またその極値が極小値か極大値のどちらであるか示せ.
+
+ %$f(x,y,z)= xyz, g(x,y,z)=x+y+z-170$とする.$g(x,y,z)=0$のもとで$f$の最大値を求めよ.つまり$S : = \{ (x,y) \in \R^3: g(x,y,z)=0\}$とする時, $f$の$S$上での最大値を求めよ.ただし$f$が$S$上で最大値を持つことは認めて良い.
+  
+ %
+   \vspace{33pt}
+   
+\hspace{-11pt}{\Large 中間レポートについて}
+
+第1問から第4問を通して, 正答率86\%でした. とてもよくできていたと思います.
+各問題を通しての感想は以下のとおりです.
+\begin{itemize}
+\item [第1問(1).] 正答率95\%.もっと変な解答が出るかと思ったが, 全然そういう解答がなかったです. 偏微分可能性をきちんと理解していて大変優秀だと思います.
+\item [第1問(2).] 正答率56\%. 予想以上に正答率は高かったです. 全微分可能性の定義から示すしかない問題です. 解答の方向性があっている人は多かったので, 大変優秀だと思います.
+\item [第1問(3).] 正答率82\%. 意外と間違っている人が多かったです. 間違っている人は復習すること.
+\item [第2問.] 正答率97\%. 第3回資料とほぼ同じ問題なので, ほぼ全員合ってました.
+\item [第3問.] 正答率93\%. 手順通り示している解答が多く採点がしやすかったです. ただ計算ミスがまあまあ見られたので, レポートを提出する前にきちんと見直しをすることをお勧めします.
+\item [第4問.] 正答率88\%. 第3問に同じ.
+\end{itemize}
+
+\newpage
+\begin{center}
+{ \large 大阪市立大学 R2年度(2020年度)後期  全学共通科目 解析II TI機・情33 $\sim$} \\
+
+{\LARGE 期末レポート問題解答例.} 
+\end{center}
+\begin{flushright}
+ 担当教官: 岩井雅崇(いわいまさたか) 
+\end{flushright}
+
+
+{\Large 第5問.}授業第10, 11回の内容.
+\vspace{11pt}
+
+{\large(1). $D=\{ (x,y) \in \R^2 : x^2 + y^2 \leqq x\}$とする.
+重積分$\iint_{D} \sqrt{x}dxdy$の値を求めよ.}
+
+\vspace{11pt}
+{\large(2). $D=\{ (x,y) \in \R^2 : 0 \leqq x, \text{\,}  0 \leqq y,\text{\,} \sqrt{x} + \sqrt{y} \leqq 1\}$とする.
+重積分$\iint_{D} x^2dxdy$の値を求めよ.}
+
+\vspace{11pt}
+{\large(3). $D=\{ (x,y) \in \R^2 : 0 \leqq y, \text{\,} 0 \leqq x-y, \text{\,} x+y \leqq 2\}$とする.
+重積分$\iint_{D} (x^2-y^2)dxdy$の値を求めよ.}
+
+ 
+ \vspace{11pt}
+ 
+\hspace{-11pt}{\Large $\bullet$ 第5問解答例}
+
+ (1). 
+ $E= \{ (r ,\theta) \in \R^2 : 0 \leqq r \leqq \cos \theta, 
+ -\frac{\pi}{2}\leqq \theta  \leqq\frac{\pi}{2}\}$とし, 
+ $$
+\begin{array}{ccccc}
+\Phi: &E & \rightarrow & \R^2 & \\
+&(r,\theta) & \longmapsto & (r \cos \theta , r \sin \theta)&
+\end{array}
+$$
+とすると, 授業第11回の変数変換の条件(1)-(3)を満たし. $D = \Phi(E)$かつ$\det D\Phi =r$である.
+
+以上より多重積分の変数変換の公式から
+\begin{align*}
+\begin{split}
+\iint_{D} \sqrt{x}dxdy
+&=
+\iint_{E}  (r\cos \theta)^{\frac{1}{2}} rdrd\theta \\
+&= \int_{- \frac{\pi}{2}}^{\frac{\pi}{2}} 
+ \int_{0}^{\cos \theta} r^{\frac{3}{2}} (\cos \theta)^{\frac{1}{2}} drd\theta \\
+&=
+\int_{- \frac{\pi}{2}}^{\frac{\pi}{2}} (\cos \theta)^{\frac{1}{2}} 
+ \left[ \frac{2}{5}r^{\frac{5}{2}} \right]_{0}^{\cos \theta} d\theta 
+=\frac{2}{5} \int_{- \frac{\pi}{2}}^{\frac{\pi}{2}} (\cos \theta)^{3} d\theta 
+=\frac{8}{15}.
+    \end{split}
+  \end{align*}
+ 
+ 
+  (補足).
+   $D= \{ (x,y) \in \R^2 : 0 \leqq x \leqq 1, 
+ -\sqrt{x-x^2}\leqq y  \leqq \sqrt{x-x^2}\}$
+ より累次積分を使用しても計算できます.
+ 
+
+ (2). 
+ $E= \{ (u ,v) \in \R^2 : 0 \leqq u \leqq 1,  
+0 \leqq v \leqq 1-u \}$とし, 
+ $$
+\begin{array}{ccccc}
+\Phi: &E & \rightarrow & \R^2 & \\
+&(u,v) & \longmapsto & (u^2 , v^2)&
+\end{array}
+$$
+とすると, 授業第11回の変数変換の条件(1)-(3)を満たし. $D = \Phi(E)$かつ$\det D\Phi =4uv$である.
+
+以上より多重積分の変数変換の公式から
+\begin{align*}
+\begin{split}
+\iint_{D} x^2 dxdy
+&=
+\iint_{E} u^4(4uv) dudv \\
+&= \int_{0}^{1} 
+ \int_{0}^{1-u} 4 u^5 v \, dvdu \\
+&=
+\int_{0}^{1} 4u^5
+ \left[ \frac{v^2}{2} \right]_{0}^{1-u} du
+=2\int_{0}^{1} \left( u^5 - 2u^6 + u^7 \right) du
+=\frac{1}{84}.
+    \end{split}
+  \end{align*}
+ 
+ 
+  (補足).
+   $D= \{ (x,y) \in \R^2 : 0 \leqq x \leqq 1, 
+0 \leqq y  \leqq (1-\sqrt{x})^2\}$
+ より累次積分を使用しても計算できます.
+ 
+  (3). 
+   $D= \{ (x,y) \in \R^2 : 0 \leqq y \leqq 1, 
+y \leqq x  \leqq 2-y \}$
+より累次積分を使用して
+ 
+\begin{align*}
+\begin{split}
+\iint_{D} (x^2 -y^2) dxdy
+&= \int_{0}^{1} 
+ \int_{y}^{2-y} (x^2 -y^2) dxdy \\
+&=\int_{0}^{1} 
+ \left[ \frac{x^3}{3} - x y^2 \right]_{y}^{2-y} dy\\
+&=
+\int_{0}^{1} 
+\left( \frac{4 y^3}{3} -4y + \frac{8}{3} \right) dy
+=1.
+    \end{split}
+  \end{align*}
+ 
+ 
+  (補足).
+   $x=\frac{u+v}{2}, y=\frac{-u+v}{2}$, 
+ $E= \{ (u ,v) \in \R^2 : 0 \leqq u \leqq 2,  u \leqq v \leqq 2\}$として
+ 変数変換公式を使用しても計算できます.
+ 
+  \vspace{33pt}
+ 
+ {\Large 第6問.}授業第12回の内容.
+\vspace{11pt}
+
+$p$を実数とする.
+\vspace{11pt}
+
+{\large(1). $p<-1$のとき, 広義積分$\int_{1}^{\infty} (1+\sqrt{x})^{2p} \log x \text{\,}dx$が収束することを示せ.}
+
+\vspace{11pt}
+
+{\large(2). $p \geqq -1$のとき, 広義積分$\int_{1}^{\infty} (1+\sqrt{x})^{2p} \log x \text{\,}dx$が発散することを示せ.}
+
+ \vspace{11pt}
+ 
+\hspace{-11pt}{\Large $\bullet$ 第6問解答例}
+
+以下$f(x)=(1+\sqrt{x})^{2p} \log x$とする.
+
+(1).$-p > 1$より, ある正の実数$\epsilon >0$で$-p-\epsilon >1$となるものが取れる.(例えば$\epsilon = \frac{-p-1}{2}$とすれば良い.)
+$\lambda = -p-\epsilon$とおくと, 
+$$
+\lim_{x \rightarrow \infty} |f(x) x^{\lambda}| = 
+\lim_{x \rightarrow \infty} \left( \frac{1+ \sqrt{x}}{\sqrt{x}} \right)^{2p} \frac{\log x}{x^{\epsilon}} =0$$
+である.
+よって, $f(x)x^{\lambda}$は$[1,+\infty)$上で有界である.
+$\lambda>1$のため, 広義積分の収束判定法から広義積分$\int_{1}^{\infty} f(x)dx=\int_{1}^{\infty} (1+\sqrt{x})^{2p} \log xdx$は収束する.
+
+(別解). $x \geqq 1$なる実数$x$について
+$1+ \sqrt{x} \geqq \sqrt{x}$である. よって$p<-1$より, $x \geqq 1$ならば$(1+ \sqrt{x} )^{2p }\leqq x^p$である.
+したがって$f(x) \leqq  x^p \log x $である.
+
+以上より, 川平先生の教科書定理12.2から, 広義積分$\int_{1}^{\infty} x^p \log x dx$が収束することを示せば良い.
+今$z>1$なる実数について, $p \neq -1$より
+$$
+\int_{1}^{z} x^p \log x dx =
+\frac{z^{p+1}}{p+1} - \frac{z^{p+1}}{(p+1)^2} +1
+$$
+のため, $p+1<0$から広義積分$\int_{0}^{\infty} x^p \log x dx$は収束する.
+
+(2). $x \geqq 1$なる実数$x$について$f(x) \geqq 0$であり, 
+$x \geqq 3$なる実数$x$について$\log x \geqq 1$である.
+
+ [$0 \leqq p$の場合.]
+ $x \geqq 1$なる実数$x$について
+ $1+ \sqrt{x} \geqq \sqrt{x}$であるので, $(1+ \sqrt{x} )^{2p } \geqq x^p$である.
+ したがって
+$$
+\int_{1}^{\infty} (1+ \sqrt{x} )^{2p } \log xdx
+\geqq
+\int_{3}^{\infty} (1+ \sqrt{x} )^{2p } \log xdx
+\geqq
+\int_{3}^{\infty} (1+ \sqrt{x} )^{2p } dx
+\geqq
+\int_{3}^{\infty} x^p dx
+$$
+ である. $p \geqq 0$より, 授業第12回の例題から$\int_{3}^{\infty} x^p dx$は$+\infty$に発散する.
+ よって広義積分$\int_{1}^{\infty} (1+\sqrt{x})^{2p} \log xdx$は発散する.
+ 
+  [$-1\leqq p <0$の場合.]
+ $x \geqq 1$なる実数$x$について
+ $1+ \sqrt{x} \leqq 2\sqrt{x}$であるので, $(1+ \sqrt{x} )^{2p } \geqq 2^{2p} x^p$である.
+ したがって
+$$
+\int_{1}^{\infty} (1+ \sqrt{x} )^{2p } \log xdx
+\geqq
+\int_{3}^{\infty} (1+ \sqrt{x} )^{2p } \log xdx
+\geqq
+\int_{3}^{\infty} (1+ \sqrt{x} )^{2p } dx
+\geqq
+2^{2p}\int_{3}^{\infty} x^p dx
+$$
+ である. $p \geqq -1$より, 授業第12回の例題から$\int_{3}^{\infty} x^p dx$は$+\infty$に発散する.
+ よって広義積分$\int_{1}^{\infty} (1+\sqrt{x})^{2p} \log xdx$は発散する.
+ 
+
+ 
+   \vspace{33pt}
+ 
+{\Large 期末レポートおまけ問題.}授業第13,14回の内容.
+
+%\vspace{11pt}$\R^2$内の滑らかな曲線$C : \vec{p}(t) =(x(t), y(t))=(\cos t, \sin t) (0 \leqq t \leqq 2\pi)$とする.これは単純閉曲線である.以下の問いに答えよ.
+
+%vspace{11pt}{\large(1). 線積分$\int_{C} (x^4 + y^4 -6x^2y^2) dx +4xy(x^2 - y^2) dy$を求めよ.}
+
+\vspace{11pt}
+
+{\large(1). $\R^2$内の滑らかな曲線$C : \vec{p}(t) =(x(t), y(t))=(\cos t, \sin t) (0 \leqq t \leqq 2\pi)$とする.(これは単純閉曲線である). 
+線積分$\int_{C} \frac{-y}{x^2 +y^2}dx + \frac{x}{x^2 +y^2} dy$の値を求めよ.}
+
+\vspace{11pt}
+
+{\large(2). $u(x,y)=\frac{-y}{x^2 +y^2}, v(x,y) = \frac{x}{x^2 +y^2} $とおくと$\pdrv{v}{x}-\pdrv{u}{y}=0$となる.
+ よって小問(1)から, (1)の$u(x,y),v(x,y)$と単純閉曲線$C$においてはグリーンの定理が成り立たないことがわかる.なぜ成り立たないのかその理由を簡潔に述べよ.}
+%{\large(2). $u(x,y)=\frac{-y}{x^2 +y^2}, v(x,y) = \frac{x}{x^2 +y^2} $とする. $\pdrv{v}{x}-\pdrv{u}{y}=0$を示せ.}
+
+%\vspace{11pt}
+
+%{\large(3). 小問(1)と(2)から, この単純閉曲線$C$と$(u(x,y), v(x,y))=(\frac{-y}{x^2 +y^2}, \frac{x}{x^2 +y^2})$においてはグリーンの定理が成り立たないことがわかる.なぜ成り立たないのかその理由を簡潔に述べよ.}
+
+\vspace{11pt}
+{\large(3). $K=\{ (x,y,z) \in \R^3 : 0 \leqq x, 0 \leqq y, 0 \leqq z, x^2+y^2+z^2 \leqq 1\}$とする.
+体積分$\iiint_{K} xyz \text{\,}dxdydz$の値を求めよ.}
+
+\vspace{11pt}
+
+\hspace{-11pt}{\Large $\bullet$ 期末レポートおまけ問題解答例}
+
+(1). 線積分の定義に基づいて計算すると, 
+\begin{align*}
+\begin{split}
+\int_{C} \frac{-y}{x^2 +y^2}dx + \frac{x}{x^2 +y^2} dy
+&=
+\int_{0}^{2\pi} \left( \frac{-\sin t}{(\cos t)^2 +(\sin t)^2}\drv{x}{t} + \frac{\cos t}{(\cos t)^2 +(\sin t)^2} \drv{y}{t} \right)dt \\
+&= \int_{0}^{2\pi} \left ( (\sin t)^2+ (\cos t)^2  \right) dt \\
+&=
+\int_{0}^{2\pi} dt 
+=2 \pi .
+    \end{split}
+  \end{align*}
+  
+  (2). $C$で囲まれる領域に原点は含まれており, $u(x,y),v(x,y)$ともに原点で$C^1$級でないから. 
+
+(3).
+$\Omega= \{ (x,y) \in \R^2 : 0 \leqq x,  0 \leqq y, 
+0 \leqq x^2 + y^2  \leqq 1 \}$
+とし, 
+$K=\{ (x,y,z) \in \R^3 : (x,y) \in \Omega,  0 \leqq z \leqq \sqrt{1-x^2-y^2}\}$とする.
+体積分の定義に基づいて計算すると, 
+
+\begin{align*}
+\begin{split}
+\iiint_{K} xyz \text{\,}dxdydz
+&= \iint_{\Omega} xy
+\left( \int_{0}^{\sqrt{1-x^2-y^2}} z dz \right) dxdy\\
+&= \iint_{\Omega} xy\left[ \frac{z^2}{2} \right]_{0}^{\sqrt{1-x^2-y^2}}dxdy
+=\frac{1}{2} \iint_{\Omega} xy(1- x^2-y^2) dxdy. \\
+    \end{split}
+  \end{align*}
+  ここで
+   $E= \{ (r ,\theta) \in \R^2 : 0 \leqq r \leqq 1, 
+0 \leqq \theta  \leqq\frac{\pi}{2}\}$とし, 
+ $$
+\begin{array}{ccccc}
+\Phi: &E & \rightarrow & \R^2 & \\
+&(r,\theta) & \longmapsto & (r \cos \theta , r \sin \theta)&
+\end{array}
+$$
+とすると, 授業第11回の変数変換の条件(1)-(3)を満たし. $\Omega = \Phi(E)$かつ$\det D\Phi =r$である.
+ よって
+ 
+ \begin{align*}
+\begin{split}
+\frac{1}{2} \iint_{\Omega} xy(1- x^2-y^2) dxdy
+&= \frac{1}{2} \int_{0}^{\frac{\pi}{2}} \int_{0}^{1}
+(1-r^2)r^3 \cos \theta \sin \theta drd\theta \\
+&= \frac{1}{2} \int_{0}^{\frac{\pi}{2}} \cos \theta \sin \theta  \left[ \frac{r^4}{4} - \frac{r^6}{6}\right]_{0}^{1}d\theta \\
+&= \frac{1}{24}\int_{0}^{\frac{\pi}{2}} \cos \theta \sin \theta d\theta  = \frac{1}{48}.
+    \end{split}
+  \end{align*}
+  
+ 
+  (補足).
+   $x=r \cos \theta\cos \phi, y=r \sin \theta \cos \phi, z = r \sin \phi$, 
+ $E= \{ (r,\theta,\phi ) \in \R^3 : 0 \leqq r \leqq 1,  0 \leqq \theta \leqq \frac{\pi}{2}, 
+0 \leqq \phi \leqq \frac{\pi}{2} \}$として
+ 変数変換公式を使用しても計算できます.
+ (がんばって計算すると, ヤコビアンは$r^2 \cos \phi$となります.)
+ 
+   \vspace{33pt}
+   
+\hspace{-11pt}{\Large 期末レポートについて}
+
+全体を通して, 正答率72\%でした. とてもよくできていたと思います.
+実は期末レポートの問題はほぼ某大学の数学科の大学院の試験から拝借してきました.
+予想に反して正答率が7割を超えていたので大変優秀だと思います.
+(数学を4年やってきた猛者たちが受ける試験の問題を, みなさんは解けたということです.)
+各問題を通しての感想は以下のとおりです.
+\begin{itemize}
+\item [第5問(1).] 正答率91\%. 実は教科書にほぼ同じ問題があります.
+\item [第5問(2).] 正答率93\%. 特になし.
+\item [第5問(3).] 正答率74\%. $D$がどんな図形か図を書いたほうがわかりやすくなる問題です.
+ ただ別解のように変数変換を用いる解答も意外と多かったです. (私が想定していない解答でした.) ただその場合$E=\{ (u ,v) \in \R^2 : 0 \leqq u \leqq 2,  u \leqq v \leqq 2\}$となります.採点してますと$0 \leqq v \leqq 2$としている解答が多かったです. 
+\item [第6問(1).] 正答率55\%. 中間レポートのできが良かったので, 点数調整のために第6問は難しくしました. 
+元々は$x^p \log x$の広義積分の収束判定を問う問題だったのですが, $x^p$を$(1+\sqrt{x})^{2p}$に変えて難しくしました. ($x^p \log x$は積分できてしまうので面白くない.)
+ですが, $x^p \log x$の広義積分の収束判定に帰着させる別解のような解答がかなり多かったです. 
+これは私が想定していない解答でした. 別解のような解答の方が分かりやすいし良い解答だと思います.
+\item [第6問(2).] 正答率38\%. 不等式評価をさせる問題です. 場合わけが生じる少々めんどくさい問題です.
+$x^p \log x$の発散に帰着させる解答が多かったです.
+これにはみなさんの計算能力の高さに驚かされました.
+(普段積分計算を全然しない私は$\log x$の計算をするのも面倒くさくなり, 解答例のように$\log x$をすぐ消しました. )
+\end{itemize}
+
+   \vspace{33pt}
+   
+
+\end{document}
